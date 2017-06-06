@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "eslint --cache *.js src && echo ✓"
+  },
+  "dependencies": {
+    "chokidar": "^1.7.0",
+    "rollup": "^0.42.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-fnd": "^1.1.1"
+  }
+}
