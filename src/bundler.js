@@ -3,43 +3,39 @@
 let rollup = require("rollup");
 let fs = require("fs");
 
-let INDEX = {}; // files by bundles' target file path -- TODO: rename
-let CACHES = {}; // bundles by target file path
+let INDEX = {}; // bundle state by entry point
+let CACHES = {}; // bundles by entry point
 
-module.exports = (...bundles) => {
-	bundles.forEach(({ entryPoint, target, format }) => {
-		generateBundle(entryPoint, target, format || "umd");
+module.exports = (callback, ...bundles) => {
+	bundles.forEach(({ entryPoint, format }) => {
+		generateBundle(entryPoint, format, callback);
 	});
 
-	return onChange;
+	return rebundler(callback);
 };
 
-function onChange(filepath) {
-	filepath = fs.realpathSync(filepath);
-
-	Object.keys(INDEX).forEach(target => {
-		let { entryPoint, format, files } = INDEX[target];
-		if(files.includes(filepath)) {
-			generateBundle(entryPoint, target, format);
-		}
-	});
+function rebundler(callback) {
+	return filepath => {
+		Object.keys(INDEX).forEach(entryPoint => {
+			let { format, files } = INDEX[entryPoint];
+			if(files.includes(filepath)) {
+				generateBundle(entryPoint, format, callback);
+			}
+		});
+	};
 }
 
-function generateBundle(entryPoint, target, format) {
-	return rollup.rollup({ entry: entryPoint, cache: CACHES[target] }).
+function generateBundle(entryPoint, format = "iife", callback) {
+	return rollup.rollup({ entry: entryPoint, cache: CACHES[entryPoint] }).
 		then(bundle => {
-			bundle.write({ format, dest: target });
-
-			// normalize file paths -- XXX: unnecessary?
-			// NB: cannot do this beforehand because otherwise the bundle does
-			//     not exist yet
-			[entryPoint, target] = [entryPoint, target].
-				map(filepath => fs.realpathSync(filepath));
+			CACHES[entryPoint] = bundle;
 
 			let files = bundle.modules.reduce(collectModulePaths, []);
-			CACHES[target] = bundle;
-			INDEX[target] = { entryPoint, format, files };
-		});
+			INDEX[entryPoint] = { format, files };
+
+			return bundle.generate({ format }).code;
+		}).
+		then(code => void callback(entryPoint, code));
 }
 
 // adapted from Rollup
