@@ -1,22 +1,29 @@
 "use strict";
 
 let chokidar = require("chokidar");
+let EventEmitter = require("events");
 let fs = require("fs");
+let path = require("path");
 
-module.exports = (rootDir, poll, callback) => {
+module.exports = (rootDir, poll) => {
 	let watcher = chokidar.watch(rootDir, {
 		persistent: true,
 		usePolling: poll
 	});
+	let emitter = new EventEmitter();
 
-	let handler = filepath => {
+	let notify = filepath => {
 		filepath = fs.realpathSync(filepath);
-		callback(filepath);
+		emitter.emit("edit", filepath);
 	};
 
 	watcher.on("ready", _ => {
-		watcher.on("add", handler).
-			on("change", handler).
-			on("unlink", handler);
+		watcher.on("add", notify).
+			on("change", notify).
+			on("unlink", filepath => {
+				filepath = path.resolve(rootDir, filepath);
+				emitter.emit("edit", filepath);
+			});
 	});
+	return emitter;
 };

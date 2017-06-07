@@ -7,7 +7,8 @@ module.exports = (bundles, options) => {
 	let rebundle = bundler(onBundle, ...bundles);
 
 	if(options.watch) {
-		watcher(options.rootDir, options.watch === "poll", rebundle);
+		watcher(options.rootDir, options.watch === "poll").
+			on("edit", rebundle);
 	}
 };
 
