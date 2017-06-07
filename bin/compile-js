@@ -2,22 +2,30 @@
 "use strict";
 
 let bundler = require("../src");
+let parseArgs = require("minimist");
 let fs = require("fs");
 let path = require("path");
 
 // command-line arguments
-let { argv } = process;
-let minify = includesAny(argv, "-m", "--minify");
-let watch = includesAny(argv, "-w", "--watch");
-let poll = argv.includes("--poll");
-let configFile = getOptionValue(argv, "-c", "--config") || "package.json";
-// TODO: optionally disable fingerprinting
+// TODO:
+// * help message
+// * optionally disable fingerprinting
+let argv = parseArgs(process.argv.slice(2), {
+	alias: {
+		c: "config",
+		m: "minify",
+		w: "watch"
+	},
+	default: {
+		config: "package.json"
+	}
+});
 
 let rootDir = process.cwd();
-let config = readConfig(path.join(rootDir, configFile), "jsConfig");
+let config = readConfig(path.join(rootDir, argv.config), "jsConfig");
 let options = {
 	rootDir,
-	watch: watch && (poll ? "poll" : true)
+	watch: argv.watch && (argv.poll ? "poll" : true)
 };
 bundler(config.bundles, options);
 
@@ -26,24 +34,4 @@ function readConfig(filepath, property) {
 	let json = fs.readFileSync(filepath);
 	let config = JSON.parse(json);
 	return config[property];
-}
-
-// parses command-line arguments, returning option value: `--foo bar` → `"bar"`
-// TODO: use minimist for proper POSIX compliance
-function getOptionValue(argv, ...options) {
-	let res;
-	options.some(option => {
-		let i = argv.indexOf(option);
-		if(i === -1) {
-			return false;
-		}
-
-		res = argv[i + 1];
-		return true;
-	});
-	return res;
-}
-
-function includesAny(arr, ...items) {
-	return items.some(item => arr.includes(item));
 }
