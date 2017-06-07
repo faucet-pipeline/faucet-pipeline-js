@@ -7,10 +7,10 @@ module.exports = (bundles, options) => {
 	let rebundle = bundler(onBundle, ...bundles);
 
 	if(options.watch) {
-		watcher(options.rootDir, rebundle);
+		watcher(options.rootDir, options.watch === "poll", rebundle);
 	}
 };
 
 function onBundle(entryPoint, code) {
-	console.log("~~~", entryPoint, code);
+	console.log(`==> ${entryPoint} <==\n` + "```\n" + code + "\n````");
 }

@@ -3,8 +3,11 @@
 let chokidar = require("chokidar");
 let fs = require("fs");
 
-module.exports = (rootDir, callback) => {
-	let watcher = chokidar.watch(rootDir, { persistent: true });
+module.exports = (rootDir, poll, callback) => {
+	let watcher = chokidar.watch(rootDir, {
+		persistent: true,
+		usePolling: poll
+	});
 
 	let handler = filepath => {
 		filepath = fs.realpathSync(filepath);
