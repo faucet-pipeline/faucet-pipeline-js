@@ -35,6 +35,12 @@ function generateBundle(entryPoint, format = "iife", callback) {
 
 			return bundle.generate({ format }).code;
 		}).
+		catch(err => {
+			let msg = `ERROR: ${err.message}`;
+			console.error(msg);
+			// also report error from within bundle, to avoid confusion
+			return `alert("${msg.replace(/"/g, "\\\"")}");`;
+		}).
 		then(code => void callback(entryPoint, code));
 }
 
