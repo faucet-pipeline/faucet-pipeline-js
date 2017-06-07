@@ -6,6 +6,17 @@ let fs = require("fs");
 let INDEX = {}; // bundle state by entry point
 let CACHES = {}; // bundles by entry point
 
+// TODO: (cf. complate-jsx)
+// * minification support
+// * `includePaths`
+// * `extensions`
+// * `aliases`
+// * `externals`
+// * `noTranspile`
+// * `moduleName`
+// * transpiler preset (default to ES2015)
+// * source maps?
+// * minification light: only stripping comments
 module.exports = (callback, ...bundles) => {
 	bundles.forEach(({ entryPoint, format }) => {
 		generateBundle(entryPoint, format, callback);

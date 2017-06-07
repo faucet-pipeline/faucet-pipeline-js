@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "eslint --cache *.js src && echo ✓"
+    "test": "eslint --cache *.js src bin/* && echo ✓"
   },
   "dependencies": {
     "chokidar": "^1.7.0",

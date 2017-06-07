@@ -1,0 +1,9 @@
+{
+	"jsConfig": {
+		"bundles": [{
+			"entryPoint": "foo.js"
+		}, {
+			"entryPoint": "bar.js"
+		}]
+	}
+}
