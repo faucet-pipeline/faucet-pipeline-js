@@ -2,7 +2,7 @@
 
 let bundler = require("./bundler");
 let watcher = require("./watcher");
-let { generateError, generateHash } = require("./util");
+let { generateError, generateHash, debounce } = require("./util");
 let mkdirp = require("mkdirp");
 let fs = require("fs");
 let path = require("path");
@@ -28,7 +28,8 @@ function start(bundles, targetDir, options) {
 
 	if(options.watch) {
 		watcher(options.rootDir, options.watch === "poll").
-			on("edit", rebundle);
+			// NB: debouncing avoids redundant invocations
+			on("edit", debounce(100, rebundle)); // XXX: magic number
 	}
 }
 

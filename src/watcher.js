@@ -11,7 +11,7 @@ module.exports = (rootDir, poll) => {
 	});
 	let emitter = new EventEmitter();
 
-	// FIXME: potentially invoked multiple times for a single change
+	// NB: potentially invoked multiple times for a single change
 	let notify = filepath => {
 		filepath = path.resolve(rootDir, filepath);
 		emitter.emit("edit", filepath);
