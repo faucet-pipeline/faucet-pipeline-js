@@ -39,11 +39,23 @@ function rebundler(callback) {
 
 function generateBundle(entryPoint, format = "iife", callback) {
 	return rollup.rollup({ entry: entryPoint, cache: CACHES[entryPoint] }).
+		catch(err => {
+			if(!INDEX[entryPoint]) { // first run
+				// ensure subsequent changes are picked up
+				INDEX[entryPoint] = { // XXX: DRY; cf. below
+					format,
+					files: [fs.realpathSync(entryPoint)]
+				};
+			}
+
+			throw err;
+		}).
 		then(bundle => {
 			CACHES[entryPoint] = bundle;
-
-			let files = bundle.modules.reduce(collectModulePaths, []);
-			INDEX[entryPoint] = { format, files };
+			INDEX[entryPoint] = {
+				format,
+				files: bundle.modules.reduce(collectModulePaths, [])
+			};
 
 			return bundle.generate({ format }).code;
 		}).
