@@ -2,22 +2,21 @@
 
 let { generateError, filterObject } = require("./util");
 let rollup = require("rollup");
+let babel = require("rollup-plugin-babel"); // TODO: optional
+let commonjs = require("rollup-plugin-commonjs");
+let nodeResolve = require("rollup-plugin-node-resolve");
 let fs = require("fs");
 
 const DEFAULTS = {
-	format: "umd"
+	format: "iife"
 };
 
 let BUNDLES = {}; // configuration and state by entry point
 
-// TODO: (cf. complate-jsx)
+// TODO:
 // * minification support
 // * `includePaths`
-// * `extensions`
 // * `aliases`
-// * `externals`
-// * `noTranspile`
-// * `moduleName`
 // * transpiler preset (default to ES2015)
 // * source maps?
 // * minification light: only stripping comments
@@ -61,6 +60,7 @@ function generateBundle(entryPoint, callback) {
 			config._cache = bundle;
 
 			let cfg = filterObject(config, ["_files", "_cache"]);
+			cfg = generateConfig(cfg);
 			return bundle.generate(cfg).code;
 		}).
 		catch(err => {
@@ -69,6 +69,45 @@ function generateBundle(entryPoint, callback) {
 			return { code, error: true };
 		}).
 		then(code => void callback(entryPoint, code));
+}
+
+// generates Rollup configuration
+// * `extensions` is a list of additional file extensions for loading modules
+//   (e.g. `[".jsx"]`)
+// * `externals` determines which modules to exclude from the bundle
+//   (e.g. `{ jquery: "jQuery" }` - the key represents the respective module
+//   name, the value refers to the corresponding global variable)
+// * `format` determines the bundle format (defaults to IIFE); cf.
+//   https://github.com/rollup/rollup/wiki/JavaScript-API#format
+// * `moduleName` determines the global variable to hold the entry point's
+//   exports (if any)
+// * `noTranspile` is a list of modules for which to skip transpilation
+//   (e.g. `["jquery"]`, perhaps due to an already optimized ES5 distribution)
+function generateConfig({ extensions, externals, format, moduleName, noTranspile }) {
+	let resolve = { jsnext: true };
+	if(extensions) {
+		resolve.extensions = [".js"].concat(extensions);
+	}
+
+	let cfg = {
+		format,
+		plugins: [
+			babel(noTranspile ? { exclude: noTranspile } : {}), // TODO: optional, configuration
+			nodeResolve(resolve),
+			commonjs({ include: "node_modules/**" }) // XXX: hard-coded
+		]
+	};
+
+	if(moduleName) {
+		cfg.moduleName = moduleName;
+	}
+
+	if(externals) { // excluded from bundle
+		cfg.external = Object.keys(externals);
+		cfg.globals = externals;
+	}
+
+	return cfg;
 }
 
 // adapted from Rollup
