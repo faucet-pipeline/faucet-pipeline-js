@@ -33,6 +33,12 @@ function start(bundles, targetDir, options) {
 }
 
 function writeBundle(entryPoint, targetDir, code) {
+	// handle potential compilation errors
+	let { error } = code;
+	if(error) {
+		code = code.code;
+	}
+
 	let ext = "." + entryPoint.split(".").pop(); // XXX: brittle; assumes regular file extension
 	let name = path.basename(entryPoint, ext);
 	let hash = generateHash(code);
@@ -41,7 +47,8 @@ function writeBundle(entryPoint, targetDir, code) {
 	let filepath = path.resolve(targetDir, filename);
 	fs.writeFile(filepath, code, err => {
 		if(!err) {
-			console.log(`✓ ${filename}`); // eslint-disable-line no-console
+			let symbol = error ? "✗" : "✓";
+			console.log(`${symbol} ${filename}`); // eslint-disable-line no-console
 			return;
 		}
 
