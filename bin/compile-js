@@ -7,9 +7,7 @@ let fs = require("fs");
 let path = require("path");
 
 // command-line arguments
-// TODO:
-// * help message
-// * optionally disable fingerprinting
+// TODO: help message, documenting options (incl. `--no-fingerprint` and `--poll`)
 let argv = parseArgs(process.argv.slice(2), {
 	alias: {
 		c: "config",
@@ -23,10 +21,22 @@ let argv = parseArgs(process.argv.slice(2), {
 
 let rootDir = process.cwd();
 let config = readConfig(path.join(rootDir, argv.config), "jsConfig");
-bundler(config.bundles, config.targetDir, {
+let options = {
 	rootDir,
-	watch: argv.watch && (argv.poll ? "poll" : true)
-});
+	watch: argv.watch && (argv.poll ? "poll" : true),
+	suppressFingerprinting: argv.fingerprint === false
+};
+
+if(options.watch) {
+	console.error(`monitoring file system at ${rootDir}`);
+
+	if(!options.suppressFingerprinting) { // for convenience
+		console.error("you might consider using `--no-fingerprint` to avoid " +
+				"littering your file system with obsolete bundles");
+	}
+}
+
+bundler(config.bundles, config.targetDir, options);
 
 // TODO: human-friendly error reporting
 function readConfig(filepath, property) {

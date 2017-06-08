@@ -21,8 +21,8 @@ module.exports = (bundles, targetDir, options) => {
 
 function start(bundles, targetDir, options) {
 	let onBundle = (entryPoint, code) => {
-		writeBundle(entryPoint, targetDir, code);
-		// TODO: remove previous bundle(s)
+		let { suppressFingerprinting } = options;
+		writeBundle(entryPoint, targetDir, code, { suppressFingerprinting });
 	};
 	let rebundle = bundler(onBundle, ...bundles);
 
@@ -33,7 +33,7 @@ function start(bundles, targetDir, options) {
 	}
 }
 
-function writeBundle(entryPoint, targetDir, code) {
+function writeBundle(entryPoint, targetDir, code, options) {
 	// handle potential compilation errors
 	let { error } = code;
 	if(error) {
@@ -42,8 +42,11 @@ function writeBundle(entryPoint, targetDir, code) {
 
 	let ext = "." + entryPoint.split(".").pop(); // XXX: brittle; assumes regular file extension
 	let name = path.basename(entryPoint, ext);
-	let hash = generateHash(code);
-	let filename = `${name}-${hash}${ext}`;
+	if(!options.suppressFingerprinting) {
+		let hash = generateHash(code);
+		name = `${name}-${hash}`;
+	}
+	let filename = `${name}${ext}`;
 
 	let filepath = path.resolve(targetDir, filename);
 	fs.writeFile(filepath, code, err => {
