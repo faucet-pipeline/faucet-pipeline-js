@@ -1,11 +1,14 @@
 "use strict";
 
-let { generateError } = require("./util");
+let { generateError, filterObject } = require("./util");
 let rollup = require("rollup");
 let fs = require("fs");
 
-let INDEX = {}; // bundle state by entry point
-let CACHES = {}; // bundles by entry point
+const DEFAULTS = {
+	format: "umd"
+};
+
+let BUNDLES = {}; // configuration and state by entry point
 
 // TODO: (cf. complate-jsx)
 // * minification support
@@ -19,8 +22,13 @@ let CACHES = {}; // bundles by entry point
 // * source maps?
 // * minification light: only stripping comments
 module.exports = (callback, ...bundles) => {
-	bundles.forEach(({ entryPoint, format }) => {
-		generateBundle(entryPoint, format, callback);
+	bundles.forEach(config => {
+		// initialize configuration/state cache
+		let { entryPoint } = config;
+		BUNDLES[entryPoint] = Object.assign({}, DEFAULTS,
+				filterObject(config, ["entryPoint"]));
+
+		generateBundle(entryPoint, callback);
 	});
 
 	return rebundler(callback);
@@ -28,36 +36,32 @@ module.exports = (callback, ...bundles) => {
 
 function rebundler(callback) {
 	return filepath => {
-		Object.keys(INDEX).forEach(entryPoint => {
-			let { format, files } = INDEX[entryPoint];
-			if(files.includes(filepath)) {
-				generateBundle(entryPoint, format, callback);
+		Object.keys(BUNDLES).forEach(entryPoint => {
+			let config = BUNDLES[entryPoint];
+			if(config._files.includes(filepath)) {
+				generateBundle(entryPoint, callback);
 			}
 		});
 	};
 }
 
-function generateBundle(entryPoint, format = "iife", callback) {
-	return rollup.rollup({ entry: entryPoint, cache: CACHES[entryPoint] }).
+function generateBundle(entryPoint, callback) {
+	let config = BUNDLES[entryPoint];
+	return rollup.rollup({ entry: entryPoint, cache: config._cache }).
 		catch(err => {
-			if(!INDEX[entryPoint]) { // first run
+			if(!config._files) { // first run
 				// ensure subsequent changes are picked up
-				INDEX[entryPoint] = { // XXX: DRY; cf. below
-					format,
-					files: [fs.realpathSync(entryPoint)]
-				};
+				config._files = [fs.realpathSync(entryPoint)];
 			}
 
 			throw err;
 		}).
 		then(bundle => {
-			CACHES[entryPoint] = bundle;
-			INDEX[entryPoint] = {
-				format,
-				files: bundle.modules.reduce(collectModulePaths, [])
-			};
+			config._files = bundle.modules.reduce(collectModulePaths, []);
+			config._cache = bundle;
 
-			return bundle.generate({ format }).code;
+			let cfg = filterObject(config, ["_files", "_cache"]);
+			return bundle.generate(cfg).code;
 		}).
 		catch(err => {
 			// also report error from within bundle, to avoid it being overlooked

@@ -16,3 +16,13 @@ exports.generateHash = str => {
 	hash.update(str);
 	return hash.digest("hex");
 };
+
+// returns a shallow copy while excluding specified properties
+exports.filterObject = (obj, excludedProps) => {
+	return Object.keys(obj).reduce((memo, key) => {
+		if(!excludedProps.includes(key)) {
+			memo[key] = obj[key];
+		}
+		return memo;
+	}, {});
+};
