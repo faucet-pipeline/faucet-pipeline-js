@@ -1,5 +1,6 @@
 "use strict";
 
+let { generateError } = require("./util");
 let rollup = require("rollup");
 let fs = require("fs");
 
@@ -46,12 +47,7 @@ function generateBundle(entryPoint, format = "iife", callback) {
 
 			return bundle.generate({ format }).code;
 		}).
-		catch(err => {
-			let msg = `ERROR: ${err.message}`;
-			console.error(msg);
-			// also report error from within bundle, to avoid confusion
-			return `alert("${msg.replace(/"/g, "\\\"")}");`;
-		}).
+		catch(generateError). // also reports error from within bundle to avoid confusion
 		then(code => void callback(entryPoint, code));
 }
 

@@ -23,11 +23,10 @@ let argv = parseArgs(process.argv.slice(2), {
 
 let rootDir = process.cwd();
 let config = readConfig(path.join(rootDir, argv.config), "jsConfig");
-let options = {
+bundler(config.bundles, config.targetDir, {
 	rootDir,
 	watch: argv.watch && (argv.poll ? "poll" : true)
-};
-bundler(config.bundles, options);
+});
 
 // TODO: human-friendly error reporting
 function readConfig(filepath, property) {

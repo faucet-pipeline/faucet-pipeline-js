@@ -1,5 +1,6 @@
 {
 	"jsConfig": {
+		"targetDir": "dist",
 		"bundles": [{
 			"entryPoint": "foo.js"
 		}, {
