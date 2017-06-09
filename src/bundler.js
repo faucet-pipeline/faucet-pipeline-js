@@ -15,7 +15,6 @@ let BUNDLES = {}; // configuration and state by entry point
 
 // TODO:
 // * minification support
-// * `includePaths`
 // * `aliases`
 // * transpiler preset (default to ES2015)
 // * source maps?
@@ -94,7 +93,7 @@ function generateConfig({ extensions, externals, format, moduleName, noTranspile
 		plugins: [
 			babel(noTranspile ? { exclude: noTranspile } : {}), // TODO: optional, configuration
 			nodeResolve(resolve),
-			commonjs({ include: "node_modules/**" }) // XXX: hard-coded
+			commonjs({ include: "node_modules/**" })
 		]
 	};
 
