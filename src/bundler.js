@@ -8,6 +8,7 @@ let nodeResolve = require("rollup-plugin-node-resolve");
 let fs = require("fs");
 
 const DEFAULTS = {
+	includePaths: ["node_modules"]
 	format: "iife"
 };
 
@@ -74,6 +75,7 @@ function generateBundle(entryPoint, callback) {
 // generates Rollup configuration
 // * `extensions` is a list of additional file extensions for loading modules
 //   (e.g. `[".jsx"]`)
+// * `includePaths`
 // * `externals` determines which modules to exclude from the bundle
 //   (e.g. `{ jquery: "jQuery" }` - the key represents the respective module
 //   name, the value refers to the corresponding global variable)
@@ -83,18 +85,25 @@ function generateBundle(entryPoint, callback) {
 //   exports (if any)
 // * `noTranspile` is a list of modules for which to skip transpilation
 //   (e.g. `["jquery"]`, perhaps due to an already optimized ES5 distribution)
-function generateConfig({ extensions, externals, format, moduleName, noTranspile }) {
+function generateConfig({ extensions, includePaths, externals, format,
+		moduleName, noTranspile }) {
 	let resolve = { jsnext: true };
 	if(extensions) {
 		resolve.extensions = [".js"].concat(extensions);
 	}
+
+	// ensure default include paths are always present -- XXX: breaks encapsulation
+	includePaths = DEFAULTS.includePaths.concat(includePaths);
+	includePaths = Array.from(new Set(includePaths));
 
 	let cfg = {
 		format,
 		plugins: [
 			babel(noTranspile ? { exclude: noTranspile } : {}), // TODO: optional, configuration
 			nodeResolve(resolve),
-			commonjs({ include: "node_modules/**" }) // XXX: hard-coded
+			commonjs({
+				include: includePaths.map(dir => `${dir.replace(/\/$/, "")}/**`)
+			})
 		]
 	};
 
