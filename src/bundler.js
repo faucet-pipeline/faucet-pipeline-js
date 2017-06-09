@@ -15,7 +15,7 @@ let BUNDLES = {}; // configuration and state by entry point
 
 // TODO:
 // * minification support
-// * `aliases`
+// * `aliases` (Rollup: `paths`?)
 // * source maps?
 // * minification light: only stripping comments
 module.exports = (callback, ...bundles) => {
@@ -44,7 +44,18 @@ function rebundler(callback) {
 
 function generateBundle(entryPoint, callback) {
 	let config = BUNDLES[entryPoint];
-	return rollup.rollup({ entry: entryPoint, cache: config._cache }).
+
+	let rollupConfig = filterObject(config, ["_files", "_cache"]);
+	rollupConfig = generateConfig(rollupConfig); // XXX: inefficient
+
+	let options = { // XXX: breaks encapsulation; move distinction into `generateConfig`
+		entry: entryPoint,
+		cache: config._cache,
+		external: rollupConfig.external,
+		paths: rollupConfig.paths,
+		plugins: rollupConfig.plugins
+	};
+	return rollup.rollup(options).
 		catch(err => {
 			if(!config._files) { // first run
 				// ensure subsequent changes are picked up
@@ -57,8 +68,7 @@ function generateBundle(entryPoint, callback) {
 			config._files = bundle.modules.reduce(collectModulePaths, []);
 			config._cache = bundle;
 
-			let cfg = filterObject(config, ["_files", "_cache"]);
-			cfg = generateConfig(cfg);
+			let cfg = filterObject(rollupConfig, Object.keys(options));
 			return bundle.generate(cfg).code;
 		}).
 		catch(err => {
