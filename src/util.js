@@ -32,13 +32,3 @@ exports.debounce = function(delay, fn) {
 		}, delay);
 	};
 };
-
-// returns a shallow copy while excluding specified properties
-exports.filterObject = (obj, excludedProps) => {
-	return Object.keys(obj).reduce((memo, key) => {
-		if(!excludedProps.includes(key)) {
-			memo[key] = obj[key];
-		}
-		return memo;
-	}, {});
-};

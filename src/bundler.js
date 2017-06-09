@@ -1,6 +1,6 @@
 "use strict";
 
-let { generateError, filterObject } = require("./util");
+let { generateError } = require("./util");
 let rollup = require("rollup");
 let babel = require("rollup-plugin-babel"); // TODO: optional
 let commonjs = require("rollup-plugin-commonjs");
@@ -22,8 +22,10 @@ module.exports = (callback, ...bundles) => {
 	bundles.forEach(config => {
 		// initialize configuration/state cache
 		let { entryPoint } = config;
-		BUNDLES[entryPoint] = Object.assign({}, DEFAULTS,
-				filterObject(config, ["entryPoint"]));
+		config = Object.assign({}, DEFAULTS, config);
+		BUNDLES[entryPoint] = {
+			rollup: generateConfig(config)
+		};
 
 		generateBundle(entryPoint, callback);
 	});
@@ -34,8 +36,8 @@ module.exports = (callback, ...bundles) => {
 function rebundler(callback) {
 	return filepath => {
 		Object.keys(BUNDLES).forEach(entryPoint => {
-			let config = BUNDLES[entryPoint];
-			if(config._files.includes(filepath)) {
+			let cache = BUNDLES[entryPoint];
+			if(cache.files.includes(filepath)) {
 				generateBundle(entryPoint, callback);
 			}
 		});
@@ -43,33 +45,27 @@ function rebundler(callback) {
 }
 
 function generateBundle(entryPoint, callback) {
-	let config = BUNDLES[entryPoint];
+	let cache = BUNDLES[entryPoint];
+	let { readConfig, writeConfig } = cache.rollup;
 
-	let rollupConfig = filterObject(config, ["_files", "_cache"]);
-	rollupConfig = generateConfig(rollupConfig); // XXX: inefficient
-
-	let options = { // XXX: breaks encapsulation; move distinction into `generateConfig`
+	let options = Object.assign({}, readConfig, {
 		entry: entryPoint,
-		cache: config._cache,
-		external: rollupConfig.external,
-		paths: rollupConfig.paths,
-		plugins: rollupConfig.plugins
-	};
+		cache: cache.bundle
+	});
 	return rollup.rollup(options).
 		catch(err => {
-			if(!config._files) { // first run
+			if(!cache.files) { // first run
 				// ensure subsequent changes are picked up
-				config._files = [fs.realpathSync(entryPoint)];
+				cache.files = [fs.realpathSync(entryPoint)];
 			}
 
 			throw err;
 		}).
 		then(bundle => {
-			config._files = bundle.modules.reduce(collectModulePaths, []);
-			config._cache = bundle;
+			cache.files = bundle.modules.reduce(collectModulePaths, []);
+			cache.bundle = bundle;
 
-			let cfg = filterObject(rollupConfig, Object.keys(options));
-			return bundle.generate(cfg).code;
+			return bundle.generate(writeConfig).code;
 		}).
 		catch(err => {
 			// also report error from within bundle, to avoid it being overlooked
@@ -120,7 +116,16 @@ function generateConfig({ extensions, externals, format, moduleName, transpiler 
 		cfg.globals = externals;
 	}
 
-	return cfg;
+	// distinguish between (roughly) read and write settings
+	let read = ["external", "paths", "plugins"];
+	return Object.keys(cfg).reduce((memo, key) => {
+		let type = read.includes(key) ? "readConfig" : "writeConfig";
+		memo[type][key] = cfg[key];
+		return memo;
+	}, {
+		readConfig: {},
+		writeConfig: {}
+	});
 }
 
 function generateTranspilerConfig({ features, jsx = {}, exclude }) {
