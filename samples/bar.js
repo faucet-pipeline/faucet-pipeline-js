@@ -1,3 +1,3 @@
 import util from "./util";
 
-console.log("[BAR]", util);
+console.log(`[BAR] ${util}`);

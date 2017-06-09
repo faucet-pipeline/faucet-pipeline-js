@@ -2,7 +2,10 @@
 	"jsConfig": {
 		"targetDir": "dist",
 		"bundles": [{
-			"entryPoint": "foo.js"
+			"entryPoint": "foo.js",
+			"transpiler": {
+				"features": ["es2015"]
+			}
 		}, {
 			"entryPoint": "bar.js"
 		}]

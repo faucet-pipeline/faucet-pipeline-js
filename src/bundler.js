@@ -16,7 +16,6 @@ let BUNDLES = {}; // configuration and state by entry point
 // TODO:
 // * minification support
 // * `aliases`
-// * transpiler preset (default to ES2015)
 // * source maps?
 // * minification light: only stripping comments
 module.exports = (callback, ...bundles) => {
@@ -80,22 +79,27 @@ function generateBundle(entryPoint, callback) {
 //   https://github.com/rollup/rollup/wiki/JavaScript-API#format
 // * `moduleName` determines the global variable to hold the entry point's
 //   exports (if any)
-// * `noTranspile` is a list of modules for which to skip transpilation
+// * `transpiler.features` determines the language features to be supported
+//   within source code (e.g. `["es2015", "jsx"]`)
+// * `transpiler.jsx` are JSX-specific options (e.g. `{ pragma: "createElement" }`)
+// * `transpiler.exclude` is a list of modules for which to skip transpilation
 //   (e.g. `["jquery"]`, perhaps due to an already optimized ES5 distribution)
-function generateConfig({ extensions, externals, format, moduleName, noTranspile }) {
+function generateConfig({ extensions, externals, format, moduleName, transpiler }) {
 	let resolve = { jsnext: true };
 	if(extensions) {
 		resolve.extensions = [".js"].concat(extensions);
 	}
 
-	let cfg = {
-		format,
-		plugins: [
-			babel(noTranspile ? { exclude: noTranspile } : {}), // TODO: optional, configuration
-			nodeResolve(resolve),
-			commonjs({ include: "node_modules/**" })
-		]
-	};
+	if(transpiler) {
+		let settings = generateTranspilerConfig(transpiler);
+		transpiler = babel(settings);
+	}
+
+	let plugins = (transpiler ? [transpiler] : []).concat([
+		nodeResolve(resolve),
+		commonjs({ include: "node_modules/**" })
+	]);
+	let cfg = { format, plugins };
 
 	if(moduleName) {
 		cfg.moduleName = moduleName;
@@ -107,6 +111,20 @@ function generateConfig({ extensions, externals, format, moduleName, noTranspile
 	}
 
 	return cfg;
+}
+
+function generateTranspilerConfig({ features, jsx = {}, exclude }) {
+	let settings = exclude ? { exclude } : {};
+
+	if(features.includes("es2015")) {
+		settings.presets = ["es2015-rollup"];
+	}
+
+	if(features.includes("jsx")) {
+		settings.plugins = ["transform-react-jsx", jsx];
+	}
+
+	return settings;
 }
 
 // adapted from Rollup
