@@ -36,7 +36,7 @@ if(options.watch) {
 	}
 }
 
-bundler(config.bundles, config.targetDir, options);
+bundler(config.bundles, config.targetDir, config.manifest, options);
 
 // TODO: human-friendly error reporting
 function readConfig(filepath, property) {

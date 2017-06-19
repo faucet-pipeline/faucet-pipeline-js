@@ -1,6 +1,10 @@
 {
 	"jsConfig": {
 		"targetDir": "dist",
+		"manifest": {
+			"file": "dist/manifest.json",
+			"baseURI": "/assets"
+		},
 		"bundles": [{
 			"entryPoint": "foo.js",
 			"transpiler": {
