@@ -2,7 +2,6 @@
 
 let { generateError } = require("./util");
 let rollup = require("rollup");
-let babel = require("rollup-plugin-babel"); // TODO: optional
 let commonjs = require("rollup-plugin-commonjs");
 let nodeResolve = require("rollup-plugin-node-resolve");
 let fs = require("fs");
@@ -97,6 +96,7 @@ function generateConfig({ extensions, externals, format, moduleName, transpiler 
 	}
 
 	if(transpiler) {
+		let babel = require("rollup-plugin-babel");
 		let settings = generateTranspilerConfig(transpiler);
 		transpiler = babel(settings);
 	}
