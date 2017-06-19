@@ -17,7 +17,7 @@ let argv = parseArgs(process.argv.slice(2), {
 let rootDir = process.cwd();
 let options = {
 	config: argv.config,
-	watch: argv.watch && (argv.poll ? "poll" : true),
+	watch: argv.watch && { poll: !!argv.poll },
 	suppressFingerprinting: argv.fingerprint === false
 };
 

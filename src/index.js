@@ -32,7 +32,7 @@ function start(bundles, targetDir, manifest, { rootDir, watch, suppressFingerpri
 	let rebundle = bundler(onBundle, ...bundles);
 
 	if(watch) {
-		watcher(rootDir, watch === "poll").
+		watcher(rootDir, watch.poll).
 			// NB: debouncing avoids redundant invocations
 			on("edit", debounce(100, rebundle)); // XXX: magic number
 	}
