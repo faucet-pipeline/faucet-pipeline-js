@@ -2,22 +2,26 @@
 
 let bundler = require("./bundler");
 let watcher = require("./watcher");
-let { generateError, generateHash, debounce } = require("./util");
+let { readConfig, generateError, generateHash, debounce } = require("./util");
 let mkdirp = require("mkdirp");
 let fs = require("fs");
 let path = require("path");
 
 let MANIFEST = {}; // maps bundles' entry point to corresponding URI
 
-module.exports = (bundles, targetDir, manifest, options) => {
-	targetDir = path.resolve(options.rootDir, targetDir);
+module.exports = (rootDir, // eslint-disable-next-line indent
+		{ config = "package.json", watch, suppressFingerprinting }) => {
+	config = readConfig(path.resolve(rootDir, config), "jsConfig");
+
+	let targetDir = path.resolve(rootDir, config.targetDir);
 	mkdirp(targetDir, err => {
 		if(err) {
 			console.error(err);
 			return;
 		}
 
-		start(bundles, targetDir, manifest, options);
+		start(config.bundles, targetDir, config.manifest,
+				{ rootDir, watch, suppressFingerprinting }); // eslint-disable-line indent
 	});
 };
 

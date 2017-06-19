@@ -3,8 +3,6 @@
 
 let bundler = require("../src");
 let parseArgs = require("minimist");
-let fs = require("fs");
-let path = require("path");
 
 // command-line arguments
 // TODO: help message, documenting options (incl. `--no-fingerprint` and `--poll`)
@@ -13,16 +11,12 @@ let argv = parseArgs(process.argv.slice(2), {
 		c: "config",
 		m: "minify",
 		w: "watch"
-	},
-	default: {
-		config: "package.json"
 	}
 });
 
 let rootDir = process.cwd();
-let config = readConfig(path.join(rootDir, argv.config), "jsConfig");
 let options = {
-	rootDir,
+	config: argv.config,
 	watch: argv.watch && (argv.poll ? "poll" : true),
 	suppressFingerprinting: argv.fingerprint === false
 };
@@ -36,11 +30,4 @@ if(options.watch) {
 	}
 }
 
-bundler(config.bundles, config.targetDir, config.manifest, options);
-
-// TODO: human-friendly error reporting
-function readConfig(filepath, property) {
-	let json = fs.readFileSync(filepath);
-	let config = JSON.parse(json);
-	return config[property];
-}
+bundler(rootDir, options);

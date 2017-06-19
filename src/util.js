@@ -1,6 +1,14 @@
 "use strict";
 
+let fs = require("fs");
 let crypto = require("crypto");
+
+// TODO: human-friendly error reporting
+exports.readConfig = (filepath, property) => {
+	let json = fs.readFileSync(filepath);
+	let config = JSON.parse(json);
+	return config[property];
+};
 
 exports.generateError = err => {
 	let msg = `ERROR: ${err}`;
