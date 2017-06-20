@@ -23,7 +23,9 @@ module.exports = (callback, ...bundles) => {
 		let { entryPoint } = config;
 		config = Object.assign({}, DEFAULTS, config);
 		BUNDLES[entryPoint] = {
-			rollup: generateConfig(config)
+			rollup: generateConfig(config),
+			bundle: null, // Rollup cache
+			files: [fs.realpathSync(entryPoint)]
 		};
 
 		generateBundle(entryPoint, callback);
@@ -36,6 +38,10 @@ function rebundler(callback) {
 	return filepath => {
 		Object.keys(BUNDLES).forEach(entryPoint => {
 			let cache = BUNDLES[entryPoint];
+			if(cache.bundle === null) { // initial compilation still in progress
+				return;
+			}
+
 			if(cache.files.includes(filepath)) {
 				generateBundle(entryPoint, callback);
 			}
@@ -52,14 +58,6 @@ function generateBundle(entryPoint, callback) {
 		cache: cache.bundle
 	});
 	return rollup.rollup(options).
-		catch(err => {
-			if(!cache.files) { // first run
-				// ensure subsequent changes are picked up
-				cache.files = [fs.realpathSync(entryPoint)];
-			}
-
-			throw err;
-		}).
 		then(bundle => {
 			cache.files = bundle.modules.reduce(collectModulePaths, []);
 			cache.bundle = bundle;
