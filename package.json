@@ -3,7 +3,9 @@
   "version": "0.8.0",
   "description": "JavaScript asset pipeline",
   "author": "FND",
-  "contributors": ["Lucas Dohmen <lucas.dohmen@innoq.com>"],
+  "contributors": [
+    "Lucas Dohmen <lucas.dohmen@innoq.com>"
+  ],
   "license": " Apache-2.0",
   "homepage": "https://github.com/faucet-pipeline/faucet-pipeline-js",
   "repository": {
@@ -15,7 +17,7 @@
   },
   "main": "src/index.js",
   "bin": {
-    "faucet-js" : "bin/faucet-js"
+    "faucet-js": "bin/faucet-js"
   },
   "scripts": {
     "test": "eslint --cache *.js src bin/* && echo ✓"

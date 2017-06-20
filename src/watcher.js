@@ -4,11 +4,8 @@ let chokidar = require("chokidar");
 let EventEmitter = require("events");
 let path = require("path");
 
-module.exports = (rootDir, poll) => {
-	let watcher = chokidar.watch(rootDir, {
-		persistent: true,
-		usePolling: poll
-	});
+module.exports = rootDir => {
+	let watcher = chokidar.watch(`${rootDir}/**`, {});
 	let emitter = new EventEmitter();
 
 	// NB: potentially invoked multiple times for a single change

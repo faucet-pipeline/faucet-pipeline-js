@@ -5,7 +5,7 @@ let bundler = require("../src");
 let parseArgs = require("minimist");
 
 // command-line arguments
-// TODO: help message, documenting options (incl. `--no-fingerprint` and `--poll`)
+// TODO: help message, documenting options (incl. `--no-fingerprint`)
 let argv = parseArgs(process.argv.slice(2), {
 	alias: {
 		c: "config",
@@ -17,7 +17,7 @@ let argv = parseArgs(process.argv.slice(2), {
 let rootDir = process.cwd();
 let options = {
 	config: argv.config,
-	watch: argv.watch && { poll: !!argv.poll },
+	watch: !!argv.watch,
 	suppressFingerprinting: argv.fingerprint === false
 };
 
