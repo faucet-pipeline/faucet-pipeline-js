@@ -122,7 +122,10 @@ function generateConfig({ extensions, externals, format, moduleName, transpiler 
 		return memo;
 	}, {
 		readConfig: {},
-		writeConfig: {}
+		writeConfig: {
+			// XXX: temporary shim; cf. http://2ality.com/2016/09/global.html
+			intro: "var global = window;"
+		}
 	});
 }
 
