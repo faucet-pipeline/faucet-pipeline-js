@@ -9,7 +9,7 @@ let path = require("path");
 
 let MANIFEST = {}; // maps bundles' entry point to corresponding URI
 
-module.exports = (rootDir, { config, watch, suppressFingerprinting }) => {
+module.exports = (rootDir, { config = "faucet.js", watch, suppressFingerprinting }) => {
 	config = require(path.resolve(rootDir, config)).js;
 
 	let targetDir = path.resolve(rootDir, config.targetDir);
