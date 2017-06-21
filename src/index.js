@@ -2,16 +2,15 @@
 
 let bundler = require("./bundler");
 let watcher = require("./watcher");
-let { readConfig, generateError, generateHash, debounce } = require("./util");
+let { generateError, generateHash, debounce } = require("./util");
 let mkdirp = require("mkdirp");
 let fs = require("fs");
 let path = require("path");
 
 let MANIFEST = {}; // maps bundles' entry point to corresponding URI
 
-module.exports = (rootDir, // eslint-disable-next-line indent
-		{ config = "package.json", watch, suppressFingerprinting }) => {
-	config = readConfig(path.resolve(rootDir, config), "jsConfig");
+module.exports = (rootDir, { config, watch, suppressFingerprinting }) => {
+	config = require(path.resolve(rootDir, config)).js;
 
 	let targetDir = path.resolve(rootDir, config.targetDir);
 	mkdirp(targetDir, err => {
