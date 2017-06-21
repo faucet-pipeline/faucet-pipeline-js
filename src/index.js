@@ -9,7 +9,8 @@ let path = require("path");
 
 let MANIFEST = {}; // maps bundles' entry point to corresponding URI
 
-module.exports = (rootDir, { config = "faucet.js", watch, suppressFingerprinting }) => {
+module.exports = (rootDir, { config = "faucet.js", // eslint-disable-next-line indent
+		watch, suppressFingerprinting, compact }) => {
 	config = require(path.resolve(rootDir, config)).js;
 
 	let targetDir = path.resolve(rootDir, config.targetDir);
@@ -19,16 +20,17 @@ module.exports = (rootDir, { config = "faucet.js", watch, suppressFingerprinting
 			return;
 		}
 
-		start(config.bundles, targetDir, config.manifest,
-				{ rootDir, watch, suppressFingerprinting }); // eslint-disable-line indent
+		start(config.bundles, targetDir, // eslint-disable-next-line indent
+				config.manifest, { rootDir, watch, suppressFingerprinting, compact });
 	});
 };
 
-function start(bundles, targetDir, manifest, { rootDir, watch, suppressFingerprinting }) {
+function start(bundles, targetDir, manifest, // eslint-disable-next-line indent
+		{ rootDir, watch, suppressFingerprinting, compact }) {
 	let onBundle = (entryPoint, code) => {
 		writeBundle(entryPoint, targetDir, code, manifest, { suppressFingerprinting });
 	};
-	let rebundle = bundler(onBundle, ...bundles);
+	let rebundle = bundler(onBundle, { compact }, ...bundles);
 
 	if(watch) {
 		watcher(rootDir).

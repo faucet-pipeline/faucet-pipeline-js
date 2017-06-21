@@ -18,7 +18,8 @@ let rootDir = process.cwd();
 let options = {
 	config: argv.config,
 	watch: !!argv.watch,
-	suppressFingerprinting: argv.fingerprint === false
+	suppressFingerprinting: argv.fingerprint === false,
+	compact: !!argv.compact
 };
 
 if(options.watch) {

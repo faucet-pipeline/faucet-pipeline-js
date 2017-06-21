@@ -17,11 +17,11 @@ let BUNDLES = {}; // configuration and state by entry point
 // * `aliases` (Rollup: `paths`?)
 // * source maps?
 // * minification light: only stripping comments
-module.exports = (callback, ...bundles) => {
+module.exports = (callback, { compact }, ...bundles) => {
 	bundles.forEach(config => {
 		// initialize configuration/state cache
 		let { entryPoint } = config;
-		config = Object.assign({}, DEFAULTS, config);
+		config = Object.assign({ compact }, DEFAULTS, config);
 		BUNDLES[entryPoint] = {
 			rollup: generateConfig(config),
 			bundle: null, // Rollup cache
@@ -80,6 +80,8 @@ function generateBundle(entryPoint, callback) {
 //   name, the value refers to the corresponding global variable)
 // * `format` determines the bundle format (defaults to IIFE); cf.
 //   https://github.com/rollup/rollup/wiki/JavaScript-API#format
+// * `compact`, if truthy, compresses the bundle's code while retaining the
+//   source code's original structure
 // * `moduleName` determines the global variable to hold the entry point's
 //   exports (if any)
 // * `transpiler.features` determines the language features to be supported
@@ -87,7 +89,8 @@ function generateBundle(entryPoint, callback) {
 // * `transpiler.jsx` are JSX-specific options (e.g. `{ pragma: "createElement" }`)
 // * `transpiler.exclude` is a list of modules for which to skip transpilation
 //   (e.g. `["jquery"]`, perhaps due to an already optimized ES5 distribution)
-function generateConfig({ extensions, externals, format, moduleName, transpiler }) {
+function generateConfig({ extensions, externals, // eslint-disable-next-line indent
+		format, compact, moduleName, transpiler }) {
 	let resolve = { jsnext: true };
 	if(extensions) {
 		resolve.extensions = [".js"].concat(extensions);
@@ -103,6 +106,10 @@ function generateConfig({ extensions, externals, format, moduleName, transpiler 
 		nodeResolve(resolve),
 		commonjs({ include: "node_modules/**" })
 	]);
+	if(compact) {
+		let cleanup = require("rollup-plugin-cleanup");
+		plugins = [cleanup].concat(plugins);
+	}
 	let cfg = { format, plugins };
 
 	if(moduleName) {
