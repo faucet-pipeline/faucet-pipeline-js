@@ -108,7 +108,7 @@ function generateConfig({ extensions, externals, // eslint-disable-next-line ind
 	]);
 	if(compact) {
 		let cleanup = require("rollup-plugin-cleanup");
-		plugins = [cleanup].concat(plugins);
+		plugins = plugins.concat(cleanup);
 	}
 	let cfg = { format, plugins };
 
