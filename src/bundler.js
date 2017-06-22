@@ -138,15 +138,22 @@ function generateConfig({ extensions, externals, // eslint-disable-next-line ind
 
 function generateTranspilerConfig({ features, jsx = {}, exclude }) {
 	let settings = exclude ? { exclude } : {};
+	let plugins = [];
 
 	if(features.includes("es2015")) {
-		settings.presets = ["es2015-rollup"];
+		settings.presets = [
+			["es2015", { modules: false }]
+		];
+		plugins.push("external-helpers");
 	}
 
 	if(features.includes("jsx")) {
-		settings.plugins = ["transform-react-jsx", jsx];
+		plugins.push(["transform-react-jsx", jsx]);
 	}
 
+	if(plugins.length) {
+		settings.plugins = plugins;
+	}
 	return settings;
 }
 

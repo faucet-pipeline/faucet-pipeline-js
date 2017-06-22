@@ -1,6 +1,6 @@
 {
   "name": "faucet-pipeline-js",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "JavaScript asset pipeline",
   "author": "FND",
   "contributors": [
@@ -31,7 +31,8 @@
     "rollup-plugin-node-resolve": "^3.0.0"
   },
   "optionalDependencies": {
-    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-cleanup": "^1.0.1"
   },
