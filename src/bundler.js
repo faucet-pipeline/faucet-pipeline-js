@@ -64,11 +64,11 @@ function generateBundle(entryPoint, callback) {
 
 			return bundle.generate(writeConfig).code;
 		}).
-		catch(err => {
-			// also report error from within bundle, to avoid it being overlooked
-			let code = generateError(err);
-			return { code, error: true };
-		}).
+		// also report error from within bundle, to avoid it being overlooked
+		catch(err => ({
+			error: true,
+			code: generateError(err)
+		})).
 		then(code => void callback(entryPoint, code));
 }
 

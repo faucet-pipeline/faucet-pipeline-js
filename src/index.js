@@ -28,7 +28,15 @@ module.exports = (rootDir, { config = "faucet.js", // eslint-disable-next-line i
 function start(bundles, targetDir, manifest, // eslint-disable-next-line indent
 		{ rootDir, watch, suppressFingerprinting, compact }) {
 	let onBundle = (entryPoint, code) => {
-		writeBundle(entryPoint, targetDir, code, manifest, { suppressFingerprinting });
+		let res = writeBundle(entryPoint, targetDir, code, manifest,
+				{ suppressFingerprinting });
+		if(!watch && code.error) {
+			res.catch(err => {
+				console.error(`ERROR: ${err}`);
+			}).then(_ => {
+				process.exit(1);
+			});
+		}
 	};
 	let rebundle = bundler(onBundle, { compact }, ...bundles);
 
@@ -54,12 +62,14 @@ function writeBundle(entryPoint, targetDir, code, manifest, { suppressFingerprin
 	}
 	let filename = `${name}${ext}`;
 
+	let res = new SimplePromise();
 	let filepath = path.resolve(targetDir, filename);
 	fs.writeFile(filepath, code, err => {
 		if(err) {
 			code = generateError(err);
 			// eslint-disable-next-line handle-callback-err
 			fs.writeFile(filepath, code, err => {});
+			res.reject(err);
 			return;
 		}
 
@@ -67,7 +77,9 @@ function writeBundle(entryPoint, targetDir, code, manifest, { suppressFingerprin
 
 		let symbol = error ? "✗" : "✓";
 		console.log(`${symbol} ${filename}`); // eslint-disable-line no-console
+		res.resolve();
 	});
+	return res;
 }
 
 function generateManifest(entryPoint, bundle, { file, baseURI = "" }) {
@@ -79,4 +91,15 @@ function generateManifest(entryPoint, bundle, { file, baseURI = "" }) {
 			console.error(`✗ ERROR: failed to create \`${filepath}\``);
 		}
 	});
+}
+
+function SimplePromise() {
+	let prom = new Promise((resolve, reject) => {
+		// expose resolving functions
+		this.resolve = resolve;
+		this.reject = reject;
+	});
+
+	this.then = prom.then.bind(prom);
+	this.catch = prom.catch.bind(prom);
 }
