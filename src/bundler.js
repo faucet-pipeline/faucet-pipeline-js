@@ -16,7 +16,6 @@ let BUNDLES = {}; // configuration and state by entry point
 // * minification support
 // * `aliases` (Rollup: `paths`?)
 // * source maps?
-// * minification light: only stripping comments
 module.exports = (callback, { compact }, ...bundles) => {
 	bundles.forEach(config => {
 		// initialize configuration/state cache
@@ -135,7 +134,7 @@ function generateConfig({ extensions = [], externals, // eslint-disable-next-lin
 		readConfig: {},
 		writeConfig: {
 			// XXX: temporary shim; cf. http://2ality.com/2016/09/global.html
-			intro: "var global = window;"
+			intro: 'if(typeof window !== "undefined") { var global = window; }'
 		}
 	});
 }
