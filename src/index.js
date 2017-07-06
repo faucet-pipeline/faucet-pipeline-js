@@ -73,7 +73,9 @@ function writeBundle(entryPoint, targetDir, code, manifest, { suppressFingerprin
 			return;
 		}
 
-		generateManifest(entryPoint, filename, manifest); // TODO: optional
+		if(manifest !== false) {
+			generateManifest(entryPoint, filename, manifest);
+		}
 
 		let symbol = error ? "✗" : "✓";
 		console.log(`${symbol} ${filename}`); // eslint-disable-line no-console
