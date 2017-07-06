@@ -28,8 +28,8 @@ module.exports = (rootDir, { config = "faucet.js", // eslint-disable-next-line i
 function start(bundles, targetDir, manifest, // eslint-disable-next-line indent
 		{ rootDir, watch, suppressFingerprinting, compact }) {
 	let onBundle = (entryPoint, code) => {
-		let res = writeBundle(entryPoint, targetDir, code, manifest,
-				{ suppressFingerprinting });
+		let res = writeBundle(entryPoint, // eslint-disable-next-line indent
+				targetDir, code, manifest, { suppressFingerprinting });
 		if(!watch && code.error) {
 			res.catch(err => {
 				console.error(`ERROR: ${err}`);

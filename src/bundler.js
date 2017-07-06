@@ -89,10 +89,14 @@ function generateBundle(entryPoint, callback) {
 // * `transpiler.jsx` are JSX-specific options (e.g. `{ pragma: "createElement" }`)
 // * `transpiler.exclude` is a list of modules for which to skip transpilation
 //   (e.g. `["jquery"]`, perhaps due to an already optimized ES5 distribution)
-function generateConfig({ extensions, externals, // eslint-disable-next-line indent
-		format, compact, moduleName, transpiler }) {
+function generateConfig({ extensions = [], externals, // eslint-disable-next-line indent
+		format, compact, moduleName, transpiler = {} }) {
 	let resolve = { jsnext: true };
-	if(extensions) {
+
+	if(transpiler.features.includes("jsx")) {
+		extensions = [".jsx"].concat(extensions);
+	}
+	if(extensions.length) {
 		resolve.extensions = [".js"].concat(extensions);
 	}
 

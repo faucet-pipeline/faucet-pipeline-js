@@ -6,8 +6,9 @@ set -x
 # XXX: hacky
 version=`grep '^  "version"' package.json | sed -e 's/^  "version": "\(.*\)".*$/\1/'`
 
-# ensure we have no unstaged changes
-git diff --exit-code --quiet # TODO: report error
+# ensure we have no unstaged changes -- TODO: report error
+git diff --exit-code --quiet
+git diff --cached --exit-code --quiet
 
 npm test
 
