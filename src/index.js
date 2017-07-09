@@ -1,8 +1,8 @@
 "use strict";
 
 let bundler = require("./bundler");
-let watcher = require("./watcher");
-let { generateError, generateHash, debounce } = require("./util");
+let watcher = require("nite-owl");
+let { generateError, generateHash } = require("./util");
 let mkdirp = require("mkdirp");
 let fs = require("fs");
 let path = require("path");
@@ -41,9 +41,9 @@ function start(bundles, targetDir, manifest, // eslint-disable-next-line indent
 	let rebundle = bundler(onBundle, { compact }, ...bundles);
 
 	if(watch) {
-		watcher(rootDir).
-			// NB: debouncing avoids redundant invocations
-			on("edit", debounce(100, rebundle)); // XXX: magic number
+		// XXX: magic number for debounce value
+		watcher(rootDir, 100).
+			on("edit", rebundle);
 	}
 }
 
