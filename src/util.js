@@ -21,19 +21,3 @@ exports.generateHash = str => {
 	hash.update(str);
 	return hash.digest("hex");
 };
-
-// adapted from uitil <https://github.com/FND/uitil>
-exports.debounce = function(delay, fn) {
-	let timer;
-	return function() {
-		let args = arguments;
-		if(timer) {
-			clearTimeout(timer);
-			timer = null;
-		}
-		timer = setTimeout(_ => {
-			fn.apply(null, args);
-			timer = null;
-		}, delay);
-	};
-};

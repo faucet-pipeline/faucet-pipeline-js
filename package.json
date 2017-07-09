@@ -23,9 +23,9 @@
     "test": "eslint --cache *.js src bin/* && echo ✓"
   },
   "dependencies": {
-    "chokidar": "^1.7.0",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "nite-owl": "^1.0.0",
     "rollup": "^0.43.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0"
