@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-let bundler = require("../src");
+let bundler = require("../lib");
 let parseArgs = require("minimist");
 
 // command-line arguments
