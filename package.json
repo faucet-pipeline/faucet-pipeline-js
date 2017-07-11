@@ -1,6 +1,6 @@
 {
   "name": "faucet-pipeline-js",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "description": "JavaScript asset pipeline",
   "author": "FND",
   "contributors": [
@@ -20,7 +20,7 @@
     "test": "eslint --cache *.js lib && echo ✓"
   },
   "dependencies": {
-    "faucet-pipeline-cli": "^0.8.0",
+    "faucet-pipeline-cli": "^0.8.1",
     "mkdirp": "^0.5.1",
     "rollup": "^0.43.0",
     "rollup-plugin-commonjs": "^8.0.2",
