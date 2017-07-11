@@ -20,7 +20,7 @@
     "test": "eslint --cache *.js lib && echo ✓"
   },
   "dependencies": {
-    "faucet-pipeline-cli": "^0.7.0",
+    "faucet-pipeline-cli": "^0.8.0",
     "mkdirp": "^0.5.1",
     "rollup": "^0.43.0",
     "rollup-plugin-commonjs": "^8.0.2",
