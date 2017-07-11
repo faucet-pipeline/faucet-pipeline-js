@@ -16,16 +16,12 @@
     "url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
   },
   "main": "lib/index.js",
-  "bin": {
-    "faucet-js": "bin/faucet-js"
-  },
   "scripts": {
-    "test": "eslint --cache *.js lib bin/* && echo ✓"
+    "test": "eslint --cache *.js lib && echo ✓"
   },
   "dependencies": {
-    "minimist": "^1.2.0",
+    "faucet-pipeline-cli": "^0.7.0",
     "mkdirp": "^0.5.1",
-    "nite-owl": "^1.0.0",
     "rollup": "^0.43.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0"
