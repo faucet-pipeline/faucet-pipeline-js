@@ -6,11 +6,13 @@ let config = {
 	},
 	bundles: [{
 		entryPoint: "foo.js",
+		target: "foo.js",
 		transpiler: {
 			features: ["es2015"]
 		}
 	}, {
-		entryPoint: "bar.js"
+		entryPoint: "bar.js",
+		target: "bar.js"
 	}]
 };
 
