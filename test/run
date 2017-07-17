@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -e
+
+root=`dirname "$0"`
+root=`realpath "$root"`
+cd "$root"
+
+faucet="require('$root/hooks.js'); require('`which faucet`');"
+
+function faucet {
+	args="$@"
+	node -e "$faucet" -- "" "$@"
+}
+
+function begin {
+	test_dir="${1:?}"
+	echo; echo `basename "$test_dir"`
+	pushd "$test_dir" > /dev/null
+}
+
+function end {
+	bundles_dir=${1:-"./dist"}
+	rm -r "$bundles_dir"
+	popd > /dev/null
+}
+
+function assert_identical {
+	actual="${1:?}"
+	expected="${2:?}"
+	# NB: `git diff` provides colorization (dependent on configuration)
+	git diff --no-index "$expected" "$actual" || \
+			fail "files \`$actual\` and \`$expected\` are not identical"
+}
+
+function assert_manifest {
+	asset_path="${1:?}"
+	uri="${2:?}"
+	manifest_path=${3:-"./dist/manifest.json"}
+
+	json="\"$asset_path\":\"$uri\""
+	grep -q "$json" "$manifest_path" || \
+			fail "manifest \`$manifest_path\` does not contain \`$json\`"
+}
+
+function fail {
+	msg="${1:?}"
+	echo; echo "FAILURE: $msg"
+	false
+}
+
+begin "./test_basic"
+	faucet --no-fingerprint
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
+begin "./test_basic" # once more with fingerprinting
+	faucet
+	assert_identical "./dist/bundle-ffb6e7a408007f33b8d4ed69cc27cc54.js" "./expected.js"
+end
+
+begin "./test_global_shim"
+	faucet --no-fingerprint
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
+begin "./test_transpilation"
+	faucet --no-fingerprint
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
+begin "./test_multi"
+	faucet --no-fingerprint
+	assert_identical "./dist/foo.js" "./expected_foo.js"
+	assert_identical "./dist/bar.js" "./expected_bar.js"
+	assert_manifest "src/foo.js" "/assets/dist/foo.js"
+	assert_manifest "src/bar.js" "/assets/dist/bar.js"
+end
+
+begin "./test_manifest"
+	faucet
+	assert_identical "./dist/manifest.json" "./expected.json"
+end
+
+begin "./test_custom_config"
+	faucet -c assets.js --no-fingerprint
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
+begin "./test_compact"
+	faucet --no-fingerprint --compact
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
+echo; echo "SUCCESS: all tests passed"
