@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "0.9.16",
+	"version": "0.10.0",
 	"description": "JavaScript asset pipeline",
 	"author": "FND",
 	"contributors": [
