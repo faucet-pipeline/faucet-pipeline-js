@@ -73,8 +73,8 @@ begin "./test_multi"
 	faucet --no-fingerprint
 	assert_identical "./dist/foo.js" "./expected_foo.js"
 	assert_identical "./dist/bar.js" "./expected_bar.js"
-	assert_manifest "src/foo.js" "/assets/dist/foo.js"
-	assert_manifest "src/bar.js" "/assets/dist/bar.js"
+	assert_manifest "dist/foo.js" "/assets/dist/foo.js"
+	assert_manifest "dist/bar.js" "/assets/dist/bar.js"
 end
 
 begin "./test_manifest"
@@ -84,8 +84,8 @@ end
 
 begin "./test_manifest_uris"
 	faucet
-	assert_manifest "src/foo.js" "/assets/foo-576c95bd367645421c34705e836c9457.js"
-	assert_manifest "src/bar.js" "/assets/bar-fb4d2ed5a6da99ac785ade3b46e192f1.js"
+	assert_manifest "dist/foo.js" "/assets/foo-576c95bd367645421c34705e836c9457.js"
+	assert_manifest "dist/bar.js" "/assets/bar-fb4d2ed5a6da99ac785ade3b46e192f1.js"
 end
 
 begin "./test_custom_config"
