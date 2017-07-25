@@ -7,4 +7,4 @@ root=`dirname "$0"`
 cd "$root"
 
 rm -r dist || true
-faucet -c assets.js --no-fingerprint -w
+faucet --no-fingerprint --watch
