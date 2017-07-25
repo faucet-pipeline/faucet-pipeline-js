@@ -1,15 +1,14 @@
 let config = {
-	targetDir: "dist",
 	manifest: {
 		file: "dist/manifest.json",
 		baseURI: "/assets"
 	},
 	bundles: [{
 		entryPoint: "src/foo.js",
-		target: "foo.js"
+		target: "dist/foo.js"
 	}, {
 		entryPoint: "src/bar.js",
-		target: "bar.js",
+		target: "dist/bar.js",
 		transpiler: {
 			features: ["es2015"]
 		}

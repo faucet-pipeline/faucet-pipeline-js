@@ -1,9 +1,8 @@
 let config = {
-	targetDir: "dist",
 	manifest: false,
 	bundles: [{
 		entryPoint: "index.js",
-		target: "bundle.js"
+		target: "dist/bundle.js"
 	}]
 };
 
