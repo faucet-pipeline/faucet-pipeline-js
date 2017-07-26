@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "0.12.0",
+	"version": "0.12.1",
 	"description": "JavaScript asset pipeline",
 	"author": "FND",
 	"contributors": [
@@ -36,10 +36,10 @@
 		"rollup-plugin-cleanup": "^1.0.1"
 	},
 	"devDependencies": {
-		"eslint": "^4.2.0",
+		"eslint": "^4.3.0",
 		"eslint-config-fnd": "^1.1.1",
-		"node-hook": "^0.6.1",
+		"node-hook": "^1.0.0",
 		"npm-run-all": "^4.0.2",
-		"release-util-fnd": "^1.0.0"
+		"release-util-fnd": "^1.0.2"
 	}
 }
