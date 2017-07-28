@@ -1,3 +1,5 @@
+"use strict";
+
 let config = {
 	manifest: {
 		file: "dist/manifest.json",
