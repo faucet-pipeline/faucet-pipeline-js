@@ -21,6 +21,9 @@
 		"test": "./test/run",
 		"lint": "eslint --cache *.js lib && echo ✓"
 	},
+	"engines": {
+		"node": ">=6"
+	},
 	"dependencies": {
 		"faucet-pipeline": "^0.11.0",
 		"faucet-pipeline-util": "^0.10.3",
