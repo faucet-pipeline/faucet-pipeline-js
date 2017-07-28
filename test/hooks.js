@@ -1,4 +1,5 @@
 // monkey-patches faucet-pipeline to `require` local repository as faucet-pipeline-js
+"use strict";
 
 let hook = require("node-hook");
 let path = require("path");
