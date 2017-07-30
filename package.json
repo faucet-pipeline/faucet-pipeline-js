@@ -39,7 +39,6 @@
 		"rollup-plugin-cleanup": "^1.0.1"
 	},
 	"devDependencies": {
-		"eslint": "^4.3.0",
 		"eslint-config-fnd": "^1.1.1",
 		"node-hook": "^1.0.0",
 		"npm-run-all": "^4.0.2",
