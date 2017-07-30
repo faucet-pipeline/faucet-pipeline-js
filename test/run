@@ -3,15 +3,8 @@
 set -e
 
 root=`dirname "$0"`
-root=`realpath "$root"`
-cd "$root"
-
-faucet="require('$root/hooks.js'); require('`which faucet`');"
-
-function faucet {
-	args="$@"
-	node -e "$faucet" -- "" "$@"
-}
+root=`realpath "$root/.."`
+. "$root/test/local.sh"
 
 function begin {
 	test_dir="${1:?}"
@@ -48,6 +41,8 @@ function fail {
 	echo; echo "FAILURE: $msg"
 	false
 }
+
+cd "$root/test"
 
 begin "./test_basic"
 	faucet --no-fingerprint
