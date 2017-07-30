@@ -4,14 +4,11 @@ let config = {
 		baseURI: "/assets"
 	},
 	bundles: [{
-		entryPoint: "foo.js",
-		target: "dist/foo.js",
+		entryPoint: "index.js",
+		target: "dist/bundle.js",
 		transpiler: {
 			features: ["es2015"]
 		}
-	}, {
-		entryPoint: "bar.js",
-		target: "dist/bar.js"
 	}]
 };
 
