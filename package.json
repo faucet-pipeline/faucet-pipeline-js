@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "0.14.0",
+	"version": "0.14.1",
 	"description": "JavaScript asset pipeline",
 	"author": "FND",
 	"contributors": [
@@ -25,23 +25,24 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"faucet-pipeline": "^0.11.0",
+		"babel-core": "^6.25",
+		"faucet-pipeline": "^0.11.1",
 		"faucet-pipeline-util": "^0.10.3",
 		"mkdirp": "^0.5.1",
-		"rollup": "^0.45.2",
-		"rollup-plugin-commonjs": "^8.0.2",
+		"rollup": "^0.46.0",
+		"rollup-plugin-commonjs": "^8.1.0",
 		"rollup-plugin-node-resolve": "^3.0.0"
 	},
 	"optionalDependencies": {
 		"babel-plugin-external-helpers": "^6.22.0",
 		"babel-preset-es2015": "^6.24.1",
-		"rollup-plugin-babel": "^2.7.1",
+		"rollup-plugin-babel": "^3.0.1",
 		"rollup-plugin-cleanup": "^1.0.1"
 	},
 	"devDependencies": {
-		"eslint-config-fnd": "^1.1.1",
+		"eslint-config-fnd": "^1.2.0",
 		"node-hook": "^1.0.0",
 		"npm-run-all": "^4.0.2",
-		"release-util-fnd": "^1.0.2"
+		"release-util-fnd": "^1.0.4"
 	}
 }
