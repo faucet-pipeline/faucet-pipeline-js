@@ -4,7 +4,7 @@
 let hook = require("node-hook");
 let path = require("path");
 
-let faucetJS = path.resolve(__dirname, "..");
+let faucetJS = path.resolve(__dirname, "../..");
 
 hook.hook(".js", (src, name) => {
 	if(/\/faucet-pipeline\/index.js$/.test(name)) {

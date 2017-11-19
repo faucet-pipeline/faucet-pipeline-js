@@ -3,7 +3,7 @@ if [ -z "$root" ]; then
 	exit 1
 fi
 
-faucet="require('$root/test/hooks.js'); require('$root/node_modules/.bin/faucet');"
+faucet="require('$root/test/cli/hooks.js'); require('$root/node_modules/.bin/faucet');"
 
 function faucet {
 	args="$@"
