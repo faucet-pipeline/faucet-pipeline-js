@@ -26,7 +26,7 @@
 	},
 	"dependencies": {
 		"babel-core": "^6.26",
-		"faucet-pipeline": "^0.13.0",
+		"faucet-pipeline": "^0.14.0",
 		"faucet-pipeline-util": "^0.10.3",
 		"mkdirp": "^0.5.1",
 		"rollup": "^0.51.5",
