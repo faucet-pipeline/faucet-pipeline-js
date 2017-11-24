@@ -3,3 +3,6 @@
 
 [faucet-pipeline](http://www.faucet-pipeline.org) plugin for bundling and
 transpiling JavaScript
+
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/faucet-pipeline/faucet-pipeline-js.svg)](https://greenkeeper.io/)
