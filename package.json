@@ -17,11 +17,10 @@
 	},
 	"main": "lib/index.js",
 	"scripts": {
-		"start": "npm-run-all --parallel lint test",
-		"test": "npm-run-all --parallel test-cli test-unit",
-		"test-cli": "./test/cli/run",
-		"test-unit": "mocha test/unit/test_*.js",
-		"lint": "eslint --cache *.js lib && echo ✓"
+		"test": "npm-run-all --parallel lint test:unit test:cli",
+		"test:cli": "./test/cli/run",
+		"test:unit": "mocha test/unit/test_*.js",
+		"lint": "eslint --cache *.js lib test/unit && echo ✓"
 	},
 	"engines": {
 		"node": ">=6"
