@@ -1,14 +1,10 @@
 /* global describe, it */
 "use strict";
 
-let { MockAssetManager } = require("./util");
+let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
 let faucetJS = require("../../lib");
 let path = require("path");
 let assert = require("assert");
-
-let assertSame = assert.strictEqual;
-
-const FIXTURES_DIR = path.resolve(__dirname, "fixtures");
 
 describe("bundling", _ => {
 	it("should combine ES6 modules into a bundle", () => {
@@ -20,7 +16,7 @@ describe("bundling", _ => {
 
 		return faucetJS(config, assman).
 			then(_ => {
-				assertWrites(assman.writes, [{
+				assman.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -43,7 +39,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 
 		return faucetJS(config, assman).
 			then(_ => {
-				assertWrites(assman.writes, [{
+				assman.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -77,7 +73,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 
 		return compile(entryPoint, target).
 			then(_ => {
-				assertWrites(assman.writes, [{
+				assman.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "DUMMY-UTIL";
@@ -94,27 +90,3 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 			});
 	});
 });
-
-function makeBundle(js) {
-	return `
-(function () {
-'use strict';
-
-if(typeof global === "undefined" && typeof window !== "undefined") {
-	window.global = window;
-}
-
-${js}
-
-}());
-	`.trim() + "\n";
-}
-
-function assertWrites(actual, expected) {
-	assertSame(actual.length, expected.length);
-	actual.forEach((op, i) => {
-		let { filepath, content } = expected[i];
-		assertSame(op.filepath, filepath);
-		assertSame(op.content, content);
-	});
-}
