@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, afterEach, it */
 "use strict";
 
 let { MockAssetManager, makeBundle, awaitInvocations, FIXTURES_DIR } = require("./util");
@@ -8,50 +8,58 @@ let fs = require("fs");
 let path = require("path");
 
 describe("watcher", () => {
-	it("responds to files changes in watch mode", done => {
-		let filepath = "./src/index.js";
-		let fullpath = path.resolve(FIXTURES_DIR, filepath);
-		let source = fs.readFileSync(fullpath, "utf8");
+	let entryPoint = { relative: "./src/index.js" };
+	entryPoint.absolute = path.resolve(FIXTURES_DIR, entryPoint.relative);
+	let source = fs.readFileSync(entryPoint.absolute, "utf8");
+	let watcher;
 
+	afterEach(() => {
+		fs.writeFileSync(entryPoint.absolute, source); // restore original
+		watcher.terminate();
+	});
+
+	it("responds to files changes in watch mode", done => {
 		let config = [{
-			entryPoint: filepath,
+			entryPoint: entryPoint.relative,
 			target: "./dist/bundle.js"
 		}];
-		let watcher = niteOwl([FIXTURES_DIR]); // FIXME: prevents process termination
+		watcher = niteOwl([FIXTURES_DIR]);
 		let assman = new MockAssetManager(FIXTURES_DIR);
+		let conclude = awaitInvocations(2, _ => {
+			done();
+		});
+
+		let bundlePath = path.resolve(FIXTURES_DIR, "./dist/bundle.js");
 		let code = `
 var util = "UTIL";
 
 console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		`.trim();
-		let conclude = awaitInvocations(2, _ => {
-			fs.writeFileSync(fullpath, source); // restore original
-			done();
-		});
+		let expectedBundles = [{
+			filepath: bundlePath,
+			content: makeBundle(code)
+		}, {
+			filepath: bundlePath,
+			content: makeBundle(code + '\nconsole.log("…");')
+		}];
 
 		faucetJS(config, assman, { watcher }). // triggers initial compilation
 			then(_ => {
-				assman.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(code)
-				}]);
+				assman.assertWrites(expectedBundles.slice(0, 1));
 
 				conclude();
 			});
 
-		// simulate source edit
+		// edit source module
 		// NB: delay assumes that initial compilation has not yet completed
 		setTimeout(_ => {
-			fs.writeFileSync(fullpath, source + '\nconsole.log("…");');
-		}, 10);
+			fs.writeFileSync(entryPoint.absolute, source + 'console.log("…");');
+		}, 50);
 		// check result
-		setTimeout(_ => {
-			assman.assertWrites([{
-				filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-				content: makeBundle(code + '\nconsole.log("…");')
-			}]);
+		setTimeout(_ => { // FIXME: hacky
+			assman.assertWrites(expectedBundles);
 
 			conclude();
-		}, 1000); // FIXME: hacky
+		}, 500);
 	});
 });

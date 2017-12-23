@@ -27,8 +27,7 @@
 	},
 	"dependencies": {
 		"babel-core": "^6.26",
-		"faucet-pipeline": "^0.14.0",
-		"faucet-pipeline-util": "^0.10.3",
+		"faucet-pipeline": "^0.15.0",
 		"mkdirp": "^0.5.1",
 		"rollup": "^0.53.0",
 		"rollup-plugin-commonjs": "^8.2.6",
