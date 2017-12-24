@@ -50,6 +50,56 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 			});
 	});
 
+	it("should optionally compact bundle", () => {
+		let config = [{
+			entryPoint: "./src/index.js",
+			target: "./dist/bundle.js"
+		}];
+		let assman = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assman, { compact: true }).
+			then(_ => {
+				assman.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log(\`[…] $\{util}\`);
+					`.trim())
+				}]);
+
+				config[0].transpiler = {
+					features: ["es2015"]
+				};
+				assman = new MockAssetManager(FIXTURES_DIR);
+				return faucetJS(config, assman, { compact: true });
+			}).
+			then(_ => {
+				assman.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log("[\\u2026] " + util);
+					`.trim())
+				}]);
+
+				config[0].compact = false; // overrides global option
+				assman = new MockAssetManager(FIXTURES_DIR);
+				return faucetJS(config, assman, { compact: true });
+			}).
+			then(_ => {
+				assman.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log("[\\u2026] " + util); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
 	it("should balk at non-relative paths in config", () => {
 		let assman = new MockAssetManager(FIXTURES_DIR);
 		let entryPoint = "src/index.js";
