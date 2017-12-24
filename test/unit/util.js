@@ -14,8 +14,8 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 		this._writes = [];
 	}
 
-	writeFile(filepath, content) {
-		this._writes.push({ filepath, content });
+	writeFile(filepath, data, error) {
+		this._writes.push({ filepath, content: data });
 		return new Promise(resolve => {
 			setTimeout(_ => resolve(), 1);
 		});
