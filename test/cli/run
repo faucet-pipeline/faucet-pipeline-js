@@ -3,8 +3,8 @@
 set -e
 
 root=`dirname "$0"`
-root=`realpath "$root/.."`
-. "$root/test/local.sh"
+root=`realpath "$root/../.."`
+. "$root/test/cli/local.sh"
 
 function begin {
 	test_dir="${1:?}"
@@ -42,7 +42,7 @@ function fail {
 	false
 }
 
-cd "$root/test"
+cd "$root/test/cli"
 
 begin "./test_basic"
 	faucet --no-fingerprint
