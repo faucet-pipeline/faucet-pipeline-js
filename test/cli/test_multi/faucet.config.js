@@ -4,10 +4,10 @@ let path = require("path");
 
 module.exports = {
 	js: [{
-		entryPoint: "./src/foo.js",
+		source: "./src/foo.js",
 		target: "./dist/foo.js"
 	}, {
-		entryPoint: "./src/bar.js",
+		source: "./src/bar.js",
 		target: "./dist/bar.js",
 		transpiler: {
 			features: ["es2015"]

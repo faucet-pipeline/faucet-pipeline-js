@@ -4,7 +4,7 @@ let path = require("path");
 
 module.exports = {
 	js: [{
-		entryPoint: "./index.js",
+		source: "./index.js",
 		target: "./dist/bundle.js"
 	}],
 	manifest: {

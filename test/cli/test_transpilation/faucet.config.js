@@ -4,7 +4,7 @@ let path = require("path");
 
 module.exports = {
 	js: [{
-		entryPoint: "./src/index.js",
+		source: "./src/index.js",
 		target: "./dist/bundle.js",
 		transpiler: {
 			features: ["es2015"]

@@ -10,17 +10,17 @@ let path = require("path");
 describe("watcher", () => {
 	let entryPoint = { relative: "./src/index.js" };
 	entryPoint.absolute = path.resolve(FIXTURES_DIR, entryPoint.relative);
-	let source = fs.readFileSync(entryPoint.absolute, "utf8");
+	let src = fs.readFileSync(entryPoint.absolute, "utf8");
 	let watcher;
 
 	afterEach(() => {
-		fs.writeFileSync(entryPoint.absolute, source); // restore original
+		fs.writeFileSync(entryPoint.absolute, src); // restore original
 		watcher.terminate();
 	});
 
 	it("responds to file changes in watch mode", done => {
 		let config = [{
-			entryPoint: entryPoint.relative,
+			source: entryPoint.relative,
 			target: "./dist/bundle.js"
 		}];
 		watcher = niteOwl(FIXTURES_DIR, { suppressReporting: true });
@@ -53,7 +53,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		// edit source module
 		// NB: delay assumes that initial compilation has not yet completed
 		setTimeout(_ => {
-			fs.writeFileSync(entryPoint.absolute, source + 'console.log("…");');
+			fs.writeFileSync(entryPoint.absolute, src + 'console.log("…");');
 		}, 50);
 		// check result
 		setTimeout(_ => { // FIXME: hacky

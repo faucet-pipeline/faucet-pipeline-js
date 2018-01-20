@@ -9,7 +9,7 @@ let assert = require("assert");
 describe("bundling", _ => {
 	it("should combine ES6 modules into a bundle", () => {
 		let config = [{
-			entryPoint: "./src/index.js",
+			source: "./src/index.js",
 			target: "./dist/bundle.js"
 		}];
 		let manager = new MockAssetManager(FIXTURES_DIR);
@@ -29,7 +29,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 
 	it("should optionally transpile ES6 to ES5", () => {
 		let config = [{
-			entryPoint: "./src/index.js",
+			source: "./src/index.js",
 			target: "./dist/bundle.js",
 			transpiler: {
 				features: ["es2015"]
@@ -52,7 +52,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 
 	it("should optionally compact bundle", () => {
 		let config = [{
-			entryPoint: "./src/index.js",
+			source: "./src/index.js",
 			target: "./dist/bundle.js"
 		}];
 		let manager = new MockAssetManager(FIXTURES_DIR);
@@ -104,7 +104,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		let manager = new MockAssetManager(FIXTURES_DIR);
 		let entryPoint = "src/index.js";
 		let target = "dist/bundle.js";
-		let compile = (entryPoint, target) => faucetJS([{ entryPoint, target }], manager);
+		let compile = (source, target) => faucetJS([{ source, target }], manager);
 
 		let fn = _ => compile(entryPoint, target);
 		assert.throws(fn, /path must be relative/);
@@ -120,7 +120,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		let entryPoint = "dummy/src/index.js";
 		let target = "./dist/bundle.js";
 		let manager = new MockAssetManager(FIXTURES_DIR);
-		let compile = (entryPoint, target) => faucetJS([{ entryPoint, target }], manager);
+		let compile = (source, target) => faucetJS([{ source, target }], manager);
 
 		return compile(entryPoint, target).
 			then(_ => {
