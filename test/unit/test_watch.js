@@ -18,13 +18,13 @@ describe("watcher", () => {
 		watcher.terminate();
 	});
 
-	it("responds to files changes in watch mode", done => {
+	it("responds to file changes in watch mode", done => {
 		let config = [{
 			entryPoint: entryPoint.relative,
 			target: "./dist/bundle.js"
 		}];
-		watcher = niteOwl([FIXTURES_DIR]);
-		let assman = new MockAssetManager(FIXTURES_DIR);
+		watcher = niteOwl(FIXTURES_DIR, { suppressReporting: true });
+		let manager = new MockAssetManager(FIXTURES_DIR);
 		let conclude = awaitInvocations(2, _ => {
 			done();
 		});
@@ -43,9 +43,9 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 			content: makeBundle(code + '\nconsole.log("…");')
 		}];
 
-		faucetJS(config, assman, { watcher }). // triggers initial compilation
+		faucetJS(config, manager, { watcher }). // triggers initial compilation
 			then(_ => {
-				assman.assertWrites(expectedBundles.slice(0, 1));
+				manager.assertWrites(expectedBundles.slice(0, 1));
 
 				conclude();
 			});
@@ -57,7 +57,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		}, 50);
 		// check result
 		setTimeout(_ => { // FIXME: hacky
-			assman.assertWrites(expectedBundles);
+			manager.assertWrites(expectedBundles);
 
 			conclude();
 		}, 500);

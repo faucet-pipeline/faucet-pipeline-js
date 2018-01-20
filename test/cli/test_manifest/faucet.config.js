@@ -1,16 +1,17 @@
 "use strict";
 
-let config = {
-	manifest: {
-		file: "dist/manifest.json",
-		baseURI: "/assets"
-	},
-	bundles: [{
-		entryPoint: "index.js",
-		target: "dist/bundle.js"
-	}]
-};
+let path = require("path");
 
 module.exports = {
-	js: config
+	js: [{
+		entryPoint: "./index.js",
+		target: "./dist/bundle.js"
+	}],
+	manifest: {
+		file: "./dist/manifest.json",
+		value: filepath => `/assets/${filepath}`
+	},
+	plugins: {
+		js: path.resolve(__dirname, "../../..")
+	}
 };

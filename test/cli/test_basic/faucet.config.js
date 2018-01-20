@@ -1,13 +1,13 @@
 "use strict";
 
-let config = {
-	manifest: false,
-	bundles: [{
-		entryPoint: "src/index.js",
-		target: "dist/bundle.js"
-	}]
-};
+let path = require("path");
 
 module.exports = {
-	js: config
+	js: [{
+		entryPoint: "./src/index.js",
+		target: "./dist/bundle.js"
+	}],
+	plugins: {
+		js: path.resolve(__dirname, "../../..")
+	}
 };

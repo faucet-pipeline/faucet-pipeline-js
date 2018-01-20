@@ -1,7 +1,6 @@
 module.exports = {
 	manifest: {
-		file: "./dist/manifest.json",
-		baseURI: "/assets"
+		file: "./dist/manifest.json"
 	},
 	js: [{
 		entryPoint: "./index.js",
