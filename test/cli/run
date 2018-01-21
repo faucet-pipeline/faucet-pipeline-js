@@ -1,93 +1,55 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 root=`dirname "$0"`
 root=`realpath "$root"`
 
-function begin {
-	test_dir="${1:?}"
-	echo; echo `basename "$test_dir"`
-	pushd "$test_dir" > /dev/null
-}
+. "$root/../../node_modules/faucet-pipeline/test/cli_harness.sh"
 
-function end {
-	bundles_dir=${1:-"./dist"}
-	rm -r "$bundles_dir"
-	popd > /dev/null
-}
-
-function assert_identical {
-	actual="${1:?}"
-	expected="${2:?}"
-	# NB: `git diff` provides colorization (dependent on configuration)
-	git diff --no-index "$expected" "$actual" || \
-			fail "files \`$actual\` and \`$expected\` are not identical"
-}
-
-function assert_manifest {
-	asset_path="${1:?}"
-	uri="${2:?}"
-	manifest_path=${3:-"./dist/manifest.json"}
-
-	json="\"$asset_path\":\"$uri\""
-	grep -q "$json" "$manifest_path" || \
-			fail "manifest \`$manifest_path\` does not contain \`$json\`"
-}
-
-function fail {
-	msg="${1:?}"
-	echo; echo "FAILURE: $msg"
-	false
-}
-
-cd "$root"
-
-begin "./test_basic"
+begin "$root/test_basic"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
 
-begin "./test_basic" # once more with fingerprinting
+begin "$root/test_basic" # once more with fingerprinting
 	faucet --fingerprint
 	assert_identical "./dist/bundle-b555fd611fda4652d2ed16fd54eff811.js" "./expected.js"
 end
 
-begin "./test_global_shim"
+begin "$root/test_global_shim"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
 
-begin "./test_transpilation"
+begin "$root/test_transpilation"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
 
-begin "./test_multi"
+begin "$root/test_multi"
 	faucet
 	assert_identical "./dist/foo.js" "./expected_foo.js"
 	assert_identical "./dist/bar.js" "./expected_bar.js"
-	assert_manifest "dist/foo.js" "/assets/dist/foo.js"
-	assert_manifest "dist/bar.js" "/assets/dist/bar.js"
+	assert_json "./dist/manifest.json" "./expected.json"
 end
 
-begin "./test_manifest"
+begin "$root/test_manifest"
 	faucet --fingerprint
 	assert_identical "./dist/manifest.json" "./expected.json"
 end
 
-begin "./test_manifest_uris"
+begin "$root/test_manifest_uris"
 	faucet --fingerprint
-	assert_manifest "dist/foo.js" "/assets/foo-dfb74164ef6f2295d3956debd0955e1f.js"
-	assert_manifest "dist/bar.js" "/assets/bar-08dfd03817b166a265ae58a19c21a669.js"
+	assert_json "./dist/manifest.json" "./expected.json"
 end
 
-begin "./test_custom_config"
+begin "$root/test_custom_config"
 	faucet -c assets.js
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
 
-begin "./test_compact"
+begin "$root/test_compact"
 	faucet --compact
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
