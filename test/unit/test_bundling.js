@@ -12,11 +12,11 @@ describe("bundling", _ => {
 			source: "./src/index.js",
 			target: "./dist/bundle.js"
 		}];
-		let manager = new MockAssetManager(FIXTURES_DIR);
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, manager).
+		return faucetJS(config, assetManager).
 			then(_ => {
-				manager.assertWrites([{
+				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -35,11 +35,11 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 				features: ["es2015"]
 			}
 		}];
-		let manager = new MockAssetManager(FIXTURES_DIR);
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, manager).
+		return faucetJS(config, assetManager).
 			then(_ => {
-				manager.assertWrites([{
+				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -55,11 +55,11 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 			source: "./src/index.js",
 			target: "./dist/bundle.js"
 		}];
-		let manager = new MockAssetManager(FIXTURES_DIR);
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, manager, { compact: true }).
+		return faucetJS(config, assetManager, { compact: true }).
 			then(_ => {
-				manager.assertWrites([{
+				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -71,11 +71,11 @@ console.log(\`[…] $\{util}\`);
 				config[0].transpiler = {
 					features: ["es2015"]
 				};
-				manager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, manager, { compact: true });
+				assetManager = new MockAssetManager(FIXTURES_DIR);
+				return faucetJS(config, assetManager, { compact: true });
 			}).
 			then(_ => {
-				manager.assertWrites([{
+				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -85,11 +85,11 @@ console.log("[\\u2026] " + util);
 				}]);
 
 				config[0].compact = false; // overrides global option
-				manager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, manager, { compact: true });
+				assetManager = new MockAssetManager(FIXTURES_DIR);
+				return faucetJS(config, assetManager, { compact: true });
 			}).
 			then(_ => {
-				manager.assertWrites([{
+				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "UTIL";
@@ -101,10 +101,10 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 	});
 
 	it("should balk at non-relative paths in config", () => {
-		let manager = new MockAssetManager(FIXTURES_DIR);
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let entryPoint = "src/index.js";
 		let target = "dist/bundle.js";
-		let compile = (source, target) => faucetJS([{ source, target }], manager);
+		let compile = (source, target) => faucetJS([{ source, target }], assetManager);
 
 		let fn = _ => compile(entryPoint, target);
 		assert.throws(fn, /path must be relative/);
@@ -119,12 +119,12 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 	it.skip("should support Node resolution algorithm for entry point", () => {
 		let entryPoint = "dummy/src/index.js";
 		let target = "./dist/bundle.js";
-		let manager = new MockAssetManager(FIXTURES_DIR);
-		let compile = (source, target) => faucetJS([{ source, target }], manager);
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+		let compile = (source, target) => faucetJS([{ source, target }], assetManager);
 
 		return compile(entryPoint, target).
 			then(_ => {
-				manager.assertWrites([{
+				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var util = "DUMMY-UTIL";

@@ -24,7 +24,7 @@ describe("watcher", () => {
 			target: "./dist/bundle.js"
 		}];
 		watcher = niteOwl(FIXTURES_DIR, { suppressReporting: true });
-		let manager = new MockAssetManager(FIXTURES_DIR);
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let conclude = awaitInvocations(2, _ => {
 			done();
 		});
@@ -43,9 +43,9 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 			content: makeBundle(code + '\nconsole.log("…");')
 		}];
 
-		faucetJS(config, manager, { watcher }). // triggers initial compilation
+		faucetJS(config, assetManager, { watcher }). // triggers initial compilation
 			then(_ => {
-				manager.assertWrites(expectedBundles.slice(0, 1));
+				assetManager.assertWrites(expectedBundles.slice(0, 1));
 
 				conclude();
 			});
@@ -57,7 +57,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		}, 50);
 		// check result
 		setTimeout(_ => { // FIXME: hacky
-			manager.assertWrites(expectedBundles);
+			assetManager.assertWrites(expectedBundles);
 
 			conclude();
 		}, 500);
