@@ -1,17 +1,12 @@
-let config = {
+module.exports = {
 	manifest: {
-		file: "dist/manifest.json",
-		baseURI: "/assets"
+		file: "./dist/manifest.json"
 	},
-	bundles: [{
-		entryPoint: "index.js",
-		target: "dist/bundle.js",
+	js: [{
+		source: "./index.js",
+		target: "./dist/bundle.js",
 		transpiler: {
 			features: ["es2015"]
 		}
 	}]
-};
-
-module.exports = {
-	js: config
 };

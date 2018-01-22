@@ -1,0 +1,4 @@
+{
+	"dist/foo.js":"/assets/dist/foo.js",
+	"dist/bar.js":"/assets/dist/bar.js"
+}

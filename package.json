@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "0.15.7",
+	"version": "1.0.0-beta.0",
 	"description": "JavaScript asset pipeline",
 	"author": "FND",
 	"contributors": [
@@ -17,19 +17,19 @@
 	},
 	"main": "lib/index.js",
 	"scripts": {
-		"start": "npm-run-all --parallel lint test",
-		"test": "./test/run",
-		"lint": "eslint --cache *.js lib && echo ✓"
+		"test": "npm-run-all --parallel lint test:unit test:cli",
+		"test:cli": "./test/cli/run",
+		"test:unit": "mocha test/unit/test_*.js",
+		"lint": "eslint --cache *.js lib test/unit && echo ✓"
 	},
 	"engines": {
 		"node": ">=6"
 	},
 	"dependencies": {
 		"babel-core": "^6.26",
-		"faucet-pipeline": "^0.14.0",
-		"faucet-pipeline-util": "^0.10.3",
+		"faucet-pipeline": "1.0.0-beta.0",
 		"mkdirp": "^0.5.1",
-		"rollup": "^0.54.0",
+		"rollup": "^0.54.1",
 		"rollup-plugin-commonjs": "^8.2.6",
 		"rollup-plugin-node-resolve": "^3.0.2"
 	},
@@ -41,7 +41,8 @@
 	},
 	"devDependencies": {
 		"eslint-config-fnd": "^1.2.0",
-		"node-hook": "^1.0.0",
+		"json-diff": "^0.5.2",
+		"mocha": "^5.0.0",
 		"npm-run-all": "^4.1.2",
 		"release-util-fnd": "^1.0.7"
 	}
