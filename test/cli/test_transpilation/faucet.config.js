@@ -7,7 +7,7 @@ module.exports = {
 		source: "./src/index.js",
 		target: "./dist/bundle.js",
 		transpiler: {
-			features: ["es2015"]
+			features: ["esnext"]
 		}
 	}],
 	plugins: {

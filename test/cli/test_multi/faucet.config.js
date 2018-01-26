@@ -10,7 +10,7 @@ module.exports = {
 		source: "./src/bar.js",
 		target: "./dist/bar.js",
 		transpiler: {
-			features: ["es2015"]
+			features: ["esnext"]
 		}
 	}],
 	manifest: {
