@@ -227,6 +227,29 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			});
 	});
 
+	it("should take into account Browserslist while transpiling", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js",
+			transpiler: {
+				features: ["esnext"]
+			}
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager, { browsers: ["Chrome 63"] }).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
 	it("should optionally compact bundle", () => {
 		let config = [{
 			source: "./src/index.js",
