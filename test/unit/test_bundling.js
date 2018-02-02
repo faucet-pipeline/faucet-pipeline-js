@@ -115,8 +115,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		return compile(`./${entryPoint}`, `./${target}`);
 	});
 
-	// NB: disabled while we're migrating old-style configurations
-	it.skip("should support Node resolution algorithm for entry point", () => {
+	it("should support Node resolution algorithm for entry point", () => {
 		let entryPoint = "dummy/src/index.js";
 		let target = "./dist/bundle.js";
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
