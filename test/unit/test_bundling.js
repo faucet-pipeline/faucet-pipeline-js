@@ -50,6 +50,135 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 			});
 	});
 
+	it("should support custom file extensions", () => {
+		let config = [{
+			source: "./src/index.coffee",
+			target: "./dist/bundle.js",
+			extensions: [".coffee"]
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var helper = { foo: "lorem", bar: "ipsum" };
+
+console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
+	it("should support customizing bundle's API", () => {
+		let config = [{
+			source: "./src/lib.js",
+			target: "./dist/bundle.js",
+			moduleName: "MYLIB"
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: "var MYLIB = " + makeBundle(`
+var util = "UTIL";
+
+var lib = msg => {
+	console.log(\`[…] $\{util} $\{msg}\`); // eslint-disable-line no-console
+};
+
+return lib;
+					`.trim())
+				}]);
+			});
+	});
+
+	it("should support customizing bundle format", () => {
+		let config = [{
+			source: "./src/lib.js",
+			target: "./dist/bundle.js",
+			format: "amd"
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: `
+define(function () { 'use strict';
+
+if(typeof global === "undefined" && typeof window !== "undefined") {
+	window.global = window;
+}
+
+var util = "UTIL";
+
+var lib = msg => {
+	console.log(\`[…] $\{util} $\{msg}\`); // eslint-disable-line no-console
+};
+
+return lib;
+
+});
+					`.trim() + "\n"
+				}]);
+			});
+	});
+
+	it("should support importing third-party packages", () => {
+		let config = [{
+			source: "./src/alt.js",
+			target: "./dist/bundle.js"
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var MYLIB = "MY-LIB";
+
+console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
+	it("should support excluding module/package references", () => {
+		let config = [{
+			source: "./src/alt.js",
+			target: "./dist/bundle.js",
+			externals: { "my-lib": "MYLIB" }
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: `
+(function (MYLIB) {
+'use strict';
+
+if(typeof global === "undefined" && typeof window !== "undefined") {
+	window.global = window;
+}
+
+MYLIB = MYLIB && MYLIB.hasOwnProperty('default') ? MYLIB['default'] : MYLIB;
+
+console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
+
+}(MYLIB));
+					`.trim() + "\n"
+				}]);
+			});
+	});
+
 	it("should optionally compact bundle", () => {
 		let config = [{
 			source: "./src/index.js",
