@@ -50,6 +50,58 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 			});
 	});
 
+	it("should support skipping transpilation for select packages", () => {
+		let cwd = process.cwd();
+		process.chdir(FIXTURES_DIR); // XXX: should not be test-specific!?
+		let restore = _ => process.chdir(cwd);
+
+		let config = [{
+			source: "./src/alt2.js",
+			target: "./dist/bundle.js",
+			transpiler: {
+				features: ["es2015"],
+				exclude: ["my-lib"]
+			}
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(restore, restore). // XXX: hacky
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					/* eslint-disable max-len */
+					content: makeBundle(`
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+
+
+
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var dist = createCommonjsModule(function (module) {
+/* eslint-disable */
+(function(window) {
+
+var MYLIB = "MY-LIB";
+
+{
+	module.exports = MYLIB;
+}
+
+}(commonjsGlobal));
+});
+
+console.log("[\\u2026] " + dist); // eslint-disable-line no-console
+					`.trim())
+					/* eslint-enable max-len */
+				}]);
+			});
+	});
+
 	it("should support custom file extensions", () => {
 		let config = [{
 			source: "./src/index.coffee",
