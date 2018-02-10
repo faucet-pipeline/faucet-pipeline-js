@@ -281,17 +281,19 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 			});
 	});
 
-	it("should balk at non-relative paths in config", () => {
+	it("should balk at non-relative paths for target", () => {
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let entryPoint = "src/index.js";
 		let target = "dist/bundle.js";
 		let compile = (source, target) => faucetJS([{ source, target }], assetManager);
 
-		let fn = _ => compile(entryPoint, target);
+		let fn = _ => compile(`./${entryPoint}`, target);
 		assert.throws(fn, /path must be relative/);
 
-		fn = _ => compile(`./${entryPoint}`, target);
-		assert.throws(fn, /path must be relative/);
+		// non-relative path is acceptable for entry point, but a suitable
+		// package path does not exist
+		fn = _ => compile(entryPoint, `./${target}`);
+		assert.throws(fn, /could not resolve/);
 
 		return compile(`./${entryPoint}`, `./${target}`);
 	});
