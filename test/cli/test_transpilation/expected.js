@@ -15,6 +15,7 @@ var Util = function Util() {
   classCallCheck(this, Util);
 };
 
+
 var FOO = "lorem ipsum";
 var BAR = "dolor sit amet";
 

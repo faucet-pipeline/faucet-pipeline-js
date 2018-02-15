@@ -74,10 +74,6 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 					content: makeBundle(`
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-
-
-
-
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
@@ -292,7 +288,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 
 		// non-relative path is acceptable for entry point, but a suitable
 		// package path does not exist
-		fn = _ => compile(entryPoint, `./${target}`);
+		fn = _ => compile("dummy/src/does_not_exist.js", `./${target}`);
 		assert.throws(fn, /could not resolve/);
 
 		return compile(`./${entryPoint}`, `./${target}`);
