@@ -1,0 +1,19 @@
+{
+	"name": "faucet-pipeline-jsx",
+	"version": "1.0.0-beta.1",
+	"description": "JSX for faucet-pipeline",
+	"author": "FND",
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/faucet-pipeline/faucet-pipeline-js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
+	},
+	"dependencies": {
+		"babel-plugin-transform-react-jsx": "^6.24.1",
+		"faucet-pipeline-esnext": "1.0.0-beta.1"
+	}
+}

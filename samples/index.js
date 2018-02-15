@@ -1,3 +1,3 @@
-import util from "./util";
+import { log } from "./util";
 
-console.log(util);
+log("hello world");

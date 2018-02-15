@@ -1,2 +1,2 @@
 root: true
-extends: fnd
+extends: fnd-jsx

@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+"use strict";
+
+// this script ensures that any candidate package referenced as dependency
+// within a meta-package matches the reference version
+
+let path = require("path");
+
+let root = path.resolve(__dirname, "..");
+let { version } = require(`${root}/package.json`);
+
+let candidates = process.argv.slice(2);
+let metaPackages = candidates.slice(1);
+
+metaPackages.forEach(metaPackage => { // NB: excludes main package
+	getDependencyGroups(`${root}/pkg/${metaPackage}`).forEach(dependencies => {
+		candidates.forEach(candidate => {
+			let versionRange = dependencies[candidate];
+			let valid = versionRange === undefined || versionRange === version;
+			if(!valid) {
+				console.error(`dependency version mismatch: ${metaPackage} requires ` +
+						`${candidate} ${versionRange}, expected ${version}`);
+				process.exit(1);
+			}
+		});
+	});
+});
+
+function getDependencyGroups(directory) {
+	let meta = require(`${directory}/package.json`);
+	return Object.keys(meta).
+		filter(key => key.match(/[dD]ependencies$/)).
+		map(section => meta[section]);
+}
