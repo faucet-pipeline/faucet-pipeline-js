@@ -2,8 +2,27 @@
 
 . ./node_modules/release-util-fnd/lib.sh
 
+# ensure meta-packages are in sync
+version=`determine_version "."`
+packages=`ls pkg`
+for dir in $packages; do
+	_version=`determine_version "pkg/$dir"`
+	if [ "$_version" != "$version" ]; then
+		abort "version mismatch in $dir"
+	fi
+	unset _version
+done
+./bin/validate_dependencies faucet-pipeline-js $packages
+unset version packages
+
 pre_release_checks
 npm test
 
-create_package > /dev/null
+target_dir=`create_package`
+# remove meta-packages
+cd "$target_dir"
+rm -r pkg
+cd -
+
+echo "☝️ remember to keep dependencies up to date"
 publish_package

@@ -27,6 +27,11 @@ begin "$root/test_transpilation"
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
 
+begin "$root/test_jsx"
+	faucet
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
 begin "$root/test_browserslist"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
