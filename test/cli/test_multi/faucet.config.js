@@ -9,9 +9,7 @@ module.exports = {
 	}, {
 		source: "./src/bar.js",
 		target: "./dist/bar.js",
-		transpiler: {
-			features: ["esnext"]
-		}
+		esnext: true
 	}],
 	manifest: {
 		file: "./dist/manifest.json",

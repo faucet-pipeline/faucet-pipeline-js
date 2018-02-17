@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
 	manifest: {
 		file: "./dist/manifest.json"
@@ -5,8 +7,6 @@ module.exports = {
 	js: [{
 		source: "./index.js",
 		target: "./dist/bundle.js",
-		transpiler: {
-			features: ["esnext"]
-		}
+		esnext: true
 	}]
 };

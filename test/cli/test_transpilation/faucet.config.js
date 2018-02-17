@@ -6,9 +6,7 @@ module.exports = {
 	js: [{
 		source: "./src/index.js",
 		target: "./dist/bundle.js",
-		transpiler: {
-			features: ["esnext"]
-		}
+		esnext: true
 	}],
 	plugins: {
 		js: path.resolve(__dirname, "../../..")

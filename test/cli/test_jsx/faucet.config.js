@@ -6,10 +6,8 @@ module.exports = {
 	js: [{
 		source: "./src/index.jsx",
 		target: "./dist/bundle.js",
-		transpiler: {
-			features: ["esnext", "jsx"],
-			jsx: { pragma: "createElement" }
-		}
+		esnext: true,
+		jsx: { pragma: "createElement" }
 	}],
 	plugins: {
 		js: path.resolve(__dirname, "../../..")
