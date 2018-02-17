@@ -31,9 +31,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
-			transpiler: {
-				features: ["esnext"]
-			}
+			esnext: true
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
@@ -58,8 +56,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/alt2.js",
 			target: "./dist/bundle.js",
-			transpiler: {
-				features: ["esnext"],
+			esnext: {
 				exclude: ["my-lib"]
 			}
 		}];
@@ -231,9 +228,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
-			transpiler: {
-				features: ["esnext"]
-			}
+			esnext: true
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
@@ -254,8 +249,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
-			transpiler: {
-				features: ["esnext"],
+			esnext: {
 				browserslist: false
 			}
 		}];
@@ -292,9 +286,7 @@ console.log(\`[…] $\{util}\`);
 					`.trim())
 				}]);
 
-				config[0].transpiler = {
-					features: ["esnext"]
-				};
+				config[0].esnext = true;
 				assetManager = new MockAssetManager(FIXTURES_DIR);
 				return faucetJS(config, assetManager, { compact: true });
 			}).
