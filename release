@@ -13,7 +13,7 @@ for dir in $packages; do
 	unset _version
 done
 ./bin/validate_dependencies faucet-pipeline-js $packages
-unset version packages
+unset version
 
 pre_release_checks
 npm test
@@ -24,7 +24,7 @@ cd "$target_dir"
 rm -r ./pkg
 cd -
 
-echo "☝️ remember to keep dependencies up to date"
+echo "☝️ remember to keep meta-packages' dependencies up to date"
 publish_package
 for dir in $packages; do
 	cd "./pkg/$dir"
