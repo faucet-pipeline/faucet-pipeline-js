@@ -31,9 +31,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
-			transpiler: {
-				features: ["es2015"]
-			}
+			esnext: true
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
@@ -58,8 +56,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/alt2.js",
 			target: "./dist/bundle.js",
-			transpiler: {
-				features: ["es2015"],
+			esnext: {
 				exclude: ["my-lib"]
 			}
 		}];
@@ -227,6 +224,73 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			});
 	});
 
+	it("should take into account Browserslist while transpiling", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js",
+			esnext: true
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager, { browsers: ["Chrome 63"] }).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
+	it("should allow suppressing Browserslist auto-config while transpiling", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js",
+			esnext: {
+				browserslist: false
+			}
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager, { browsers: ["Chrome 63"] }).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log("[\\u2026] " + util); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
+	it("should allow specifying an alternative Browserslist directory", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js",
+			esnext: {
+				browserslist: "./alt"
+			}
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager, { browsers: ["IE 11"] }).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
 	it("should optionally compact bundle", () => {
 		let config = [{
 			source: "./src/index.js",
@@ -245,9 +309,7 @@ console.log(\`[…] $\{util}\`);
 					`.trim())
 				}]);
 
-				config[0].transpiler = {
-					features: ["es2015"]
-				};
+				config[0].esnext = true;
 				assetManager = new MockAssetManager(FIXTURES_DIR);
 				return faucetJS(config, assetManager, { compact: true });
 			}).

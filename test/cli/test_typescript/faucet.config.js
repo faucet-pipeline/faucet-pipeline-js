@@ -4,9 +4,9 @@ let path = require("path");
 
 module.exports = {
 	js: [{
-		source: "./src/index.js",
+		source: "./src/index.ts",
 		target: "./dist/bundle.js",
-		esnext: true
+		typescript: true
 	}],
 	plugins: {
 		js: path.resolve(__dirname, "../../..")
