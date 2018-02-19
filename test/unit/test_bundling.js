@@ -268,6 +268,29 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 			});
 	});
 
+	it("should allow specifying an alternative Browserslist directory", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js",
+			esnext: {
+				browserslist: "./alt"
+			}
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager, { browsers: ["IE 11"] }).
+			then(_ => {
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: makeBundle(`
+var util = "UTIL";
+
+console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
+					`.trim())
+				}]);
+			});
+	});
+
 	it("should optionally compact bundle", () => {
 		let config = [{
 			source: "./src/index.js",
