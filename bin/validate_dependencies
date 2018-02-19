@@ -29,6 +29,6 @@ metaPackages.forEach(metaPackage => { // NB: excludes main package
 function getDependencyGroups(directory) {
 	let meta = require(`${directory}/package.json`);
 	return Object.keys(meta).
-		filter(key => key.match(/[dD]ependencies$/)).
+		filter(key => /[dD]ependencies$/.test(key)).
 		map(section => meta[section]);
 }
