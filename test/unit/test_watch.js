@@ -55,11 +55,19 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		setTimeout(_ => {
 			fs.writeFileSync(entryPoint.absolute, src + 'console.log("…");');
 		}, 50);
-		// check result
-		setTimeout(_ => { // FIXME: hacky
-			assetManager.assertWrites(expectedBundles);
+		// check result by polling (capped by test harness's timeout)
+		let timer = 0;
+		let interval = 50;
+		let check = _ => {
+			timer += interval;
+			if(assetManager._writes.length === expectedBundles.length) {
+				assetManager.assertWrites(expectedBundles);
+				conclude();
+				return;
+			}
 
-			conclude();
-		}, 500);
+			setTimeout(check, interval);
+		};
+		setTimeout(check, interval);
 	});
 });
