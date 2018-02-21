@@ -18,7 +18,7 @@ describe("watcher", () => {
 		watcher.terminate();
 	});
 
-	it("responds to file changes in watch mode", done => {
+	it("responds to file changes in watch mode", function(done) {
 		let config = [{
 			source: entryPoint.relative,
 			target: "./dist/bundle.js"
@@ -55,11 +55,21 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		setTimeout(_ => {
 			fs.writeFileSync(entryPoint.absolute, src + 'console.log("…");');
 		}, 50);
-		// check result
-		setTimeout(_ => { // FIXME: hacky
-			assetManager.assertWrites(expectedBundles);
+		// check result by polling
+		let timer = 0;
+		let interval = 50;
+		let threshold = this.timeout() - 2 * interval;
+		let check = _ => {
+			timer += interval;
+			if(timer > threshold ||
+					assetManager._writes.length === expectedBundles.length) {
+				assetManager.assertWrites(expectedBundles);
+				conclude();
+				return;
+			}
 
-			conclude();
-		}, 500);
+			setTimeout(check, interval); // retry
+		};
+		setTimeout(check, interval);
 	});
 });
