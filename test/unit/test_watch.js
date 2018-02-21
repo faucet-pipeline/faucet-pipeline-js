@@ -18,7 +18,7 @@ describe("watcher", () => {
 		watcher.terminate();
 	});
 
-	it("responds to file changes in watch mode", done => {
+	it("responds to file changes in watch mode", function(done) {
 		let config = [{
 			source: entryPoint.relative,
 			target: "./dist/bundle.js"
@@ -45,6 +45,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 
 		faucetJS(config, assetManager, { watcher }). // triggers initial compilation
 			then(_ => {
+				console.log("~~~~ ✓ 1st compile");
 				assetManager.assertWrites(expectedBundles.slice(0, 1));
 
 				conclude();
@@ -53,20 +54,27 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		// edit source module
 		// NB: delay assumes that initial compilation has not yet completed
 		setTimeout(_ => {
+			console.log("~~~~ edit file");
 			fs.writeFileSync(entryPoint.absolute, src + 'console.log("…");');
+			console.log("~~~~ done editing");
 		}, 50);
-		// check result by polling (capped by test harness's timeout)
+		// check result by polling
 		let timer = 0;
 		let interval = 50;
+		let threshold = this.timeout() - 2 * interval;
 		let check = _ => {
 			timer += interval;
-			if(assetManager._writes.length === expectedBundles.length) {
+			console.log(`~~~~ [${timer}ms] checking... #${assetManager._writes.length}`);
+			if(timer > threshold ||
+					assetManager._writes.length === expectedBundles.length) {
+				console.log("~~~~ assert");
 				assetManager.assertWrites(expectedBundles);
 				conclude();
 				return;
 			}
 
-			setTimeout(check, interval);
+			console.log(`~~~~ [${timer} / ${threshold}] retry`);
+			setTimeout(check, interval); // retry
 		};
 		setTimeout(check, interval);
 	});

@@ -15,14 +15,17 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 	}
 
 	writeFile(filepath, data, error) {
+		console.log(`~~~~ writing ${filepath}`);
 		this._writes.push({ filepath, content: data });
 		return new Promise(resolve => {
+			console.log(`~~~~ done writing ${filepath}`);
 			setTimeout(_ => resolve(), 1);
 		});
 	}
 
 	assertWrites(expected) {
 		let actual = this._writes;
+		console.log(`~~~~ asserting ${actual.length} === ${expected.length}`);
 		assertSame(actual.length, expected.length);
 		actual.forEach((op, i) => {
 			let { filepath, content } = expected[i];

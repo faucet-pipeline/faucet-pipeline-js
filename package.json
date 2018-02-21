@@ -17,9 +17,8 @@
 	},
 	"main": "lib/index.js",
 	"scripts": {
-		"test": "npm-run-all lint --parallel test:unit test:cli",
+		"test": "mocha test/unit/test_*.js",
 		"test:cli": "./test/cli/run",
-		"test:unit": "mocha test/unit/test_*.js",
 		"lint": "eslint --cache --ext .js --ext .jsx *.js bin samples && echo ✓"
 	},
 	"engines": {
