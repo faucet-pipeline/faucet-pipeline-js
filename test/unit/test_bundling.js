@@ -3,6 +3,7 @@
 
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
 let faucetJS = require("../../lib");
+let fs = require("fs");
 let path = require("path");
 let assert = require("assert");
 
@@ -91,6 +92,27 @@ var MYLIB = "MY-LIB";
 console.log("[\\u2026] " + dist); // eslint-disable-line no-console
 					`.trim())
 					/* eslint-enable max-len */
+				}]);
+			});
+	});
+
+	it("should support transpiling `async`/`await`", function() {
+		this.timeout(10000);
+
+		let config = [{
+			source: "./src/async.js",
+			target: "./dist/bundle.js",
+			esnext: true
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		return faucetJS(config, assetManager).
+			then(_ => {
+				let expected = path.resolve(FIXTURES_DIR, "./bundles/async.js");
+				fs.writeFileSync(expected, assetManager._writes[0].content);
+				assetManager.assertWrites([{
+					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+					content: fs.readFileSync(expected, "utf8")
 				}]);
 			});
 	});
