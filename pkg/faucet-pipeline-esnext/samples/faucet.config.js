@@ -3,6 +3,7 @@
 module.exports = {
 	js: [{
 		source: "./index.js",
-		target: "./dist/bundle.js"
+		target: "./dist/bundle.js",
+		esnext: true
 	}]
 };

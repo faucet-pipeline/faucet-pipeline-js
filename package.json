@@ -20,7 +20,7 @@
 		"test": "npm-run-all lint --parallel test:unit test:cli",
 		"test:cli": "./test/cli/run",
 		"test:unit": "mocha test/unit/test_*.js",
-		"lint": "eslint --cache --ext .js --ext .jsx *.js bin/* samples && echo ✓"
+		"lint": "eslint --cache --ext .js --ext .jsx *.js bin/* samples pkg && echo ✓"
 	},
 	"engines": {
 		"node": ">=6"
@@ -28,7 +28,7 @@
 	"dependencies": {
 		"faucet-pipeline": "1.0.0-beta.1",
 		"mkdirp": "^0.5.1",
-		"rollup": "^0.56.2",
+		"rollup": "^0.56.3",
 		"rollup-plugin-commonjs": "^8.3.0",
 		"rollup-plugin-node-resolve": "^3.0.3"
 	},
