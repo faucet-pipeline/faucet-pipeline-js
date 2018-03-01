@@ -7,6 +7,18 @@ module.exports = {
 		source: "./src/index.js",
 		target: "./dist/bundle.js",
 		esnext: true
+	}, {
+		source: "./src/index.js",
+		target: "./dist/bundle_alt.js",
+		esnext: {
+			browserslist: false
+		}
+	}, {
+		source: "./src/index.js",
+		target: "./dist/bundle_legacy.js",
+		esnext: {
+			browserslist: "legacy"
+		}
 	}],
 	plugins: {
 		js: path.resolve(__dirname, "../../..")

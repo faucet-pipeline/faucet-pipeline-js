@@ -45,7 +45,8 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 			content: makeBundle(code + '\nconsole.log("…");')
 		}];
 
-		faucetJS(config, assetManager, { watcher }). // triggers initial compilation
+		faucetJS(config, assetManager, // triggers initial compilation
+				{ watcher, browsers: {} }).
 			then(_ => {
 				assetManager.assertWrites(expectedBundles.slice(0, 1));
 
