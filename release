@@ -30,4 +30,5 @@ for dir in $packages; do
 	cd "./pkg/$dir"
 	echo "about to publish $dir"
 	npm publish
+	cd -
 done
