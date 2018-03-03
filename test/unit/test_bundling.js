@@ -303,7 +303,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 
 	it("should optionally compact bundle", () => {
 		let config = [{
-			source: "./src/index.js",
+			source: "./src/multiline.js",
 			target: "./dist/bundle.js"
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
@@ -314,9 +314,11 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
-var util = "UTIL";
+let txt = \`foo
 
-console.log(\`[…] $\{util}\`);
+bar\`;
+
+console.log(\`[…] $\{txt}\`);
 					`.trim())
 				}]);
 
@@ -328,9 +330,9 @@ console.log(\`[…] $\{util}\`);
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
-var util = "UTIL";
+var txt = "foo\\n\\nbar";
 
-console.log("[\\u2026] " + util);
+console.log("[\\u2026] " + txt);
 					`.trim())
 				}]);
 
@@ -342,9 +344,9 @@ console.log("[\\u2026] " + util);
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
-var util = "UTIL";
+var txt = "foo\\n\\nbar";
 
-console.log("[\\u2026] " + util); // eslint-disable-line no-console
+console.log("[\\u2026] " + txt); // eslint-disable-line no-console
 					`.trim())
 				}]);
 			});
