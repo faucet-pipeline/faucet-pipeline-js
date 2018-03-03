@@ -6,6 +6,10 @@ let faucetJS = require("../../lib");
 let path = require("path");
 let assert = require("assert");
 
+let DEFAULT_OPTIONS = {
+	browsers: {}
+};
+
 describe("bundling", _ => {
 	it("should combine ES6 modules into a bundle", () => {
 		let config = [{
@@ -14,7 +18,7 @@ describe("bundling", _ => {
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -35,7 +39,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -62,7 +66,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(restore, restore). // XXX: hacky
 			then(_ => {
 				assetManager.assertWrites([{
@@ -103,7 +107,7 @@ console.log("[\\u2026] " + dist); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -124,7 +128,7 @@ console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -149,7 +153,7 @@ return lib;
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -181,7 +185,7 @@ return lib;
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -202,7 +206,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {} }).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -304,7 +308,8 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, { browsers: {}, compact: true }).
+		let options = { browsers: {}, compact: true };
+		return faucetJS(config, assetManager, options).
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -317,7 +322,7 @@ console.log(\`[…] $\{util}\`);
 
 				config[0].esnext = true;
 				assetManager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, assetManager, { browsers: {}, compact: true });
+				return faucetJS(config, assetManager, options);
 			}).
 			then(_ => {
 				assetManager.assertWrites([{
@@ -331,7 +336,7 @@ console.log("[\\u2026] " + util);
 
 				config[0].compact = false; // overrides global option
 				assetManager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, assetManager, { browsers: {}, compact: true });
+				return faucetJS(config, assetManager, options);
 			}).
 			then(_ => {
 				assetManager.assertWrites([{
@@ -350,7 +355,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		let entryPoint = "src/index.js";
 		let target = "dist/bundle.js";
 		let compile = (source, target) => faucetJS([{ source, target }],
-				assetManager, { browsers: {} });
+				assetManager, DEFAULT_OPTIONS);
 
 		let fn = _ => compile(`./${entryPoint}`, target);
 		assert.throws(fn, /path must be relative/);
@@ -368,7 +373,7 @@ console.log("[\\u2026] " + util); // eslint-disable-line no-console
 		let target = "./dist/bundle.js";
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let compile = (source, target) => faucetJS([{ source, target }],
-				assetManager, { browsers: {} });
+				assetManager, DEFAULT_OPTIONS);
 
 		return compile(entryPoint, target).
 			then(_ => {
