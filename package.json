@@ -29,7 +29,7 @@
 		"faucet-pipeline": "~1.0.0-rc.2",
 		"rollup": "^0.56.4",
 		"rollup-plugin-cleanup": "^2.0.0",
-		"rollup-plugin-commonjs": "^8.4.0",
+		"rollup-plugin-commonjs": "^9.0.0",
 		"rollup-plugin-node-resolve": "^3.0.3"
 	},
 	"devDependencies": {
