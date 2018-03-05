@@ -8,7 +8,7 @@ module.exports = {
 		target: "./dist/bundle.js"
 	}],
 	manifest: {
-		file: "./dist/manifest.json",
+		target: "./dist/manifest.json",
 		value: filepath => `/assets/${filepath}`
 	},
 	plugins: {

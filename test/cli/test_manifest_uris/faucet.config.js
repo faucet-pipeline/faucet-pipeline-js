@@ -12,7 +12,7 @@ module.exports = {
 		esnext: true
 	}],
 	manifest: {
-		file: "./dist/manifest.json",
+		target: "./dist/manifest.json",
 		value: bundlePath => assetURI(bundlePath)
 	},
 	plugins: {
