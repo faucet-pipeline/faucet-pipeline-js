@@ -2,5 +2,5 @@
 [![build status](https://travis-ci.org/faucet-pipeline/faucet-pipeline-js.svg?branch=master)](https://travis-ci.org/faucet-pipeline/faucet-pipeline-js)
 [![Greenkeeper badge](https://badges.greenkeeper.io/faucet-pipeline/faucet-pipeline-js.svg)](https://greenkeeper.io)
 
-[faucet-pipeline](http://www.faucet-pipeline.org) plugin for bundling and
-transpiling JavaScript
+[faucet-pipeline](http://faucet-pipeline.org) plugin for bundling JavaScript
+modules
