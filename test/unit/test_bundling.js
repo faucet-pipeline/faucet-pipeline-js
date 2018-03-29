@@ -11,6 +11,16 @@ let DEFAULT_OPTIONS = {
 };
 
 describe("bundling", _ => {
+	let { exit } = process;
+	beforeEach(() => {
+		process.exit = code => {
+			throw new Error(`exit ${code}`);
+		};
+	});
+	afterEach(() => {
+		process.exit = exit;
+	});
+
 	it("should combine ES6 modules into a bundle", () => {
 		let config = [{
 			source: "./src/index.js",
@@ -360,12 +370,12 @@ console.log("[\\u2026] " + txt); // eslint-disable-line no-console
 				assetManager, DEFAULT_OPTIONS);
 
 		let fn = _ => compile(`./${entryPoint}`, target);
-		assert.throws(fn, /path must be relative/);
+		assert.throws(fn, /exit 1/); // aborts with "path must be relative"
 
 		// non-relative path is acceptable for entry point, but a suitable
 		// package path does not exist
 		fn = _ => compile("dummy/src/does_not_exist.js", `./${target}`);
-		assert.throws(fn, /could not resolve/);
+		assert.throws(fn, /exit 1/); // aborts with "could not resolve"
 
 		return compile(`./${entryPoint}`, `./${target}`);
 	});
@@ -389,10 +399,10 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 				}]);
 
 				let fn = _ => compile("dummy/src/does_not_exist.js", target);
-				assert.throws(fn, /could not resolve/);
+				assert.throws(fn, /exit 1/); // aborts with "could not resolve"
 
 				fn = _ => compile(entryPoint, "dist/bundle.js");
-				assert.throws(fn, /path must be relative/);
+				assert.throws(fn, /exit 1/); // aborts with "path must be relative"
 			});
 	});
 });
