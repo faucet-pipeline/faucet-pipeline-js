@@ -56,7 +56,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 					content: makeBundle(`
 var util = "UTIL";
 
-console.log("[\\u2026] " + util); // eslint-disable-line no-console
+console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					`.trim())
 				}]);
 			});
@@ -102,7 +102,7 @@ var MYLIB = "MY-LIB";
 }(commonjsGlobal));
 });
 
-console.log("[\\u2026] " + dist); // eslint-disable-line no-console
+console.log("[\\u2026] ".concat(dist)); // eslint-disable-line no-console
 					`.trim())
 					/* eslint-enable max-len */
 				}]);
@@ -278,7 +278,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 					content: makeBundle(`
 var util = "UTIL";
 
-console.log("[\\u2026] " + util); // eslint-disable-line no-console
+console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					`.trim())
 				}]);
 			});
@@ -341,8 +341,7 @@ console.log(\`[…] $\{txt}\`);
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var txt = "foo\\n\\nbar";
-
-console.log("[\\u2026] " + txt);
+console.log("[\\u2026] ".concat(txt));
 					`.trim())
 				}]);
 
@@ -355,8 +354,7 @@ console.log("[\\u2026] " + txt);
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: makeBundle(`
 var txt = "foo\\n\\nbar";
-
-console.log("[\\u2026] " + txt); // eslint-disable-line no-console
+console.log("[\\u2026] ".concat(txt)); // eslint-disable-line no-console
 					`.trim())
 				}]);
 			});

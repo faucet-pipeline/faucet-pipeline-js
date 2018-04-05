@@ -6,7 +6,6 @@ if(typeof global === "undefined" && typeof window !== "undefined") {
 }
 
 class Util {}
-
 const FOO = "lorem ipsum";
 const BAR = "dolor sit amet";
 

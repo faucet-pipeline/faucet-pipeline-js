@@ -7,6 +7,6 @@ if(typeof global === "undefined" && typeof window !== "undefined") {
 
 var util = "UTIL";
 
-console.log("[BAR] " + util);
+console.log("[BAR] ".concat(util));
 
 }());
