@@ -68,6 +68,11 @@ begin "$root/test_fingerprinting"
 	assert_identical "./dist/bundle_alt.js" "./expected.js"
 end
 
+begin "$root/test_bundle_customization"
+	faucet
+	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
 begin "$root/test_custom_config"
 	faucet -c assets.js
 	assert_identical "./dist/bundle.js" "./expected.js"
