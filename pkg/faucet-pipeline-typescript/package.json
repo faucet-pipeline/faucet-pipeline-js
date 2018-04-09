@@ -16,8 +16,8 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"faucet-pipeline-js": "1.0.0-rc.4",
-		"rollup-plugin-typescript2": "^0.12.0",
-		"typescript": "^2.8.1"
+		"faucet-pipeline-js": "~1.0.0-rc.4",
+		"rollup-plugin-typescript2": "~0.12.0",
+		"typescript": "~2.8.1"
 	}
 }

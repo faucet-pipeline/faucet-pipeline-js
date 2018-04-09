@@ -13,9 +13,9 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"@babel/core": "7.0.0-beta.44",
-		"@babel/preset-env": "7.0.0-beta.44",
-		"faucet-pipeline-js": "1.0.0-rc.4",
-		"rollup-plugin-babel": "^4.0.0-beta.3"
+		"@babel/core": "~7.0.0-beta.44",
+		"@babel/preset-env": "~7.0.0-beta.44",
+		"faucet-pipeline-js": "~1.0.0-rc.4",
+		"rollup-plugin-babel": "~4.0.0-beta.3"
 	}
 }
