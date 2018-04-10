@@ -71,6 +71,7 @@ end
 begin "$root/test_bundle_customization"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
+	assert_identical "./dist/bundle_cjs.js" "./expected_cjs.js"
 end
 
 begin "$root/test_custom_config"
