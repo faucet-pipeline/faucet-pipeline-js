@@ -327,7 +327,6 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 let txt = \`foo
 
 bar\`;
-
 console.log(\`[…] $\{txt}\`);
 					`.trim())
 				}]);
