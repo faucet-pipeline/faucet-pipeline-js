@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sourcesContent": [
+    "export default class Util {}\n\nexport const FOO = \"lorem ipsum\";\nexport const BAR = \"dolor sit amet\";\n",
+    "import Util, { FOO, BAR } from \"./util\";\n\nconsole.log(`~~ ${Util} ~~ ${FOO} ~~ ${BAR} ~~`);\n"
+  ],
+  "names": [],
+  "mappings": ";;;;;;;AAAe,MAAM,IAAI,CAAC,EAAE;;AAE5B,AAAO,MAAM,GAAG,GAAG,aAAa,CAAC;AACjC,AAAO,MAAM,GAAG,GAAG,gBAAgB,CAAC;;ACDpC,OAAO,CAAC,GAAG,CAAC,CAAC,GAAG,EAAE,IAAI,CAAC,IAAI,EAAE,GAAG,CAAC,IAAI,EAAE,GAAG,CAAC,GAAG,CAAC,CAAC,CAAC;;;;"
+}

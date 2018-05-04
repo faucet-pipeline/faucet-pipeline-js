@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+let { Transform } = require("stream");
+
+let base64 = Transform({
+	transform(chunk, encoding, callback) {
+		callback(null, Buffer.from(chunk.toString("utf8"), "base64").toString("binary"));
+	}
+});
+
+process.stdin.pipe(base64).pipe(process.stdout);
