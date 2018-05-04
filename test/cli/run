@@ -7,6 +7,18 @@ root=`node -r fs -p "fs.realpathSync(process.argv[1]);" "$root"`
 
 . "$root/../../node_modules/faucet-pipeline/test/cli_harness.sh"
 
+bin="$root/../../bin"
+
+function extract_sourcemap {
+	local file=${1?:missing file}
+	mv "$file" "$file.orig"
+	sed '/^\/\/# sourceMappingURL/d' <"$file.orig" >"$file"
+	grep '^//# sourceMappingURL' "$file.orig" |
+		cut -d, -f2 |
+		"$bin/base64-decode" |
+		"$bin/sourcemap-clean" version names mappings sourcesContent
+}
+
 begin "$root/test_basic"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
@@ -25,6 +37,16 @@ end
 begin "$root/test_transpilation"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
+end
+
+begin "$root/test_sourcemap"
+	faucet
+	extract_sourcemap "./dist/bundle.js" >"./dist/bundle.js.map"
+	assert_identical "./dist/bundle.js" "./expected.js"
+	assert_json "./dist/bundle.js.map" "./expected.js.map"
+	extract_sourcemap "./dist/bundle-esnext.js" >"./dist/bundle-esnext.js.map"
+	assert_identical "./dist/bundle-esnext.js" "./expected-esnext.js"
+	assert_json "./dist/bundle-esnext.js.map" "./expected-esnext.js.map"
 end
 
 begin "$root/test_jsx"
