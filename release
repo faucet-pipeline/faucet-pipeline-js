@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eu
+
 . ./node_modules/release-util-fnd/lib.sh
 
 # ensure meta-packages are in sync and up to date
