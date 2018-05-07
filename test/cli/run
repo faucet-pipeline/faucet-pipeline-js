@@ -54,7 +54,7 @@ begin "$root/test_transpilation"
 end
 
 begin "$root/test_sourcemap"
-	faucet
+	faucet --sourcemaps
 	assert_identical_sourcemap "./dist/bundle.js" "./expected.js" "./expected.js.map"
 	assert_identical_sourcemap "./dist/bundle-esnext.js" "./expected-esnext.js" "./expected-esnext.js.map"
 end
