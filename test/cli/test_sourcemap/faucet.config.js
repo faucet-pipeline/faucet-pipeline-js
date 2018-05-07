@@ -5,13 +5,11 @@ let path = require("path");
 module.exports = {
 	js: [{
 		source: "./src/index.js",
-		target: "./dist/bundle.js",
-		sourcemaps: true
+		target: "./dist/bundle.js"
 	}, {
 		source: "./src/index.js",
 		target: "./dist/bundle-esnext.js",
-		esnext: true,
-		sourcemaps: true
+		esnext: true
 	}],
 	plugins: {
 		js: path.resolve(__dirname, "../../..")
