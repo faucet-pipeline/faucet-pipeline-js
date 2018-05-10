@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// Read JSON from stdin, keep keys passed as arguments, write the result to stdout as JSON
+
 let { Transform } = require("stream");
 
 let [, ...args] = process.argv;
