@@ -14,10 +14,16 @@ function assert_identical_sourcemap {
 	actual="${1:?}"
 	expected_src="${2:?}"
 	expected_map="${3:?}"
+	# ensure that $actual contains an inline source map
 	grep -q '^//# sourceMappingURL' "$actual" ||
 			fail "missing inline source map in \`$actual\`"
+	# save the original file
 	mv "$actual" "$actual.orig"
+	# drop the inline source map
 	sed '\!^//# sourceMappingURL!d' <"$actual.orig" >"$actual"
+	# decode and clean the inline source map
+	#  source maps contain system-dependent information (full paths)
+	#  so we drop all information we're not explicitly testing
 	grep '^//# sourceMappingURL' "$actual.orig" |
 			cut -d, -f2 |
 			"$bin/base64-decode" |

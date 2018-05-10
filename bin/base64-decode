@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// Read base64 from stdin, decode it, write the result to stdout
+
 let { Transform } = require("stream");
 
 let base64 = Transform({
