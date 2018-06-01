@@ -3,7 +3,7 @@
 
 let { Transform } = require("stream");
 
-let [, ...args] = process.argv;
+let args = process.argv.slice(2);
 let clean = Transform({
 	transform(chunk, encoding, callback) {
 		let obj = JSON.parse(chunk);
