@@ -6,6 +6,11 @@ let assert = require("assert");
 
 let assertSame = assert.strictEqual;
 
+let GLOBAL_SHIM = `
+if(typeof global === "undefined" && typeof window !== "undefined") {
+	window.global = window;
+}`.trim();
+
 exports.FIXTURES_DIR = path.resolve(__dirname, "fixtures");
 
 exports.MockAssetManager = class MockAssetManager extends AssetManager {
@@ -33,14 +38,20 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 };
 
 // wraps given code in boilerplate
-exports.makeBundle = function makeBundle(code) {
+exports.makeBundle = function makeBundle(code, { compact } = {}) {
+	if(compact) {
+		return `
+(function(){'use strict';${GLOBAL_SHIM}
+
+${code}}());
+		`.trim();
+	}
+
 	return `
 (function () {
 'use strict';
 
-if(typeof global === "undefined" && typeof window !== "undefined") {
-	window.global = window;
-}
+${GLOBAL_SHIM}
 
 ${code}
 

@@ -1,4 +1,13 @@
 import util from "./util";
 
 // lorem ipsum
-console.log(`[…] ${util}`);
+function info() {
+	console.log(`[…] ${util}`);
+}
+
+// dolor sit amet
+function help() {
+	info();
+}
+
+help();

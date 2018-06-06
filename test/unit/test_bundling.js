@@ -328,7 +328,7 @@ let txt = \`foo
 
 bar\`;
 console.log(\`[…] $\{txt}\`);
-					`.trim())
+					`.trim(), { compact: true })
 				}]);
 
 				config[0].esnext = true;
@@ -341,7 +341,7 @@ console.log(\`[…] $\{txt}\`);
 					content: makeBundle(`
 var txt = "foo\\n\\nbar";
 console.log("[\\u2026] ".concat(txt));
-					`.trim())
+					`.trim(), { compact: true })
 				}]);
 
 				config[0].compact = false; // overrides global option
