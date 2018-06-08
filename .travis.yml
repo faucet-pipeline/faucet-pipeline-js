@@ -5,4 +5,4 @@ node_js:
 - 10
 
 script:
-- npm test
+- "node -e 'let { foo, ...obj } = { foo: \"hello\", bar: \"world\", baz: \"…\" }; console.log(foo, obj); process.exit(1)'"
