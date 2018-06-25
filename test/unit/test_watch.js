@@ -61,7 +61,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		// check result by polling
 		let timer = 0;
 		let interval = 50;
-		let threshold = this.timeout() - 2 * interval;
+		let threshold = this.timeout() - 10 * interval;
 		let check = _ => {
 			timer += interval;
 			if(timer > threshold ||
