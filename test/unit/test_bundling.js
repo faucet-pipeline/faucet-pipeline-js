@@ -21,6 +21,16 @@ describe("bundling", _ => {
 		process.exit = exit;
 	});
 
+	it("should verify configuration", () => {
+		let config = [{}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+		let fn = _ => faucetJS(config, assetManager, DEFAULT_OPTIONS);
+		assert.throws(fn, /exit 1/); // aborts with "missing `source` configuration"
+		config[0].source = "./src/index.js";
+		assert.throws(fn, /exit 1/); // aborts with "missing `target` configuration"
+	});
+
 	it("should combine ES6 modules into a bundle", () => {
 		let config = [{
 			source: "./src/index.js",
