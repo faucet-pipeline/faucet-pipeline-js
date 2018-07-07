@@ -144,7 +144,7 @@ console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
 		let config = [{
 			source: "./src/lib.js",
 			target: "./dist/bundle.js",
-			moduleName: "MYLIB"
+			exports: "MYLIB"
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
