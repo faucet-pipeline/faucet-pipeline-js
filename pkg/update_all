@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -eu
+
+root=`dirname $0`
+root=`realpath $root`
+
+echo "==== updating faucet-pipeline-js ===="
+(cd "$root/.."; ncu -a)
+
+for dir in `find "$root" -type d -d 1`; do
+	echo "==== updating `basename $dir` ===="
+	(cd "$dir"; ncu -a) # npm-check-updates
+done

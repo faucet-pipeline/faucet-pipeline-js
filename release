@@ -4,6 +4,8 @@ set -eu
 
 . ./node_modules/release-util-fnd/lib.sh
 
+./pkg/update_all
+
 # ensure meta-packages are in sync and up to date
 version=`determine_version "."`
 packages=`ls ./pkg`
@@ -13,8 +15,6 @@ for dir in $packages; do
 		abort "version mismatch in $dir"
 	fi
 	unset _version
-
-	(cd "./pkg/$dir"; ncu -a) # npm-check-updates
 done
 ./bin/validate_dependencies faucet-pipeline-js $packages
 unset version
