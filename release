@@ -2,17 +2,21 @@
 
 set -eu
 
+root=`dirname $0`
+root=`realpath $root`
+
 . ./node_modules/release-util-fnd/lib.sh
 
-./pkg/update_all
+"$root/pkg/update_all"
 
 # ensure meta-packages are in sync and up to date
 version=`determine_version "."`
-packages=`ls ./pkg`
+packages=`find "$root/pkg" -type d -d 1`
 for dir in $packages; do
-	_version=`determine_version "./pkg/$dir"`
+	package=`basename $dir`
+	_version=`determine_version "./pkg/$package"`
 	if [ "$_version" != "$version" ]; then
-		abort "version mismatch in $dir"
+		abort "version mismatch in $package"
 	fi
 	unset _version
 done
@@ -28,8 +32,8 @@ rm -r "$target_dir/pkg"
 
 publish_package
 for dir in $packages; do
-	cd "./pkg/$dir"
-	echo "about to publish $dir"
+	cd "$dir"
+	echo "about to publish `basename $dir`"
 	npm publish
 	cd -
 done

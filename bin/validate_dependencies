@@ -13,6 +13,7 @@ let candidates = process.argv.slice(2);
 let metaPackages = candidates.slice(1);
 
 metaPackages.forEach(metaPackage => { // NB: excludes main package
+	metaPackage = path.basename(metaPackage);
 	getDependencyGroups(`${root}/pkg/${metaPackage}`).forEach(dependencies => {
 		candidates.forEach(candidate => {
 			let versionRange = dependencies[candidate];

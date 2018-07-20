@@ -1,6 +1,6 @@
 "use strict";
 
-let AssetManager = require("faucet-pipeline/lib/manager");
+let AssetManager = require("faucet-pipeline-core/lib/manager");
 let path = require("path");
 let assert = require("assert");
 

@@ -5,7 +5,7 @@ set -euo pipefail
 root=`dirname "$0"`
 root=`node -r fs -p "fs.realpathSync(process.argv[1]);" "$root"`
 
-. "$root/../../node_modules/faucet-pipeline/test/cli_harness.sh"
+. "$root/../../node_modules/faucet-pipeline-core/test/cli_harness.sh"
 
 begin "$root/test_basic"
 	faucet
