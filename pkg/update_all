@@ -5,10 +5,19 @@ set -eu
 root=`dirname $0`
 root=`realpath $root`
 
-echo "==== updating faucet-pipeline-js ===="
+abort() {
+	message="$@"
+
+	echo "$message" >&2
+	exit 1
+}
+
+which ncu || abort "ERROR: npm-check-updates missing"
+
+echo "==== updating faucet-pipeline-js ====" >&2
 (cd "$root/.."; ncu -a)
 
 for dir in `find "$root" -type d -d 1`; do
-	echo "==== updating `basename $dir` ===="
+	echo "==== updating `basename $dir` ====" >&2
 	(cd "$dir"; ncu -a) # npm-check-updates
 done
