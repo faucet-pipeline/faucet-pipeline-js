@@ -26,7 +26,7 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"faucet-pipeline-core": "~1.0.0-rc.10",
+		"faucet-pipeline-core": "faucet-pipeline/faucet-pipeline-core#lord-buckethead",
 		"rollup": "~0.64.1",
 		"rollup-plugin-cleanup": "~3.0.0",
 		"rollup-plugin-commonjs": "~9.1.5",

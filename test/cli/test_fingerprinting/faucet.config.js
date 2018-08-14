@@ -12,6 +12,9 @@ module.exports = {
 		fingerprint: false
 	}],
 	plugins: {
-		js: path.resolve(__dirname, "../../..")
+		js: {
+			package: path.resolve(__dirname, "../../.."),
+			bucket: "scripts"
+		}
 	}
 };

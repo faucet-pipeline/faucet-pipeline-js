@@ -35,6 +35,11 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 			assertSame(op.content, content);
 		});
 	}
+
+	assertNumberOfWrites(expected) {
+		let actual = this._writes;
+		assertSame(actual.length, expected);
+	}
 };
 
 // wraps given code in boilerplate
