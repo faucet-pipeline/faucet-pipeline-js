@@ -20,7 +20,7 @@
 		"test": "npm-run-all lint --parallel test:unit test:cli",
 		"test:cli": "./test/cli/run",
 		"test:unit": "mocha test/unit/test_*.js",
-		"lint": "eslint --cache --ext .js --ext .jsx lib bin/* samples pkg && echo ✓"
+		"lint": "eslint --cache --ext .js --ext .jsx lib bin/* test/unit samples pkg && echo ✓"
 	},
 	"engines": {
 		"node": ">=6"
