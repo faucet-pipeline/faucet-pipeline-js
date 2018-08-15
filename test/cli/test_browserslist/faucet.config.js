@@ -22,7 +22,7 @@ module.exports = {
 	}],
 	plugins: {
 		js: {
-			package: path.resolve(__dirname, "../../.."),
+			plugin: path.resolve(__dirname, "../../.."),
 			bucket: "scripts"
 		}
 	}
