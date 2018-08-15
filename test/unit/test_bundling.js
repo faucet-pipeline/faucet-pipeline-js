@@ -420,12 +420,12 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let run = faucetJS(config, assetManager, DEFAULT_OPTIONS);
-		let fileThatIsPartOfBundle = path.join(FIXTURES_DIR, "src/util.js");
+		let relevantModule = path.join(FIXTURES_DIR, "src/util.js");
 
 		return run().
-			then(_ => run([fileThatIsPartOfBundle])).
+			then(_ => run([relevantModule])).
 			then(_ => {
-				assetManager.assertNumberOfWrites(2);
+				assetManager.assertWriteCount(2);
 			});
 	});
 
@@ -436,12 +436,12 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let run = faucetJS(config, assetManager, DEFAULT_OPTIONS);
-		let fileThatIsNotPartOfBundle = path.join(FIXTURES_DIR, "src/alt.js");
+		let unusedModule = path.join(FIXTURES_DIR, "src/alt.js");
 
 		return run().
-			then(_ => run([fileThatIsNotPartOfBundle])).
+			then(_ => run([unusedModule])).
 			then(_ => {
-				assetManager.assertNumberOfWrites(1);
+				assetManager.assertWriteCount(1);
 			});
 	});
 });

@@ -26,6 +26,10 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 		});
 	}
 
+	assertWriteCount(expected) {
+		assertSame(this._writes.length, expected);
+	}
+
 	assertWrites(expected) {
 		let actual = this._writes;
 		assertSame(actual.length, expected.length);
@@ -34,11 +38,6 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 			assertSame(op.filepath, filepath);
 			assertSame(op.content, content);
 		});
-	}
-
-	assertNumberOfWrites(expected) {
-		let actual = this._writes;
-		assertSame(actual.length, expected);
 	}
 };
 
