@@ -419,11 +419,11 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 			target: "./dist/bundle.js"
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
-		let run = faucetJS(config, assetManager, DEFAULT_OPTIONS);
+		let buildJS = faucetJS(config, assetManager, DEFAULT_OPTIONS);
 		let relevantModule = path.join(FIXTURES_DIR, "src/util.js");
 
-		return run().
-			then(_ => run([relevantModule])).
+		return buildJS().
+			then(_ => buildJS([relevantModule])).
 			then(_ => {
 				assetManager.assertWriteCount(2);
 			});
@@ -435,11 +435,11 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 			target: "./dist/bundle.js"
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
-		let run = faucetJS(config, assetManager, DEFAULT_OPTIONS);
+		let buildJS = faucetJS(config, assetManager, DEFAULT_OPTIONS);
 		let unusedModule = path.join(FIXTURES_DIR, "src/alt.js");
 
-		return run().
-			then(_ => run([unusedModule])).
+		return buildJS().
+			then(_ => buildJS([unusedModule])).
 			then(_ => {
 				assetManager.assertWriteCount(1);
 			});
