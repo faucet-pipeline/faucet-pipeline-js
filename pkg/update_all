@@ -19,5 +19,5 @@ echo "==== updating faucet-pipeline-js ====" >&2
 
 for dir in `find "$root" -type d -d 1`; do
 	echo "==== updating `basename $dir` ====" >&2
-	(cd "$dir"; ncu -a) # npm-check-updates
+	(cd "$dir"; ncu -a)
 done
