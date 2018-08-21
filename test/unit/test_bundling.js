@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, it, beforeEach, afterEach */
 "use strict";
 
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
@@ -25,7 +25,7 @@ describe("bundling", _ => {
 		let config = [{}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		let fn = _ => faucetJS(config, assetManager, DEFAULT_OPTIONS);
+		let fn = _ => faucetJS(config, assetManager, DEFAULT_OPTIONS)();
 		assert.throws(fn, /exit 1/); // aborts with "missing `source` configuration"
 		config[0].source = "./src/index.js";
 		assert.throws(fn, /exit 1/); // aborts with "missing `target` configuration"
@@ -38,7 +38,7 @@ describe("bundling", _ => {
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -59,7 +59,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -86,7 +86,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(restore, restore). // XXX: hacky
 			then(_ => {
 				assetManager.assertWrites([{
@@ -127,7 +127,7 @@ console.log("[\\u2026] ".concat(dist)); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -148,7 +148,7 @@ console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -173,7 +173,7 @@ return lib;
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -205,7 +205,7 @@ return lib;
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -226,7 +226,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS).
+		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -257,7 +257,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
 		let browsers = { defaults: ["Chrome 63"] };
-		return faucetJS(config, assetManager, { browsers }).
+		return faucetJS(config, assetManager, { browsers })().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -281,7 +281,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
 		let browsers = { defaults: ["Chrome 63"] };
-		return faucetJS(config, assetManager, { browsers }).
+		return faucetJS(config, assetManager, { browsers })().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -308,7 +308,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 			defaults: ["IE 11"],
 			modern: ["Chrome 63"]
 		};
-		return faucetJS(config, assetManager, { browsers }).
+		return faucetJS(config, assetManager, { browsers })().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -329,7 +329,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
 		let options = { browsers: {}, compact: true };
-		return faucetJS(config, assetManager, options).
+		return faucetJS(config, assetManager, options)().
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
@@ -343,7 +343,7 @@ console.log(\`[…] $\{txt}\`);
 
 				config[0].esnext = true;
 				assetManager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, assetManager, options);
+				return faucetJS(config, assetManager, options)();
 			}).
 			then(_ => {
 				assetManager.assertWrites([{
@@ -356,7 +356,7 @@ console.log("[\\u2026] ".concat(txt));
 
 				config[0].compact = false; // overrides global option
 				assetManager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, assetManager, options);
+				return faucetJS(config, assetManager, options)();
 			}).
 			then(_ => {
 				assetManager.assertWrites([{
@@ -374,7 +374,7 @@ console.log("[\\u2026] ".concat(txt)); // eslint-disable-line no-console
 		let entryPoint = "src/index.js";
 		let target = "dist/bundle.js";
 		let compile = (source, target) => faucetJS([{ source, target }],
-				assetManager, DEFAULT_OPTIONS);
+				assetManager, DEFAULT_OPTIONS)();
 
 		let fn = _ => compile(`./${entryPoint}`, target);
 		assert.throws(fn, /exit 1/); // aborts with "path must be relative"
@@ -392,7 +392,7 @@ console.log("[\\u2026] ".concat(txt)); // eslint-disable-line no-console
 		let target = "./dist/bundle.js";
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 		let compile = (source, target) => faucetJS([{ source, target }],
-				assetManager, DEFAULT_OPTIONS);
+				assetManager, DEFAULT_OPTIONS)();
 
 		return compile(entryPoint, target).
 			then(_ => {
@@ -410,6 +410,38 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 
 				fn = _ => compile(entryPoint, "dist/bundle.js");
 				assert.throws(fn, /exit 1/); // aborts with "path must be relative"
+			});
+	});
+
+	it("should build when the provided path is part of the bundle", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js"
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+		let buildJS = faucetJS(config, assetManager, DEFAULT_OPTIONS);
+		let relevantModule = path.join(FIXTURES_DIR, "src/util.js");
+
+		return buildJS().
+			then(_ => buildJS([relevantModule])).
+			then(_ => {
+				assetManager.assertWriteCount(2);
+			});
+	});
+
+	it("should not build when the provided path is not part of the bundle", () => {
+		let config = [{
+			source: "./src/index.js",
+			target: "./dist/bundle.js"
+		}];
+		let assetManager = new MockAssetManager(FIXTURES_DIR);
+		let buildJS = faucetJS(config, assetManager, DEFAULT_OPTIONS);
+		let unusedModule = path.join(FIXTURES_DIR, "src/alt.js");
+
+		return buildJS().
+			then(_ => buildJS([unusedModule])).
+			then(_ => {
+				assetManager.assertWriteCount(1);
 			});
 	});
 });

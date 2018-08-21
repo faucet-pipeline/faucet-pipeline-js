@@ -10,6 +10,9 @@ module.exports = {
 		jsx: { pragma: "createElement" }
 	}],
 	plugins: {
-		js: path.resolve(__dirname, "../../..")
+		js: {
+			plugin: path.resolve(__dirname, "../../.."),
+			bucket: "scripts"
+		}
 	}
 };

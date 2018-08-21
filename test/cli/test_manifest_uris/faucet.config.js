@@ -16,7 +16,10 @@ module.exports = {
 		value: bundlePath => assetURI(bundlePath)
 	},
 	plugins: {
-		js: path.resolve(__dirname, "../../..")
+		js: {
+			plugin: path.resolve(__dirname, "../../.."),
+			bucket: "scripts"
+		}
 	}
 };
 

@@ -14,6 +14,9 @@ module.exports = {
 		format: "commonjs"
 	}],
 	plugins: {
-		js: path.resolve(__dirname, "../../..")
+		js: {
+			plugin: path.resolve(__dirname, "../../.."),
+			bucket: "scripts"
+		}
 	}
 };

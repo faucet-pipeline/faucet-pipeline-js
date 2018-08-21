@@ -32,8 +32,5 @@ rm -r "$target_dir/pkg"
 
 publish_package
 for dir in $packages; do
-	cd "$dir"
-	echo "about to publish `basename $dir`"
-	npm publish
-	cd -
+	(cd "$dir"; echo "about to publish `basename $dir`"; npm publish)
 done

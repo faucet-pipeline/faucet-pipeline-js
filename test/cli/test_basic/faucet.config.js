@@ -8,6 +8,9 @@ module.exports = {
 		target: "./dist/bundle.js"
 	}],
 	plugins: {
-		js: path.resolve(__dirname, "../../..")
+		js: {
+			plugin: path.resolve(__dirname, "../../.."),
+			bucket: "scripts"
+		}
 	}
 };
