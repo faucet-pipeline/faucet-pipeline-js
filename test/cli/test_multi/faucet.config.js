@@ -16,6 +16,9 @@ module.exports = {
 		value: filepath => `/assets/${filepath}`
 	},
 	plugins: {
-		js: path.resolve(__dirname, "../../..")
+		js: {
+			plugin: path.resolve(__dirname, "../../.."),
+			bucket: "scripts"
+		}
 	}
 };
