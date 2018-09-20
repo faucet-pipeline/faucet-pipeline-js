@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "1.0.0-rc.11",
+	"version": "1.0.0-rc.12",
 	"description": "JavaScript module bundling for faucet-pipeline",
 	"author": "FND",
 	"contributors": [
@@ -26,11 +26,11 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"faucet-pipeline-core": "~1.0.0-rc.12",
-		"rollup": "~0.65.0",
+		"faucet-pipeline-core": "~1.0.0-rc.13",
+		"rollup": "~0.66.1",
 		"rollup-plugin-cleanup": "~3.0.0",
-		"rollup-plugin-commonjs": "~9.1.6",
-		"rollup-plugin-node-resolve": "~3.3.0"
+		"rollup-plugin-commonjs": "~9.1.8",
+		"rollup-plugin-node-resolve": "~3.4.0"
 	},
 	"devDependencies": {
 		"eslint-config-fnd-jsx": "^1.6.0",
