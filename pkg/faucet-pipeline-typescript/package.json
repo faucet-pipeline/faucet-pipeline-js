@@ -1,13 +1,13 @@
 {
 	"name": "faucet-pipeline-typescript",
-	"version": "1.0.0-rc.12",
+	"version": "1.0.0",
 	"description": "TypeScript for faucet-pipeline",
 	"author": "FND",
 	"contributors": [
 		"Till Schulte-Coerne <npmjs@trsnet.de>"
 	],
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/faucet-pipeline/faucet-pipeline-js",
+	"homepage": "https://www.faucet-pipeline.org",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js.git"
@@ -16,7 +16,7 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"faucet-pipeline-js": "1.0.0-rc.12",
+		"faucet-pipeline-js": "1.0.0",
 		"rollup-plugin-typescript2": "~0.17.0",
 		"typescript": "~3.0.3"
 	}

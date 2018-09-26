@@ -1,13 +1,13 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "1.0.0-rc.12",
+	"version": "1.0.0",
 	"description": "JavaScript module bundling for faucet-pipeline",
 	"author": "FND",
 	"contributors": [
 		"Lucas Dohmen <lucas.dohmen@innoq.com>"
 	],
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/faucet-pipeline/faucet-pipeline-js",
+	"homepage": "https://www.faucet-pipeline.org",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js.git"
@@ -26,8 +26,8 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"faucet-pipeline-core": "~1.0.0-rc.13",
-		"rollup": "~0.66.1",
+		"faucet-pipeline-core": "^1.0.0",
+		"rollup": "~0.66.2",
 		"rollup-plugin-cleanup": "~3.0.0",
 		"rollup-plugin-commonjs": "~9.1.8",
 		"rollup-plugin-node-resolve": "~3.4.0"
