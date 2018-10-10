@@ -1,0 +1,12 @@
+{
+	"groups": {
+		"default": {
+			"packages": [
+				"package.json",
+				"pkg/faucet-pipeline-esnext/package.json",
+				"pkg/faucet-pipeline-jsx/package.json",
+				"pkg/faucet-pipeline-typescript/package.json"
+			]
+		}
+	}
+}
