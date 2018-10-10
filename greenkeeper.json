@@ -1,16 +1,1 @@
-{
-	"groups": {
-		"faucet-pipeline-js": {
-			"packages": ["./package.json"]
-		},
-		"faucet-pipeline-esnext": {
-			"packages": ["./pkg/faucet-pipeline-esnext/package.json"]
-		},
-		"faucet-pipeline-jsx": {
-			"packages": ["./pkg/faucet-pipeline-jsx/package.json"]
-		},
-		"faucet-pipeline-typescript": {
-			"packages": ["./pkg/faucet-pipeline-typescript/package.json"]
-		}
-	}
-}
+{}
