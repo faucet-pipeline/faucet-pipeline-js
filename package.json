@@ -33,6 +33,7 @@
 		"rollup-plugin-node-resolve": "~3.4.0"
 	},
 	"devDependencies": {
+		"complate-stream": "^0.16.4",
 		"eslint-config-fnd-jsx": "^1.6.0",
 		"faucet-pipeline-esnext": "file:pkg/faucet-pipeline-esnext",
 		"faucet-pipeline-jsx": "file:pkg/faucet-pipeline-jsx",
