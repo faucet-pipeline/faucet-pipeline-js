@@ -17,6 +17,16 @@ Contributing
 * `npm test` runs the test suite and checks code for stylistic consistency
 
 
+Release Process
+---------------
+
+1. ensure dependencies are up to date (→ `./pkg/update_all`)
+2. ensure all meta-packages use the same version number (i.e.
+   `pkg/*/package.json`, both WRT `version` field and faucet-js `dependencies`)
+3. `./release`, skipping dependencies' installation (due to meta-packages; thus
+   the manual first step)
+
+
 License
 -------
 
