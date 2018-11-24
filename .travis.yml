@@ -4,5 +4,9 @@ node_js:
 - 8
 - 10
 
+install: # workaround for https://github.com/eslint/eslint/issues/11018
+- npm install -D acorn
+- npm install
+
 script:
 - npm test
