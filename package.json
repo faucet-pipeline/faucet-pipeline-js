@@ -30,7 +30,7 @@
 		"rollup": "~0.67.3",
 		"rollup-plugin-cleanup": "~3.0.0",
 		"rollup-plugin-commonjs": "~9.2.0",
-		"rollup-plugin-node-resolve": "~3.4.0"
+		"rollup-plugin-node-resolve": "~4.0.0"
 	},
 	"devDependencies": {
 		"eslint-config-fnd-jsx": "^1.6.0",
