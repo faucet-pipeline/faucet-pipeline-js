@@ -16,6 +16,6 @@
 		"@babel/core": "~7.1.6",
 		"@babel/preset-env": "~7.1.6",
 		"faucet-pipeline-js": "1.1.1",
-		"rollup-plugin-babel": "~4.0.3"
+		"rollup-plugin-babel": "~4.1.0"
 	}
 }
