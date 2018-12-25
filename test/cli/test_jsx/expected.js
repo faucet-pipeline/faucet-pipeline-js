@@ -1,10 +1,6 @@
 (function () {
 'use strict';
 
-if(typeof global === "undefined" && typeof window !== "undefined") {
-	window.global = window;
-}
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");

@@ -180,10 +180,6 @@ return lib;
 					content: `
 define(function () { 'use strict';
 
-if(typeof global === "undefined" && typeof window !== "undefined") {
-	window.global = window;
-}
-
 var util = "UTIL";
 
 var lib = msg => {
@@ -233,10 +229,6 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 					content: `
 (function (MYLIB) {
 'use strict';
-
-if(typeof global === "undefined" && typeof window !== "undefined") {
-	window.global = window;
-}
 
 MYLIB = MYLIB && MYLIB.hasOwnProperty('default') ? MYLIB['default'] : MYLIB;
 
@@ -333,8 +325,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-let txt = \`foo
+					content: makeBundle(`let txt = \`foo
 
 bar\`;
 console.log(\`[…] $\{txt}\`);

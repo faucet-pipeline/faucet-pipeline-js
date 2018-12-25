@@ -1,10 +1,6 @@
 (function () {
 'use strict';
 
-if(typeof global === "undefined" && typeof window !== "undefined") {
-	window.global = window;
-}
-
 var LogLevel;
 (function (LogLevel) {
     LogLevel[LogLevel["Debug"] = 0] = "Debug";
