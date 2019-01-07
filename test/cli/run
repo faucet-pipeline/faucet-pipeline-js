@@ -30,7 +30,7 @@ end
 begin "$root/test_sourcemap"
 	faucet --sourcemaps
 	assert_identical_sourcemap "./dist/bundle.js" "./expected.js" "./expected.js.map"
-	assert_identical_sourcemap "./dist/bundle-esnext.js" "./expected-esnext.js" "./expected-esnext.js.map"
+	assert_identical_sourcemap "./dist/bundle_esnext.js" "./expected_esnext.js" "./expected_esnext.js.map"
 end
 
 begin "$root/test_jsx"

@@ -8,7 +8,7 @@ module.exports = {
 		target: "./dist/bundle.js"
 	}, {
 		source: "./src/index.js",
-		target: "./dist/bundle-esnext.js",
+		target: "./dist/bundle_esnext.js",
 		esnext: true
 	}],
 	plugins: {
