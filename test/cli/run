@@ -87,7 +87,26 @@ end
 
 begin "$root/test_compact"
 	faucet --compact
-	assert_identical "./dist/bundle.js" "./expected.js"
+	assert_identical "./dist/bundle.js" "./expected_compacted.js"
+
+	faucet
+	assert_identical "./dist/bundle.js" "./expected_uncompacted.js"
+end
+
+begin "$root/test_minify"
+	faucet --compact
+	assert_identical "./dist/bundle.js" "./expected_compacted.js"
+
+	faucet
+	assert_identical "./dist/bundle.js" "./expected_uncompacted.js"
+end
+
+begin "$root/test_mangle"
+	faucet --compact
+	assert_identical "./dist/bundle.js" "./expected_compacted.js"
+
+	faucet
+	assert_identical "./dist/bundle.js" "./expected_uncompacted.js"
 end
 
 echo; echo "SUCCESS: all tests passed"

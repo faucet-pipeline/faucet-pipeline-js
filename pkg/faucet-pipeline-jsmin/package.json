@@ -1,7 +1,7 @@
 {
-	"name": "faucet-pipeline-esnext",
+	"name": "faucet-pipeline-jsmin",
 	"version": "1.1.1",
-	"description": "ES6 and beyond for faucet-pipeline",
+	"description": "JavaScript minification for faucet-pipeline",
 	"author": "FND",
 	"license": "Apache-2.0",
 	"homepage": "https://www.faucet-pipeline.org",
@@ -13,9 +13,6 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"@babel/core": "~7.2.2",
-		"@babel/preset-env": "~7.3.1",
-		"faucet-pipeline-js": "1.1.1",
-		"rollup-plugin-babel": "~4.3.2"
+		"rollup-plugin-terser": "^4.0.4"
 	}
 }
