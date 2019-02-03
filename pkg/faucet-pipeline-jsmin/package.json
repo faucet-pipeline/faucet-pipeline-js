@@ -1,11 +1,8 @@
 {
-	"name": "faucet-pipeline-typescript",
+	"name": "faucet-pipeline-jsmin",
 	"version": "1.1.1",
-	"description": "TypeScript for faucet-pipeline",
+	"description": "JavaScript minification for faucet-pipeline",
 	"author": "FND",
-	"contributors": [
-		"Till Schulte-Coerne <npmjs@trsnet.de>"
-	],
 	"license": "Apache-2.0",
 	"homepage": "https://www.faucet-pipeline.org",
 	"repository": {
@@ -16,8 +13,6 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"faucet-pipeline-js": "1.1.1",
-		"rollup-plugin-typescript2": "~0.19.2",
-		"typescript": "~3.3.1"
+		"rollup-plugin-terser": "^4.0.3"
 	}
 }
