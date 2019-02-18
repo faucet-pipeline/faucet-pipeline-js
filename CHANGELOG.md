@@ -16,13 +16,23 @@ improvements for end users:
 
 * added support for JSX fragments
 
-  `<>`/`</>` shorthand syntax can now be configured via `jsx.fragment`
+  `<>…</>` shorthand syntax can now be configured via `jsx.fragment`
   (alongside `jsx.pragma`)
 
 * removed `global` shim
 
-  introducing this was premature in the first place: faucet-pipeline is not in
-  the business of polyfilling - this should be handled at the application level
+  introducing this was premature in the first place: it might not be officially
+  called `global` after all, but faucet-pipeline is not in the business of
+  polyfilling anyway
+
+  this should be handled at the application level if necessary, for example by
+  creating and importing (early on) a module like this:
+
+  ```javascript
+  if(typeof global === "undefined" && typeof window !== "undefined") {
+      window.global = window;
+  }
+  ```
 
 * renamed default identifier for ECMAScript module format: `es` → `esm`
 
@@ -31,10 +41,10 @@ improvements for end users:
 * dropped Node 6 compatibility
 
   April 2019 marks the end of life for this LTS version, so it should soon be
-  phased out by users.
+  phased out by users
 
-  While most functionality (namely anything but JSX) remains compatible for now,
-  we no longer offer any guarantees in that regard.
+  (while most functionality - namely anything but JSX - remains compatible for
+  now, we no longer offer any guarantees in that regard)
 
 improvements for developers:
 
