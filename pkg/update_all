@@ -15,11 +15,11 @@ abort() {
 which ncu || abort "ERROR: npm-check-updates missing"
 
 echo "==== updating faucet-pipeline-js ====" >&2
-(cd "$root/.."; ncu -a)
+(cd "$root/.."; ncu -u)
 
 for dir in `find "$root" -type d -d 1`; do
 	echo "==== updating `basename $dir` ====" >&2
-	(cd "$dir"; ncu -a)
+	(cd "$dir"; ncu -u)
 done
 
 echo
