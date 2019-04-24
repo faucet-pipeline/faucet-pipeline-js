@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"faucet-pipeline-js": "2.0.3",
-		"rollup-plugin-typescript2": "~0.20.1",
+		"rollup-plugin-typescript2": "~0.21.0",
 		"typescript": "~3.4.3"
 	}
 }
