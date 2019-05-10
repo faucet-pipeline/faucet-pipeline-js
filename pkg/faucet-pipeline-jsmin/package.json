@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-jsmin",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"description": "JavaScript minification for faucet-pipeline",
 	"author": "FND",
 	"license": "Apache-2.0",
