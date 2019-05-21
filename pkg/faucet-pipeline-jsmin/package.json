@@ -13,6 +13,6 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"rollup-plugin-terser": "^4.0.4"
+		"rollup-plugin-terser": "^5.0.0"
 	}
 }
