@@ -2,6 +2,21 @@ faucet-pipeline-js version history
 ==================================
 
 
+v2.0.6
+------
+
+_2019-06-21_
+
+improvements for end users:
+
+* fixed module resolution to prefer `jsnext:main` over `main` if present
+
+  this ensures that ESM is used instead of legacy module formats (while
+  `jsnext:main` is considered deprecated, it's still being used in the wild)
+
+no significant changes for developers
+
+
 v2.0.5
 ------
 
