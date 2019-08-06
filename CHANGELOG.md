@@ -2,12 +2,22 @@ faucet-pipeline-js version history
 ==================================
 
 
+v2.0.7
+------
+
+_2019-08-06_
+
+notable changes for end users:
+
+* fixed potential race condition in conjunction with adjacent plugins
+
+
 v2.0.6
 ------
 
 _2019-06-21_
 
-improvements for end users:
+notable changes for end users:
 
 * fixed module resolution to prefer `jsnext:main` over `main` if present
 
@@ -62,7 +72,7 @@ v2.0.0
 
 _2019-02-18_
 
-improvements for end users:
+notable changes for end users:
 
 * extended compacting options
 
@@ -101,7 +111,7 @@ improvements for end users:
   (while most functionality - namely anything but JSX - remains compatible for
   now, we no longer offer any guarantees in that regard)
 
-improvements for developers:
+notable changes for developers:
 
 * renamed configuration property for source maps: `sourcemap` → `sourcemaps`
 
@@ -111,7 +121,7 @@ v1.1.1
 
 _2018-11-29_
 
-improvements for end users:
+notable changes for end users:
 
 * fixed change detection in watch mode if multiple files were altered
   simultaneously
@@ -126,7 +136,7 @@ _2018-11-07_
 
 no significant changes for end users
 
-improvements for developers:
+notable changes for developers:
 
 * added support for virtual bundles, using strings rather than files as entry
   point and not automatically writing bundles to disk (programmatic API only)
