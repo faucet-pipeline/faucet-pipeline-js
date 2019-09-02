@@ -41,7 +41,6 @@ end
 begin "$root/test_typescript"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
-	rm -r "./.rpt2_cache"
 end
 
 begin "$root/test_browserslist"
