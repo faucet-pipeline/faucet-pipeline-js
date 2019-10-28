@@ -2,12 +2,20 @@ faucet-pipeline-js version history
 ==================================
 
 
+v2.0.9
+------
+
+_2019-10-28_
+
+maintenance release to update dependencies; no significant changes
+
+
 v2.0.8
 ------
 
 _2019-09-02_
 
-maintenance release to update dependencies; no relevant changes
+maintenance release to update dependencies; no significant changes
 
 
 v2.0.7
@@ -40,7 +48,7 @@ v2.0.5
 
 _2019-06-05_
 
-maintenance release to update dependencies; no relevant changes
+maintenance release to update dependencies; no significant changes
 
 
 v2.0.4
@@ -48,7 +56,7 @@ v2.0.4
 
 _2019-05-10_
 
-maintenance release to update dependencies; no relevant changes
+maintenance release to update dependencies; no significant changes
 
 
 v2.0.3
@@ -56,7 +64,7 @@ v2.0.3
 
 _2019-04-11_
 
-maintenance release to update dependencies; no relevant changes
+maintenance release to update dependencies; no significant changes
 
 
 v2.0.2
@@ -64,7 +72,7 @@ v2.0.2
 
 _2019-04-02_
 
-maintenance release to update dependencies; no relevant changes
+maintenance release to update dependencies; no significant changes
 
 
 v2.0.1
@@ -72,7 +80,7 @@ v2.0.1
 
 _2019-03-15_
 
-maintenance release to update dependencies; no relevant changes
+maintenance release to update dependencies; no significant changes
 
 
 v2.0.0

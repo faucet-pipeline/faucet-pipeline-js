@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-jsx",
-	"version": "2.0.8",
+	"version": "2.0.9",
 	"description": "JSX for faucet-pipeline",
 	"author": "FND",
 	"license": "Apache-2.0",
@@ -14,6 +14,6 @@
 	},
 	"dependencies": {
 		"@babel/plugin-transform-react-jsx": "~7.3.0",
-		"faucet-pipeline-esnext": "2.0.8"
+		"faucet-pipeline-esnext": "2.0.9"
 	}
 }
