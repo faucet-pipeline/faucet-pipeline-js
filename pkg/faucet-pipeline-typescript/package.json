@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-typescript",
-	"version": "2.0.9",
+	"version": "2.0.10",
 	"description": "TypeScript for faucet-pipeline",
 	"author": "FND",
 	"contributors": [
@@ -16,8 +16,8 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"faucet-pipeline-js": "2.0.9",
-		"rollup-plugin-typescript2": "~0.24.3",
-		"typescript": "~3.6.4"
+		"faucet-pipeline-js": "2.0.10",
+		"rollup-plugin-typescript2": "~0.25.2",
+		"typescript": "~3.7.2"
 	}
 }
