@@ -2,8 +2,9 @@
 
 set -eu
 
-root=`dirname $0`
-root=`realpath $root`
+baseDir=`dirname $0`
+baseDir="$baseDir/../pkg"
+baseDir=`node -r fs -p "fs.realpathSync(process.argv[1]);" "$baseDir"`
 
 abort() {
 	message="$@"
@@ -15,9 +16,9 @@ abort() {
 which ncu || abort "ERROR: npm-check-updates missing"
 
 echo "==== updating faucet-pipeline-js ====" >&2
-(cd "$root/.."; ncu -u)
+(cd "$baseDir/.."; ncu -u)
 
-for dir in `find "$root" -type d -d 1`; do
+for dir in `find "$baseDir" -type d -d 1`; do
 	echo "==== updating `basename $dir` ====" >&2
 	(cd "$dir"; ncu -u)
 done
