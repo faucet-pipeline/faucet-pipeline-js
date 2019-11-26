@@ -7,7 +7,10 @@ root=`node -r fs -p "fs.realpathSync(process.argv[1]);" "$root/.."`
 
 . ./node_modules/release-util-fnd/lib.sh
 
-"$root/bin/update-pkg"
+skip=${SKIP_UPDATES:-""}
+if [ -z "$skip" ]; then
+	"$root/bin/update-pkg"
+fi
 
 # ensure meta-packages are in sync and up to date
 version=`determine_version "."`
@@ -23,7 +26,10 @@ done
 "$root/bin/validate-dependencies" faucet-pipeline-js $packages
 unset version
 
-pre_release_checks
+skip=${SKIP_CHECKS:-""}
+if [ -z "$skip" ]; then
+	pre_release_checks
+fi
 npm test
 
 target_dir=`create_package`
