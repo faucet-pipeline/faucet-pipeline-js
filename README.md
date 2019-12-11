@@ -2,7 +2,7 @@ faucet-pipeline-js
 ==================
 
 [![package version](https://img.shields.io/npm/v/faucet-pipeline-js.svg?style=flat)](https://www.npmjs.com/package/faucet-pipeline-js)
-[![build status](https://travis-ci.org/faucet-pipeline/faucet-pipeline-js.svg?branch=master)](https://travis-ci.org/faucet-pipeline/faucet-pipeline-js)
+[![build status](https://github.com/faucet-pipeline/faucet-pipeline-js/workflows/tests/badge.svg)](https://github.com/faucet-pipeline/faucet-pipeline-js/actions)
 [![Greenkeeper badge](https://badges.greenkeeper.io/faucet-pipeline/faucet-pipeline-js.svg)](https://greenkeeper.io)
 
 [faucet-pipeline](http://faucet-pipeline.org) plugin for bundling JavaScript
