@@ -1,10 +1,9 @@
 language: node_js
 node_js:
 - 8
-- 10
+- 12
 
-install: # workaround for https://github.com/eslint/eslint/issues/11018
-- npm install -D acorn
+install:
 - npm install
 
 script:
