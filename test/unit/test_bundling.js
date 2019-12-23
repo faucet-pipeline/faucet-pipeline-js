@@ -2,7 +2,7 @@
 "use strict";
 
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
-let faucetJS = require("../../lib");
+let faucetJS = require("../../lib").plugin;
 let path = require("path");
 let assert = require("assert");
 

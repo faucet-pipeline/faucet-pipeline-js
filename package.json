@@ -26,7 +26,7 @@
 		"node": ">=8"
 	},
 	"dependencies": {
-		"faucet-pipeline-core": "^1.2.2",
+		"faucet-pipeline-core": "https://github.com/faucet-pipeline/faucet-pipeline-core.git#plugin-api",
 		"rollup": "^1.28.0",
 		"rollup-plugin-cleanup": "~3.1.1",
 		"rollup-plugin-commonjs": "~10.1.0",

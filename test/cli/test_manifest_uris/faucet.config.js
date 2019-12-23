@@ -15,12 +15,7 @@ module.exports = {
 		target: "./dist/manifest.json",
 		value: bundlePath => assetURI(bundlePath)
 	},
-	plugins: {
-		js: {
-			plugin: path.resolve(__dirname, "../../.."),
-			bucket: "scripts"
-		}
-	}
+	plugins: [path.resolve(__dirname, "../../..")]
 };
 
 function assetURI(filepath) {
