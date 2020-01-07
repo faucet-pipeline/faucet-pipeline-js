@@ -22,7 +22,7 @@ function List(_, ...children) {
 
 console.log(createElement(List, null, createElement(Button, {
   label: UTIL
-}), createElement(Button, {
+}), createElement(Fragment, null, createElement(Button, {
   type: "reset",
   label: MYLIB
-})));
+}))));

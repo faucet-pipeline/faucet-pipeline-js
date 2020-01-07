@@ -38,7 +38,10 @@ console.log(UTIL + MYLIB);
 	it("should support JSX", async () => {
 		let bundle = new VirtualBundle(FIXTURES_DIR, {
 			format: "CommonJS",
-			jsx: { pragma: "createElement" }
+			jsx: {
+				pragma: "createElement",
+				fragment: "Fragment"
+			}
 		}, DEFAULT_OPTIONS);
 
 		let { code, error } = await bundle.compile(`
@@ -49,7 +52,9 @@ import createElement from "my-lib/elements";
 
 console.log(<List>
 	<Button label={UTIL} />
-	<Button type="reset" label={MYLIB} />
+	<>
+		<Button type="reset" label={MYLIB} />
+	</>
 </List>);
 		`);
 		assertSame(error, undefined);

@@ -7,7 +7,10 @@ module.exports = {
 		source: "./src/index.jsx",
 		target: "./dist/bundle.js",
 		esnext: true,
-		jsx: { pragma: "createElement" }
+		jsx: {
+			pragma: "createElement",
+			fragment: "Fragment"
+		}
 	}],
 	plugins: {
 		js: {
