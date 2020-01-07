@@ -29,4 +29,4 @@ NB: in order to ensure compatibility across faucet plugins, please only \
 increase the version number of faucet-pipeline-core when necessary
 EOF
 echo
-read -n1 -p "press any key to confirm" confirmation
+read -n1 -p "press any key to acknowledge" confirmation
