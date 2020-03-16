@@ -8,10 +8,5 @@ module.exports = {
 		target: "./dist/bundle.js",
 		esnext: true
 	}],
-	plugins: {
-		js: {
-			plugin: path.resolve(__dirname, "../../.."),
-			bucket: "scripts"
-		}
-	}
+	plugins: [path.resolve(__dirname, "../../..")]
 };

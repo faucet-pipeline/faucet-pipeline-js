@@ -2,7 +2,7 @@
 "use strict";
 
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
-let faucetJS = require("../../lib");
+let faucetJS = require("../../lib").plugin;
 let path = require("path");
 let assert = require("assert");
 
@@ -228,7 +228,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 (function (MYLIB) {
 'use strict';
 
-MYLIB = MYLIB && MYLIB.hasOwnProperty('default') ? MYLIB['default'] : MYLIB;
+MYLIB = MYLIB && Object.prototype.hasOwnProperty.call(MYLIB, 'default') ? MYLIB['default'] : MYLIB;
 
 console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 

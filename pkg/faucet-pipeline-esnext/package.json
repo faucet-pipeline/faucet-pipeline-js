@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-esnext",
-	"version": "2.0.10",
+	"version": "2.1.0",
 	"description": "ES6 and beyond for faucet-pipeline",
 	"author": "FND",
 	"license": "Apache-2.0",
@@ -13,9 +13,9 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"@babel/core": "~7.8.4",
-		"@babel/preset-env": "~7.8.4",
-		"faucet-pipeline-js": "2.0.10",
+		"@babel/core": "~7.8.7",
+		"@babel/preset-env": "~7.8.7",
+		"faucet-pipeline-js": "2.1.0",
 		"rollup-plugin-babel": "~4.3.3"
 	}
 }

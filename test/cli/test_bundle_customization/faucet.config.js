@@ -13,10 +13,5 @@ module.exports = {
 		target: "./dist/bundle_cjs.js",
 		format: "commonjs"
 	}],
-	plugins: {
-		js: {
-			plugin: path.resolve(__dirname, "../../.."),
-			bucket: "scripts"
-		}
-	}
+	plugins: [path.resolve(__dirname, "../../..")]
 };

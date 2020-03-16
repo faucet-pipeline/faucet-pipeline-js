@@ -2,10 +2,10 @@
 
 set -eu
 
-root=`dirname $0`
-root=`node -r fs -p "fs.realpathSync(process.argv[1]);" "$root/.."`
-
 . ./node_modules/release-util-fnd/lib.sh
+
+root=`dirname $0`
+root=`realpath "$root/.."`
 
 skip=${SKIP_UPDATES:-""}
 if [ -z "$skip" ]; then

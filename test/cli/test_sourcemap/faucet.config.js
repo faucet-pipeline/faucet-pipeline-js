@@ -11,10 +11,5 @@ module.exports = {
 		target: "./dist/bundle_esnext.js",
 		esnext: true
 	}],
-	plugins: {
-		js: {
-			plugin: path.resolve(__dirname, "../../.."),
-			bucket: "scripts"
-		}
-	}
+	plugins: [path.resolve(__dirname, "../../..")]
 };

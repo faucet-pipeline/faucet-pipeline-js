@@ -11,10 +11,5 @@ module.exports = {
 		target: "./dist/bundle_alt.js",
 		fingerprint: false
 	}],
-	plugins: {
-		js: {
-			plugin: path.resolve(__dirname, "../../.."),
-			bucket: "scripts"
-		}
-	}
+	plugins: [path.resolve(__dirname, "../../..")]
 };
