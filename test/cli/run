@@ -17,11 +17,6 @@ begin "$root/test_basic" # once more with fingerprinting
 	assert_identical "./dist/bundle-3930f63318329292cd52218fdbd7a70d.js" "./expected.js"
 end
 
-begin "$root/test_global_shim"
-	faucet
-	assert_identical "./dist/bundle.js" "./expected.js"
-end
-
 begin "$root/test_transpilation"
 	faucet
 	assert_identical "./dist/bundle.js" "./expected.js"
