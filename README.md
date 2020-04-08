@@ -12,7 +12,7 @@ modules, along with extensions for ESNext, JSX and TypeScript
 Contributing
 ------------
 
-* ensure [Node](http://nodejs.org) is installed
+* ensure [Node](https://nodejs.org) is installed
 * `npm install` downloads dependencies
 * `npm test` runs the test suite and checks code for stylistic consistency
 
