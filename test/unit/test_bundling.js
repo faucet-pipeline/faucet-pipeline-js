@@ -93,8 +93,18 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					/* eslint-disable max-len */
 					content: makeBundle(`
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
+function createCommonjsModule(fn, basedir, module) {
+	return module = {
+	  path: basedir,
+	  exports: {},
+	  require: function (path, base) {
+      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+    }
+	}, fn(module, module.exports), module.exports;
+}
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 }
 
 var dist = createCommonjsModule(function (module) {

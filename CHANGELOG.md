@@ -2,6 +2,21 @@ faucet-pipeline-js version history
 ==================================
 
 
+v2.1.5
+------
+
+_2020-05-22_
+
+notable changes for end users:
+
+* fixed a compatibility issues with CommonJS modules
+* silenced a warning when transpiling ESNext
+
+no significant changes for developers
+
+(skipping v2.1.4 due to a technical glitch in the release process)
+
+
 v2.1.3
 ------
 
