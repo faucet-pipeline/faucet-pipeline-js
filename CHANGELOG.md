@@ -2,6 +2,14 @@ faucet-pipeline-js version history
 ==================================
 
 
+v2.1.6
+------
+
+_2020-06-15_
+
+maintenance release to update dependencies; no significant changes
+
+
 v2.1.5
 ------
 
