@@ -13,7 +13,7 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"@babel/plugin-transform-react-jsx": "~7.10.1",
+		"@babel/plugin-transform-react-jsx": "~7.10.3",
 		"faucet-pipeline-esnext": "2.1.6"
 	}
 }
