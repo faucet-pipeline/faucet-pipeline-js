@@ -2,3 +2,7 @@ Chrome 63
 
 [legacy]
 IE 11
+
+[test]
+> 1%
+last 2 versions

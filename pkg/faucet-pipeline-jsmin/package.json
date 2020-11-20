@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-jsmin",
-	"version": "2.1.6",
+	"version": "2.1.7",
 	"description": "JavaScript minification for faucet-pipeline",
 	"author": "FND",
 	"license": "Apache-2.0",
@@ -13,6 +13,6 @@
 		"url": "https://github.com/faucet-pipeline/faucet-pipeline-js/issues"
 	},
 	"dependencies": {
-		"rollup-plugin-terser": "^6.1.0"
+		"rollup-plugin-terser": "^7.0.2"
 	}
 }

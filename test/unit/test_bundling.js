@@ -95,11 +95,11 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					content: makeBundle(`
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
-	  path: basedir,
-	  exports: {},
-	  require: function (path, base) {
-      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-    }
+		path: basedir,
+		exports: {},
+		require: function (path, base) {
+			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+		}
 	}, fn(module, module.exports), module.exports;
 }
 
@@ -238,9 +238,11 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 (function (MYLIB) {
 'use strict';
 
-MYLIB = MYLIB && Object.prototype.hasOwnProperty.call(MYLIB, 'default') ? MYLIB['default'] : MYLIB;
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
+var MYLIB__default = /*#__PURE__*/_interopDefaultLegacy(MYLIB);
+
+console.log(\`[…] $\{MYLIB__default['default']}\`); // eslint-disable-line no-console
 
 }(MYLIB));
 					`.trim() + "\n"
