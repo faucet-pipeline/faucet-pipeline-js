@@ -8,4 +8,5 @@ let el = <MyComponent type="dummy">
 			dolor sit amet
 		</>
 	</my-element>
-</MyComponent>
+</MyComponent>;
+console.log(el);
