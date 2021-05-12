@@ -6,6 +6,7 @@ module.exports = {
 	js: [{
 		source: "./src/index.jsx",
 		target: "./dist/bundle.js",
+		format: "esm",
 		esnext: true,
 		jsx: {
 			pragma: "createElement",
