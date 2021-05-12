@@ -14,7 +14,7 @@ end
 
 begin "$root/test_basic" # once more with fingerprinting
 	faucet --fingerprint
-	assert_identical "./dist/bundle-3930f63318329292cd52218fdbd7a70d.js" "./expected.js"
+	assert_identical "./dist/bundle-56a55e40e1b060b637dba590df3ff10b.js" "./expected.js"
 end
 
 begin "$root/test_transpilation"
@@ -64,13 +64,14 @@ end
 
 begin "$root/test_fingerprinting"
 	faucet --fingerprint
-	assert_identical "./dist/bundle-3930f63318329292cd52218fdbd7a70d.js" "./expected.js"
+	assert_identical "./dist/bundle-56a55e40e1b060b637dba590df3ff10b.js" "./expected.js"
 	assert_identical "./dist/bundle_alt.js" "./expected.js"
 end
 
 begin "$root/test_bundle_customization"
 	faucet
-	assert_identical "./dist/bundle.js" "./expected.js"
+	assert_identical "./dist/bundle_iife.js" "./expected_iife.js"
+	assert_identical "./dist/bundle_umd.js" "./expected_umd.js"
 	assert_identical "./dist/bundle_cjs.js" "./expected_cjs.js"
 end
 

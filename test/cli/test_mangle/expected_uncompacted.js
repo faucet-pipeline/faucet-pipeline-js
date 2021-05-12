@@ -1,6 +1,3 @@
-(function () {
-'use strict';
-
 // dolor sit amet
 var util = "UTIL";
 
@@ -15,5 +12,3 @@ function help() {
 }
 
 help();
-
-}());
