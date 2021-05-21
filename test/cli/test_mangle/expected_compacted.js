@@ -1,1 +1,1 @@
-var n="UTIL";function o(){console.log(`[…] ${n}`)}function c(){o()}c();
+var o="UTIL";function t(){console.log(`[…] ${o}`)}function i(){t()}i();

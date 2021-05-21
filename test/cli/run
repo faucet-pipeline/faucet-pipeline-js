@@ -14,19 +14,15 @@ end
 
 begin "$root/test_basic" # once more with fingerprinting
 	faucet --fingerprint
-	assert_identical "./dist/bundle-56a55e40e1b060b637dba590df3ff10b.js" "./expected.js"
+	assert_identical "./dist/bundle-f119f696e321180ef10ae365ccdbbe0b.js" "./expected.js"
 end
 
-begin "$root/test_transpilation"
-	faucet
-	assert_identical "./dist/bundle.js" "./expected.js"
-end
-
-begin "$root/test_sourcemap"
-	faucet --sourcemaps
-	assert_identical_sourcemap "./dist/bundle.js" "./expected.js" "./expected.js.map"
-	assert_identical_sourcemap "./dist/bundle_esnext.js" "./expected_esnext.js" "./expected_esnext.js.map"
-end
+# TODO: Add sourcemap support
+# begin "$root/test_sourcemap"
+# 	faucet --sourcemaps
+# 	assert_identical_sourcemap "./dist/bundle.js" "./expected.js" "./expected.js.map"
+# 	assert_identical_sourcemap "./dist/bundle_esnext.js" "./expected_esnext.js" "./expected_esnext.js.map"
+# end
 
 begin "$root/test_jsx"
 	faucet
@@ -38,12 +34,13 @@ begin "$root/test_typescript"
 	assert_identical "./dist/bundle.js" "./expected.js"
 end
 
-begin "$root/test_browserslist"
-	faucet
-	assert_identical "./dist/bundle.js" "./expected.js"
-	assert_identical "./dist/bundle_alt.js" "./expected_legacy.js"
-	assert_identical "./dist/bundle_legacy.js" "./expected_legacy.js"
-end
+# TODO figure out which parts can be supported
+# begin "$root/test_browserslist"
+# 	faucet
+# 	assert_identical "./dist/bundle.js" "./expected.js"
+# 	assert_identical "./dist/bundle_alt.js" "./expected_legacy.js"
+# 	assert_identical "./dist/bundle_legacy.js" "./expected_legacy.js"
+# end
 
 begin "$root/test_multi"
 	faucet
@@ -64,28 +61,13 @@ end
 
 begin "$root/test_fingerprinting"
 	faucet --fingerprint
-	assert_identical "./dist/bundle-56a55e40e1b060b637dba590df3ff10b.js" "./expected.js"
+	assert_identical "./dist/bundle-f119f696e321180ef10ae365ccdbbe0b.js" "./expected.js"
 	assert_identical "./dist/bundle_alt.js" "./expected.js"
-end
-
-begin "$root/test_bundle_customization"
-	faucet
-	assert_identical "./dist/bundle_iife.js" "./expected_iife.js"
-	assert_identical "./dist/bundle_umd.js" "./expected_umd.js"
-	assert_identical "./dist/bundle_cjs.js" "./expected_cjs.js"
 end
 
 begin "$root/test_custom_config"
 	faucet -c assets.js
 	assert_identical "./dist/bundle.js" "./expected.js"
-end
-
-begin "$root/test_compact"
-	faucet --compact
-	assert_identical "./dist/bundle.js" "./expected_compacted.js"
-
-	faucet
-	assert_identical "./dist/bundle.js" "./expected_uncompacted.js"
 end
 
 begin "$root/test_minify"

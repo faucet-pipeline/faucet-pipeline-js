@@ -2,6 +2,20 @@ faucet-pipeline-js version history
 ==================================
 
 
+v3.0.0
+------
+
+_unreleased_
+
+* Switch from rollup to esbuild
+* Support for TypeScript, JSX and minification built-in (no plugin required)
+* ESM is the default output format
+* `--compact` defaults to minify, mangle remains opt-in
+* Drop support for:
+    * transpilation to pre-ES6 code
+    * UMD, CJS and IIFE output format (only ESM is supported)
+
+
 v2.1.6
 ------
 

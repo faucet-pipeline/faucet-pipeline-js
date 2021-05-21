@@ -1,14 +1,10 @@
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-var MyComponent = function MyComponent() {
-  _classCallCheck(this, MyComponent);
+// src/component.js
+var MyComponent = class {
 };
+var component_default = MyComponent;
 
-var el = createElement(MyComponent, {
+// src/index.jsx
+var el = /* @__PURE__ */ createElement(component_default, {
   type: "dummy"
-}, createElement("my-element", null, "lorem ipsum", createElement(Fragment, null, createElement("mark", null, "666"), "dolor sit amet")));
+}, /* @__PURE__ */ createElement("my-element", null, "lorem ipsum", /* @__PURE__ */ createElement(Fragment, null, /* @__PURE__ */ createElement("mark", null, "666"), "dolor sit amet")));
 console.log(el);

@@ -1,14 +1,11 @@
-// dolor sit amet
-var util = "UTIL";
+// src/util.js
+var util_default = "UTIL";
 
-// lorem ipsum
+// src/index.js
 function info() {
-	console.log(`[…] ${util}`);
+  console.log(`[…] ${util_default}`);
 }
-
-// dolor sit amet
 function help() {
-	info();
+  info();
 }
-
 help();
