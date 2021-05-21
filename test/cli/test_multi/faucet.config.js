@@ -5,13 +5,10 @@ let path = require("path");
 module.exports = {
 	js: [{
 		source: "./src/foo.js",
-		target: "./dist/foo.js",
-		format: "esm"
+		target: "./dist/foo.js"
 	}, {
 		source: "./src/bar.js",
-		target: "./dist/bar.js",
-		format: "esm",
-		esnext: true
+		target: "./dist/bar.js"
 	}],
 	manifest: {
 		target: "./dist/manifest.json",
