@@ -27,7 +27,7 @@
 	},
 	"dependencies": {
 		"@rollup/plugin-commonjs": "~16.0.0",
-		"@rollup/plugin-node-resolve": "~10.0.0",
+		"@rollup/plugin-node-resolve": "~13.0.2",
 		"faucet-pipeline-core": "^1.4.0",
 		"rollup": "^2.33.3",
 		"rollup-plugin-cleanup": "~3.2.1"
