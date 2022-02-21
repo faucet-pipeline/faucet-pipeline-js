@@ -72,7 +72,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 			});
 	});
 
-	it("should support skipping transpilation for select packages", () => {
+	it.skip("should support skipping transpilation for select packages", () => {
 		let cwd = process.cwd();
 		process.chdir(FIXTURES_DIR); // XXX: should not be test-specific!?
 		let restore = _ => process.chdir(cwd);
