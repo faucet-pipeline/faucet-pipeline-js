@@ -186,7 +186,7 @@ return lib;
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: `
-define(function () { 'use strict';
+define((function () { 'use strict';
 
 var util = "UTIL";
 
@@ -196,7 +196,7 @@ var lib = msg => {
 
 return lib;
 
-});
+}));
 					`.trim() + "\n"
 				}]);
 			});
@@ -242,9 +242,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var MYLIB__default = /*#__PURE__*/_interopDefaultLegacy(MYLIB);
 
-console.log(\`[…] $\{MYLIB__default['default']}\`); // eslint-disable-line no-console
+console.log(\`[…] $\{MYLIB__default["default"]}\`); // eslint-disable-line no-console
 
-}(MYLIB));
+})(MYLIB);
 					`.trim() + "\n"
 				}]);
 			});

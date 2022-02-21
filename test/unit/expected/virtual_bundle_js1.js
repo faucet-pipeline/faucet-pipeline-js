@@ -5,4 +5,4 @@ var UTIL = "UTIL";
 
 console.log(UTIL);
 
-}());
+})();
