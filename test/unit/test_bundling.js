@@ -72,7 +72,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 			});
 	});
 
-	it.skip("should support skipping transpilation for select packages", () => {
+	it("should support skipping transpilation for select packages", () => {
 		let cwd = process.cwd();
 		process.chdir(FIXTURES_DIR); // XXX: should not be test-specific!?
 		let restore = _ => process.chdir(cwd);
@@ -93,22 +93,11 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					/* eslint-disable max-len */
 					content: makeBundle(`
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-		path: basedir,
-		exports: {},
-		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-		}
-	}, fn(module, module.exports), module.exports;
-}
+var dist = {exports: {}};
 
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-}
-
-var dist = createCommonjsModule(function (module) {
 /* eslint-disable */
+
+(function (module) {
 (function(window) {
 
 var MYLIB = "MY-LIB";
@@ -118,9 +107,11 @@ var MYLIB = "MY-LIB";
 }
 
 }());
-});
+}(dist));
 
-console.log("[\\u2026] ".concat(dist)); // eslint-disable-line no-console
+var MYLIB = dist.exports;
+
+console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
 					`.trim())
 					/* eslint-enable max-len */
 				}]);
