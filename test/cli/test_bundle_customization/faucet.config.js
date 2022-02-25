@@ -11,6 +11,7 @@ module.exports = {
 	}, {
 		source: "./src/index.js",
 		target: "./dist/bundle_iife.js",
+		format: "iife",
 		exports: "MYLIB"
 	}, {
 		source: "./src/index.js",

@@ -46,7 +46,7 @@ describe("bundling", _ => {
 var util = "UTIL";
 
 console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -67,7 +67,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 var util = "UTIL";
 
 console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -112,7 +112,7 @@ var MYLIB = "MY-LIB";
 var MYLIB = dist.exports;
 
 console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
-					`.trim())
+					`)
 					/* eslint-enable max-len */
 				}]);
 			});
@@ -134,7 +134,7 @@ console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
 var helper = { foo: "lorem", bar: "ipsum" };
 
 console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -151,15 +151,15 @@ console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: "var MYLIB = " + makeBundle(`
+					content: makeBundle(`
 var util = "UTIL";
 
 var lib = msg => {
 	console.log(\`[…] $\{util} $\{msg}\`); // eslint-disable-line no-console
 };
 
-return lib;
-					`.trim())
+export { lib as default };
+					`)
 				}]);
 			});
 	});
@@ -176,7 +176,7 @@ return lib;
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: `
+					content: makeBundle(`
 define((function () { 'use strict';
 
 var util = "UTIL";
@@ -188,7 +188,7 @@ var lib = msg => {
 return lib;
 
 }));
-					`.trim() + "\n"
+					`)
 				}]);
 			});
 	});
@@ -208,7 +208,7 @@ return lib;
 var MYLIB = "MY-LIB";
 
 console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -225,18 +225,11 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: `
-(function (MYLIB) {
-'use strict';
+					content: makeBundle(`
+import MYLIB from 'my-lib';
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var MYLIB__default = /*#__PURE__*/_interopDefaultLegacy(MYLIB);
-
-console.log(\`[…] $\{MYLIB__default["default"]}\`); // eslint-disable-line no-console
-
-})(MYLIB);
-					`.trim() + "\n"
+console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
+					`)
 				}]);
 			});
 	});
@@ -258,7 +251,7 @@ console.log(\`[…] $\{MYLIB__default["default"]}\`); // eslint-disable-line no-
 var util = "UTIL";
 
 console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -282,7 +275,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 var util = "UTIL";
 
 console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -309,7 +302,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 var util = "UTIL";
 
 console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -330,7 +323,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 
 bar\`;
 console.log(\`[…] $\{txt}\`);
-					`.trim(), { compact: true })
+					`, { compact: true })
 				}]);
 
 				config[0].esnext = true;
@@ -343,7 +336,7 @@ console.log(\`[…] $\{txt}\`);
 					content: makeBundle(`
 var txt = "foo\\n\\nbar";
 console.log("[\\u2026] ".concat(txt));
-					`.trim(), { compact: true })
+					`, { compact: true })
 				}]);
 
 				config[0].compact = false; // overrides global option
@@ -356,7 +349,7 @@ console.log("[\\u2026] ".concat(txt));
 					content: makeBundle(`
 var txt = "foo\\n\\nbar";
 console.log("[\\u2026] ".concat(txt)); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 			});
 	});
@@ -394,7 +387,7 @@ console.log("[\\u2026] ".concat(txt)); // eslint-disable-line no-console
 var util = "DUMMY-UTIL";
 
 console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
-					`.trim())
+					`)
 				}]);
 
 				let fn = _ => compile("dummy/src/does_not_exist.js", target);
