@@ -1,6 +1,3 @@
-(function () {
-'use strict';
-
 var LogLevel;
 (function (LogLevel) {
     LogLevel[LogLevel["Debug"] = 0] = "Debug";
@@ -31,5 +28,3 @@ generateArticle({
     },
     authors: ["foo", "bar"]
 });
-
-})();

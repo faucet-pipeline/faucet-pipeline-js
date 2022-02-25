@@ -36,22 +36,9 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 	}
 };
 
-// wraps given code in boilerplate
+// adjust the whitespace around the given code
 exports.makeBundle = function makeBundle(code, { compact } = {}) {
-	if(compact) {
-		return `
-(function(){'use strict';${code}})();
-		`.trim();
-	}
-
-	return `
-(function () {
-'use strict';
-
-${code}
-
-})();
-	`.trim() + "\n";
+	return compact ? code.trim() : `${code.trim()}\n`;
 };
 
 // returns a function that invokes `callback` only after having itself been
