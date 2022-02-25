@@ -40,15 +40,3 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 exports.makeBundle = function makeBundle(code, { compact } = {}) {
 	return compact ? code.trim() : `${code.trim()}\n`;
 };
-
-// returns a function that invokes `callback` only after having itself been
-// invoked `total` times
-exports.awaitInvocations = function awaitAll(total, callback) {
-	let i = 0;
-	return _ => {
-		i++;
-		if(i === total) {
-			callback();
-		}
-	};
-};
