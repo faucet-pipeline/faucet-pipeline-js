@@ -40,7 +40,7 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 exports.makeBundle = function makeBundle(code, { compact } = {}) {
 	if(compact) {
 		return `
-(function(){'use strict';${code}}());
+(function(){'use strict';${code}})();
 		`.trim();
 	}
 
@@ -50,7 +50,7 @@ exports.makeBundle = function makeBundle(code, { compact } = {}) {
 
 ${code}
 
-}());
+})();
 	`.trim() + "\n";
 };
 

@@ -93,22 +93,11 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					/* eslint-disable max-len */
 					content: makeBundle(`
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-		path: basedir,
-		exports: {},
-		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-		}
-	}, fn(module, module.exports), module.exports;
-}
+var dist = {exports: {}};
 
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-}
-
-var dist = createCommonjsModule(function (module) {
 /* eslint-disable */
+
+(function (module) {
 (function(window) {
 
 var MYLIB = "MY-LIB";
@@ -118,9 +107,11 @@ var MYLIB = "MY-LIB";
 }
 
 }());
-});
+}(dist));
 
-console.log("[\\u2026] ".concat(dist)); // eslint-disable-line no-console
+var MYLIB = dist.exports;
+
+console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
 					`.trim())
 					/* eslint-enable max-len */
 				}]);
@@ -186,7 +177,7 @@ return lib;
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					content: `
-define(function () { 'use strict';
+define((function () { 'use strict';
 
 var util = "UTIL";
 
@@ -196,7 +187,7 @@ var lib = msg => {
 
 return lib;
 
-});
+}));
 					`.trim() + "\n"
 				}]);
 			});
@@ -242,9 +233,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var MYLIB__default = /*#__PURE__*/_interopDefaultLegacy(MYLIB);
 
-console.log(\`[…] $\{MYLIB__default['default']}\`); // eslint-disable-line no-console
+console.log(\`[…] $\{MYLIB__default["default"]}\`); // eslint-disable-line no-console
 
-}(MYLIB));
+})(MYLIB);
 					`.trim() + "\n"
 				}]);
 			});

@@ -7,4 +7,4 @@ var index = _ => {
 
 return index;
 
-}());
+})();

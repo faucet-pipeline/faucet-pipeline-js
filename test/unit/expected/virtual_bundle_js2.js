@@ -7,4 +7,4 @@ var MYLIB = "MY-LIB";
 
 console.log(UTIL + MYLIB);
 
-}());
+})();

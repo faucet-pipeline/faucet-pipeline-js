@@ -20,7 +20,7 @@ var generateArticle = function (params) {
     var title = params.title, authors = params.authors;
     if (typeof title !== "string") {
         log(LogLevel.Debug, "auto-generating title");
-        title = title.main + ": " + title.sub;
+        title = "".concat(title.main, ": ").concat(title.sub);
     }
     return title + "\n" + authors.join(", ");
 };
@@ -32,4 +32,4 @@ generateArticle({
     authors: ["foo", "bar"]
 });
 
-}());
+})();
