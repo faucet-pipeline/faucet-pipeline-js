@@ -118,27 +118,6 @@ console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
 			});
 	});
 
-	it("should support custom file extensions", () => {
-		let config = [{
-			source: "./src/index.coffee",
-			target: "./dist/bundle.js",
-			extensions: [".coffee"]
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var helper = { foo: "lorem", bar: "ipsum" };
-
-console.log(\`[…] $\{helper}\`); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
 	it("should support customizing bundle's API", () => {
 		let config = [{
 			source: "./src/lib.js",
