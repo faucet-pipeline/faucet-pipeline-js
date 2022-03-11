@@ -1,1 +1,1 @@
-var n="UTIL";function o(){console.log(`[…] ${n}`)}function c(){o()}c();
+var b = "UTIL";function c(){console.log(`[…] ${b}`);}function a(){c();}a();
