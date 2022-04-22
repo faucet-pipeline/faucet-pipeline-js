@@ -23,7 +23,7 @@
 		"lint": "eslint --cache --ext .js --ext .jsx lib bin/validate-dependencies test/unit samples pkg && echo ✓"
 	},
 	"engines": {
-		"node": ">=8"
+		"node": ">=14"
 	},
 	"dependencies": {
 		"@rollup/plugin-commonjs": "~21.0.2",
