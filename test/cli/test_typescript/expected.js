@@ -1,5 +1,5 @@
 var LogLevel;
-(function (LogLevel) {
+(function(LogLevel) {
     LogLevel[LogLevel["Debug"] = 0] = "Debug";
     LogLevel[LogLevel["Info"] = 1] = "Info";
     LogLevel[LogLevel["Critical"] = 2] = "Critical";
@@ -7,17 +7,16 @@ var LogLevel;
 function log(level, msg) {
     if (level === LogLevel.Critical) {
         console.error(msg);
-    }
-    else {
+    } else {
         console.log(msg);
     }
 }
 
-var generateArticle = function (params) {
-    var title = params.title, authors = params.authors;
+let generateArticle = (params)=>{
+    let { title , authors  } = params;
     if (typeof title !== "string") {
         log(LogLevel.Debug, "auto-generating title");
-        title = "".concat(title.main, ": ").concat(title.sub);
+        title = `${title.main}: ${title.sub}`;
     }
     return title + "\n" + authors.join(", ");
 };
@@ -26,5 +25,8 @@ generateArticle({
         main: "Hello World",
         sub: "sup"
     },
-    authors: ["foo", "bar"]
+    authors: [
+        "foo",
+        "bar"
+    ]
 });
