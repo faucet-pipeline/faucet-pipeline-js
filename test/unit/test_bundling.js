@@ -93,23 +93,27 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					/* eslint-disable max-len */
 					content: makeBundle(`
-var dist = {exports: {}};
+var distExports = {};
+var dist = {
+  get exports(){ return distExports; },
+  set exports(v){ distExports = v; },
+};
 
 /* eslint-disable */
 
 (function (module) {
-(function(window) {
+	(function(window) {
 
-var MYLIB = "MY-LIB";
+	var MYLIB = "MY-LIB";
 
-{
-	module.exports = MYLIB;
-}
+	{
+		module.exports = MYLIB;
+	}
 
-}());
-}(dist));
+	}());
+} (dist));
 
-var MYLIB = dist.exports;
+var MYLIB = distExports;
 
 console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
 					`)
