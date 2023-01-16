@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "2.1.8",
+	"version": "3.0.0",
 	"description": "JavaScript module bundling for faucet-pipeline",
 	"author": "FND",
 	"contributors": [

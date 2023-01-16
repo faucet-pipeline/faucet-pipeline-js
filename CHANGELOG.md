@@ -2,6 +2,22 @@ faucet-pipeline-js version history
 ==================================
 
 
+v3.0.0
+------
+
+_2023-01-16_
+
+notable changes for end users:
+
+* switched to ESM as default output format
+* removed deprecated `sourcemap` option (long superseded by `sourcemaps`)
+* removed support for custom file extensions
+
+notable changes for developers:
+
+* removed support for virtual bundles
+
+
 v2.1.8
 ------
 
