@@ -3,6 +3,7 @@
 
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
 let faucetJS = require("../../lib").plugin;
+const fs = require("fs");
 let path = require("path");
 let assert = require("assert");
 
@@ -411,5 +412,50 @@ console.log(\`[DUMMY] $\{util}\`); // eslint-disable-line no-console
 			then(_ => {
 				assetManager.assertWriteCount(1);
 			});
+	});
+
+	describe("working with linked modules", () => {
+		// in case some set this env variable before
+		let initialFlagValue = process.env.FAUCET_EXPERIMENTAL_SYMLINKS;
+
+		beforeEach(() => {
+			fs.symlinkSync(
+					path.resolve(FIXTURES_DIR, "./external/cjs-module"),
+					path.resolve(FIXTURES_DIR, "./node_modules/some-cjs-module"),
+					"dir"
+			);
+
+			process.env.FAUCET_EXPERIMENTAL_SYMLINKS = "true";
+		});
+
+		afterEach(() => {
+			fs.unlinkSync(path.resolve(FIXTURES_DIR, "./node_modules/some-cjs-module"));
+			process.env.FAUCET_EXPERIMENTAL_SYMLINKS = initialFlagValue;
+		});
+
+		it("should preserve symlinks when env varialbe is set", () => {
+			let config = [{
+				source: "./src/import-symlinked.js",
+				target: "./dist/bundle.js",
+				format: "CommonJS"
+			}];
+			let assetManager = new MockAssetManager(FIXTURES_DIR);
+
+			return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
+				then(() => {
+					assetManager.assertWrites([{
+						filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
+						content: makeBundle(`
+'use strict';
+
+var dummy = {
+	some: "dummy value"
+};
+
+console.log(dummy); // eslint-disable-line no-console
+`)
+					}]);
+				});
+		});
 	});
 });
