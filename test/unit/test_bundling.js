@@ -93,11 +93,11 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
 					/* eslint-disable max-len */
 					content: makeBundle(`
-var distExports = {};
-var dist = {
-  get exports(){ return distExports; },
-  set exports(v){ distExports = v; },
-};
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+var dist = {exports: {}};
 
 /* eslint-disable */
 
@@ -110,13 +110,16 @@ var dist = {
 		module.exports = MYLIB;
 	}
 
-	}());
+	}());$$$WHITESPACE$$$
 } (dist));
 
-var MYLIB = distExports;
+var distExports = dist.exports;
+var MYLIB = /*@__PURE__*/getDefaultExportFromCjs(distExports);
 
 console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
-					`)
+					`).
+						// fugly workaround for trailing whitespace being generated
+						replace("$$$WHITESPACE$$$", " ")
 					/* eslint-enable max-len */
 				}]);
 			});
