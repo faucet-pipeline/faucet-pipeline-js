@@ -19,7 +19,7 @@ Contributing
 Release Process
 ---------------
 
-1. ensure dependencies are up to date (→ `./bin/update-pkg`)
+1. ensure dependencies are up to date (→ `./bin/update-pkg`, then `npm install`)
 2. ensure all meta-packages use the same version number (i.e.
    `pkg/*/package.json`, both WRT `version` field and faucet-js `dependencies`)
 3. `./bin/release`, skipping dependencies' installation (due to meta-packages;
