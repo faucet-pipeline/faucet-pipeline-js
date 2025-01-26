@@ -26,10 +26,10 @@
 		"node": ">=14"
 	},
 	"dependencies": {
-		"@rollup/plugin-commonjs": "~25.0.7",
-		"@rollup/plugin-node-resolve": "~15.2.3",
+		"@rollup/plugin-commonjs": "~26.0.3",
+		"@rollup/plugin-node-resolve": "~16.0.0",
 		"faucet-pipeline-core": "^2.0.0",
-		"rollup": "^4.3.0",
+		"rollup": "^4.34.0",
 		"rollup-plugin-cleanup": "~3.2.1"
 	},
 	"devDependencies": {
