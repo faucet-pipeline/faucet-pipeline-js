@@ -1,10 +1,9 @@
-/* global describe, it, beforeEach, afterEach */
 "use strict";
-
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
 let faucetJS = require("../../lib").plugin;
-let path = require("path");
-let assert = require("assert");
+let { describe, it, beforeEach, afterEach } = require("node:test");
+let path = require("node:path");
+let assert = require("node:assert");
 
 let DEFAULT_OPTIONS = {
 	browsers: {}
