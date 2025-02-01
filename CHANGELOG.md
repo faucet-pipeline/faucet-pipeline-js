@@ -2,6 +2,12 @@ faucet-pipeline-js version history
 ==================================
 
 
+v3.1.0
+------
+
+_TBD_
+
+
 v3.0.2
 ------
 
