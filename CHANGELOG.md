@@ -2,6 +2,20 @@ faucet-pipeline-js version history
 ==================================
 
 
+v3.0.2
+------
+
+_2025-02-01_
+
+notable changes for end users:
+
+* dropped support for obsolete Node versions; now requires Node v18 or later
+* dropped support for undocumented ESM aliases
+* reduced number of dependencies
+
+no significant changes for developers
+
+
 v3.0.1
 ------
 
