@@ -101,19 +101,26 @@ var dist = {exports: {}};
 
 /* eslint-disable */
 
-(function (module) {
-	(function(window) {
+var hasRequiredDist;
 
-	var MYLIB = "MY-LIB";
+function requireDist () {
+	if (hasRequiredDist) return dist.exports;
+	hasRequiredDist = 1;
+	(function (module) {
+		(function(window) {
 
-	{
-		module.exports = MYLIB;
-	}
+		var MYLIB = "MY-LIB";
 
-	}());$$$WHITESPACE$$$
-} (dist));
+		{
+			module.exports = MYLIB;
+		}
 
-var distExports = dist.exports;
+		}());$$$WHITESPACE$$$
+	} (dist));
+	return dist.exports;
+}
+
+var distExports = requireDist();
 var MYLIB = /*@__PURE__*/getDefaultExportFromCjs(distExports);
 
 console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
