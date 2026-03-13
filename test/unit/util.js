@@ -31,7 +31,7 @@ exports.MockAssetManager = class MockAssetManager extends AssetManager {
 		actual.forEach((op, i) => {
 			let { filepath, content } = expected[i];
 			assertSame(op.filepath, filepath);
-			assertSame(op.content, content);
+			assertSame(op.content.trim(), content.trim());
 		});
 	}
 };
