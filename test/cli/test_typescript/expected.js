@@ -1,30 +1,25 @@
-var LogLevel;
-(function (LogLevel) {
-    LogLevel[LogLevel["Debug"] = 0] = "Debug";
-    LogLevel[LogLevel["Info"] = 1] = "Info";
-    LogLevel[LogLevel["Critical"] = 2] = "Critical";
-})(LogLevel || (LogLevel = {}));
+// src/util.ts
 function log(level, msg) {
-    if (level === LogLevel.Critical) {
-        console.error(msg);
-    }
-    else {
-        console.log(msg);
-    }
+  if (level === 2 /* Critical */) {
+    console.error(msg);
+  } else {
+    console.log(msg);
+  }
 }
 
-var generateArticle = function (params) {
-    var title = params.title, authors = params.authors;
-    if (typeof title !== "string") {
-        log(LogLevel.Debug, "auto-generating title");
-        title = "".concat(title.main, ": ").concat(title.sub);
-    }
-    return title + "\n" + authors.join(", ");
+// src/index.ts
+var generateArticle = (params) => {
+  let { title, authors } = params;
+  if (typeof title !== "string") {
+    log(0 /* Debug */, "auto-generating title");
+    title = `${title.main}: ${title.sub}`;
+  }
+  return title + "\n" + authors.join(", ");
 };
 generateArticle({
-    title: {
-        main: "Hello World",
-        sub: "sup"
-    },
-    authors: ["foo", "bar"]
+  title: {
+    main: "Hello World",
+    sub: "sup"
+  },
+  authors: ["foo", "bar"]
 });

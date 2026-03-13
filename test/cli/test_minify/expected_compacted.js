@@ -1,1 +1,1 @@
-var util="UTIL";function info(){console.log(`[…] ${util}`)}function help(){info()}help();
+var util_default="UTIL";function info(){console.log(`[…] ${util_default}`)}function help(){info()}help();
