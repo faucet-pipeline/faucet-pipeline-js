@@ -5,9 +5,7 @@ let { describe, it, beforeEach, afterEach } = require("node:test");
 let path = require("node:path");
 let assert = require("node:assert");
 
-let DEFAULT_OPTIONS = {
-	browsers: {}
-};
+let DEFAULT_OPTIONS = {};
 
 describe("bundling", _ => {
 	let { exit } = process;
@@ -45,141 +43,6 @@ describe("bundling", _ => {
 var util = "UTIL";
 
 console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
-	it("should optionally transpile ES6 to ES5", () => {
-		let config = [{
-			source: "./src/index.js",
-			target: "./dist/bundle.js",
-			esnext: true
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
-	it("should support skipping transpilation for select packages", () => {
-		let cwd = process.cwd();
-		process.chdir(FIXTURES_DIR); // XXX: should not be test-specific!?
-		let restore = _ => process.chdir(cwd);
-
-		let config = [{
-			source: "./src/alt2.js",
-			target: "./dist/bundle.js",
-			esnext: {
-				exclude: ["my-lib"]
-			}
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
-			then(restore, restore). // XXX: hacky
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					/* eslint-disable max-len */
-					content: makeBundle(`
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-var dist = {exports: {}};
-
-/* eslint-disable */
-
-var hasRequiredDist;
-
-function requireDist () {
-	if (hasRequiredDist) return dist.exports;
-	hasRequiredDist = 1;
-	(function (module) {
-		(function(window) {
-
-		var MYLIB = "MY-LIB";
-
-		{
-			module.exports = MYLIB;
-		}
-
-		}());$$$WHITESPACE$$$
-	} (dist));
-	return dist.exports;
-}
-
-var distExports = requireDist();
-var MYLIB = /*@__PURE__*/getDefaultExportFromCjs(distExports);
-
-console.log("[\\u2026] ".concat(MYLIB)); // eslint-disable-line no-console
-					`).
-						// fugly workaround for trailing whitespace being generated
-						replace("$$$WHITESPACE$$$", " ")
-					/* eslint-enable max-len */
-				}]);
-			});
-	});
-
-	it("should support customizing bundle's API", () => {
-		let config = [{
-			source: "./src/lib.js",
-			target: "./dist/bundle.js",
-			exports: "MYLIB"
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-var lib = msg => {
-	console.log(\`[…] $\{util} $\{msg}\`); // eslint-disable-line no-console
-};
-
-export { lib as default };
-					`)
-				}]);
-			});
-	});
-
-	it("should support customizing bundle format", () => {
-		let config = [{
-			source: "./src/lib.js",
-			target: "./dist/bundle.js",
-			format: "amd"
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		return faucetJS(config, assetManager, DEFAULT_OPTIONS)().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-define((function () { 'use strict';
-
-var util = "UTIL";
-
-var lib = msg => {
-	console.log(\`[…] $\{util} $\{msg}\`); // eslint-disable-line no-console
-};
-
-return lib;
-
-}));
 					`)
 				}]);
 			});
@@ -226,79 +89,6 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			});
 	});
 
-	it.skip("should take into account Browserslist while transpiling", () => {
-		let config = [{
-			source: "./src/index.js",
-			target: "./dist/bundle.js",
-			esnext: true
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		let browsers = { defaults: ["Chrome 63"] };
-		return faucetJS(config, assetManager, { browsers })().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
-	it("should allow suppressing Browserslist auto-config while transpiling", () => {
-		let config = [{
-			source: "./src/index.js",
-			target: "./dist/bundle.js",
-			esnext: {
-				browserslist: false
-			}
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		let browsers = { defaults: ["Chrome 63"] };
-		return faucetJS(config, assetManager, { browsers })().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
-	it.skip("should allow specifying an alternative Browserslist group", () => {
-		let config = [{
-			source: "./src/index.js",
-			target: "./dist/bundle.js",
-			esnext: {
-				browserslist: "modern"
-			}
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		let browsers = {
-			defaults: ["IE 11"],
-			modern: ["Chrome 63"]
-		};
-		return faucetJS(config, assetManager, { browsers })().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
 	it("should optionally compact bundle", () => {
 		let config = [{
 			source: "./src/multiline.js",
@@ -306,7 +96,7 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 		}];
 		let assetManager = new MockAssetManager(FIXTURES_DIR);
 
-		let options = { browsers: {}, compact: true };
+		let options = { compact: true };
 		return faucetJS(config, assetManager, options)().
 			then(_ => {
 				assetManager.assertWrites([{
@@ -318,19 +108,6 @@ console.log(\`[…] $\{txt}\`);
 					`, { compact: true })
 				}]);
 
-				config[0].esnext = true;
-				assetManager = new MockAssetManager(FIXTURES_DIR);
-				return faucetJS(config, assetManager, options)();
-			}).
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var txt = "foo\\n\\nbar";
-console.log("[\\u2026] ".concat(txt));
-					`, { compact: true })
-				}]);
-
 				config[0].compact = false; // overrides global option
 				assetManager = new MockAssetManager(FIXTURES_DIR);
 				return faucetJS(config, assetManager, options)();
@@ -338,9 +115,11 @@ console.log("[\\u2026] ".concat(txt));
 			then(_ => {
 				assetManager.assertWrites([{
 					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var txt = "foo\\n\\nbar";
-console.log("[\\u2026] ".concat(txt)); // eslint-disable-line no-console
+					content: makeBundle(`let txt = \`foo
+
+bar\`;
+
+console.log(\`[…] $\{txt}\`); // eslint-disable-line no-console
 					`)
 				}]);
 			});

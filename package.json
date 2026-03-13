@@ -26,14 +26,12 @@
 	"dependencies": {
 		"@rollup/plugin-commonjs": "~29.0.1",
 		"@rollup/plugin-node-resolve": "~16.0.3",
-		"browserslist": "^4.28.1",
 		"faucet-pipeline-core": "^2.0.0 || ^3.0.0",
 		"rollup": "^4.59.0",
 		"rollup-plugin-cleanup": "~3.2.1"
 	},
 	"devDependencies": {
 		"eslint-config-fnd-jsx": "^1.8.0",
-		"faucet-pipeline-esnext": "file:pkg/faucet-pipeline-esnext",
 		"faucet-pipeline-jsmin": "file:pkg/faucet-pipeline-jsmin",
 		"faucet-pipeline-jsx": "file:pkg/faucet-pipeline-jsx",
 		"faucet-pipeline-typescript": "file:pkg/faucet-pipeline-typescript",
