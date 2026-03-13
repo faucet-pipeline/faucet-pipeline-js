@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-js",
-	"version": "3.0.2",
+	"version": "3.0.3",
 	"description": "JavaScript module bundling for faucet-pipeline",
 	"author": "FND",
 	"contributors": ["Lucas Dohmen <lucas@dohmen.io>"],
@@ -15,10 +15,10 @@
 	},
 	"main": "lib/index.js",
 	"scripts": {
-		"test": "npm-run-all lint --parallel test:unit test:cli",
+		"test": "npm run lint && npm run test:unit && npm run test:cli",
 		"test:cli": "./test/cli/run",
-		"test:unit": "mocha test/unit/test_*.js",
-		"lint": "eslint --cache --ext .js --ext .jsx lib bin/validate-dependencies test/unit samples pkg && echo ✓"
+		"test:unit": "node --test ./test/unit/test_*.js",
+		"lint": "eslint --cache --ext .js --ext .jsx ./lib ./bin/validate-dependencies ./test/unit ./samples ./pkg && echo ✓"
 	},
 	"engines": {
 		"node": ">=22"
@@ -26,7 +26,8 @@
 	"dependencies": {
 		"@rollup/plugin-commonjs": "~29.0.1",
 		"@rollup/plugin-node-resolve": "~16.0.3",
-		"faucet-pipeline-core": "^2.0.0",
+		"browserslist": "^4.28.1",
+		"faucet-pipeline-core": "^2.0.0 || ^3.0.0",
 		"rollup": "^4.59.0",
 		"rollup-plugin-cleanup": "~3.2.1"
 	},
@@ -37,8 +38,6 @@
 		"faucet-pipeline-jsx": "file:pkg/faucet-pipeline-jsx",
 		"faucet-pipeline-typescript": "file:pkg/faucet-pipeline-typescript",
 		"json-diff": "^1.0.6",
-		"mocha": "^11.7.5",
-		"npm-run-all": "^4.1.5",
 		"release-util-fnd": "^3.0.0"
 	}
 }

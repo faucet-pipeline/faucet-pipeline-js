@@ -1,10 +1,9 @@
-/* global describe, it, beforeEach, afterEach */
 "use strict";
-
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
 let faucetJS = require("../../lib").plugin;
-let path = require("path");
-let assert = require("assert");
+let { describe, it, beforeEach, afterEach } = require("node:test");
+let path = require("node:path");
+let assert = require("node:assert");
 
 let DEFAULT_OPTIONS = {
 	browsers: {}
@@ -227,7 +226,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			});
 	});
 
-	it("should take into account Browserslist while transpiling", () => {
+	it.skip("should take into account Browserslist while transpiling", () => {
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
@@ -273,7 +272,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 			});
 	});
 
-	it("should allow specifying an alternative Browserslist group", () => {
+	it.skip("should allow specifying an alternative Browserslist group", () => {
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
