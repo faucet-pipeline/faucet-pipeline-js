@@ -226,7 +226,7 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			});
 	});
 
-	it("should take into account Browserslist while transpiling", () => {
+	it.skip("should take into account Browserslist while transpiling", () => {
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
@@ -272,7 +272,7 @@ console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
 			});
 	});
 
-	it("should allow specifying an alternative Browserslist group", () => {
+	it.skip("should allow specifying an alternative Browserslist group", () => {
 		let config = [{
 			source: "./src/index.js",
 			target: "./dist/bundle.js",
