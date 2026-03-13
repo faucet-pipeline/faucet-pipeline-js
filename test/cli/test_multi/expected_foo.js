@@ -1,3 +1,5 @@
-var util = "UTIL";
+// src/util.js
+var util_default = "UTIL";
 
-console.log(`[FOO] ${util}`);
+// src/foo.js
+console.log(`[FOO] ${util_default}`);

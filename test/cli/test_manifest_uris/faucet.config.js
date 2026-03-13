@@ -8,8 +8,7 @@ module.exports = {
 		target: "./dist/foo.js"
 	}, {
 		source: "./src/bar.js",
-		target: "./dist/bar.js",
-		esnext: true
+		target: "./dist/bar.js"
 	}],
 	manifest: {
 		target: "./dist/manifest.json",
