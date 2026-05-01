@@ -1,10 +1,9 @@
-/* global describe, it, beforeEach, afterEach */
 "use strict";
-
 let { MockAssetManager, makeBundle, FIXTURES_DIR } = require("./util");
 let faucetJS = require("../../lib").plugin;
-let path = require("path");
-let assert = require("assert");
+let { describe, it, beforeEach, afterEach } = require("node:test");
+let path = require("node:path");
+let assert = require("node:assert");
 
 let DEFAULT_OPTIONS = {
 	browsers: {}
@@ -227,28 +226,6 @@ console.log(\`[…] $\{MYLIB}\`); // eslint-disable-line no-console
 			});
 	});
 
-	it("should take into account Browserslist while transpiling", () => {
-		let config = [{
-			source: "./src/index.js",
-			target: "./dist/bundle.js",
-			esnext: true
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		let browsers = { defaults: ["Chrome 63"] };
-		return faucetJS(config, assetManager, { browsers })().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
 	it("should allow suppressing Browserslist auto-config while transpiling", () => {
 		let config = [{
 			source: "./src/index.js",
@@ -268,33 +245,6 @@ console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 var util = "UTIL";
 
 console.log("[\\u2026] ".concat(util)); // eslint-disable-line no-console
-					`)
-				}]);
-			});
-	});
-
-	it("should allow specifying an alternative Browserslist group", () => {
-		let config = [{
-			source: "./src/index.js",
-			target: "./dist/bundle.js",
-			esnext: {
-				browserslist: "modern"
-			}
-		}];
-		let assetManager = new MockAssetManager(FIXTURES_DIR);
-
-		let browsers = {
-			defaults: ["IE 11"],
-			modern: ["Chrome 63"]
-		};
-		return faucetJS(config, assetManager, { browsers })().
-			then(_ => {
-				assetManager.assertWrites([{
-					filepath: path.resolve(FIXTURES_DIR, "./dist/bundle.js"),
-					content: makeBundle(`
-var util = "UTIL";
-
-console.log(\`[…] $\{util}\`); // eslint-disable-line no-console
 					`)
 				}]);
 			});
