@@ -23,7 +23,11 @@ Release Process
 2. ensure all meta-packages use the same version number (i.e.
    `pkg/*/package.json`, both WRT `version` field and faucet-js `dependencies`)
 3. update `CHANGELOG.md`
-4. `./bin/release`, skipping dependencies' installation (due to meta-packages;
+4. commit as "v#.#.#"
+
+        $ git commit -m "v`node -p -e 'require("./package.json").version'`"
+
+5. `./bin/release`, skipping dependencies' installation (due to meta-packages;
    thus the manual first step)
 
 

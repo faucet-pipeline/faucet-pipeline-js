@@ -2,6 +2,31 @@ faucet-pipeline-js version history
 ==================================
 
 
+v3.1.0
+------
+
+_2026-09-16_
+
+notable changes for end users:
+
+*   deprecated `esnext`, `jsx`, `exports` and `format` options as well as
+    `compact: mangle` setting
+
+    This functionality will be removed in the next major release due to lack of
+    user needs: `format` and `exports` should no longer be necessary, now that
+    ESM is well-established. `esnext` should no longer be necessary because
+    once-new JavaScript syntax is now well-established across engines and
+    there's not a lot of new syntax on the horizon. JSX usage has evolved to
+    typically require framework-specific integration these days, thus now it's
+    effectively out of scope for faucet (given our agnostic ambitions). `mangle`
+    was deemed excessive and ultimately unhelpful; `minify` should be used
+    instead.
+
+*   reduced number of dependencies
+
+no significant changes for developers
+
+
 v3.0.2
 ------
 

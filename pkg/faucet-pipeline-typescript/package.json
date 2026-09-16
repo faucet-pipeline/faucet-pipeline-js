@@ -1,6 +1,6 @@
 {
 	"name": "faucet-pipeline-typescript",
-	"version": "3.0.2",
+	"version": "3.1.0",
 	"description": "TypeScript for faucet-pipeline",
 	"author": "FND",
 	"contributors": [
@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"@rollup/plugin-typescript": "~12.3.0",
-		"faucet-pipeline-js": "3.0.2",
+		"faucet-pipeline-js": "3.1.0",
 		"tslib": "~2.8.1",
 		"typescript": "~5.9.3"
 	}
